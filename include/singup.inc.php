@@ -5,42 +5,42 @@
 if(ISSET($_POST["submit"])) {
     
     $name = $_POST["username"];
-    $level = $_POST["access_level"];
+    $correo = $_POST["email"];
     $contraseña = $_POST["contraseña"];
     $contraseñarepeat = $_POST["contraseña-repeat"];
 
     require_once 'dbh.inc.php';
     require_once 'functions.php';
 
-    if (emptyInputRegistro($name,$level,$contraseña,$contraseñarepeat) !== false) 
+    if (registroFormDatoVacio($name,$correo,$contraseña,$contraseñarepeat) !== false) 
     {
-        header("location: ../admin.php?error=emptyinput");
+        header("location: ../singup.php?error=emptyinput");
         exit();
     }
-    if (invalidName($name))
+    if (nombreValido($name))
     {
-        header("location: ../admin.php?error=nameNotValid");
+        header("location: ../singup.php?error=nameNotValid");
         exit();
     }
-    if (invalidLevel($level))
-    {   
-        header("location: ../admin.php?error=emailNotValid");
+    if (correoValido($correo))
+    {
+        header("location: ../singup.php?error=emailNotValid");
         exit();
     }
-    if (passnotmatch($contraseña, $contraseñarepeat)){
-        header("location: ../admin.php?error=passwordNotMatch");
+    if (contraseñaNoIgual($contraseña, $contraseñarepeat)){
+        header("location: ../singup.php?error=passwordNotMatch");
         exit();
     }
-    if (uidexists($conn, $name, $level)){
-        header("location: ../admin.php?error=nameORemailTaken");
+    if (revisarExistenciaDelUsuario($conn, $name, $correo)){
+        header("location: ../singup.php?error=nameORemailTaken");
         exit();
     }
 
-    createUser($conn, $name, $level, $contraseña);
+    crearUser($conn, $name, $correo, $contraseña);
     
 }
 else {
-    header("location: ../admin.php");
+    header("location: ../singup.php");
     exit();
 }
 

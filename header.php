@@ -20,20 +20,28 @@
                 </a>
                 <?php
                         if (isset($_SESSION["username"])) {
-                            echo "</li>
-                            <a class=\"nav-link\">". $_SESSION["username"] ."</a>
-                            </li>";
-                            switch($_SESSION["acceslevel"]) {
-                                case 1:
-                                    echo "<a class=\"nav-link\" href=\"admin.php\">Panel de reporte</a>";
-                                    break;
-                                default:
-                                    echo "<a class=\"nav-link\" href=\"admin.php\">Panel de control</a>";
-                                    break;
-                            }
                             echo "<li class=\"nav-item\">
-                            <a class=\"nav-link\" href=\"include/logout.inc.php\">Desconectarse</a>
+                            <a class=\"nav-link\">". $_SESSION["username"] ."</a>
+                            ";
+                            
+                            echo "
+                            <a class=\"nav-link\" href=\"admin.php\">Panel de control</a>
+                            ";
+                            
+                            
+                            echo "
+                            <a class=\"nav-link\" href=\"include/logout.inc.php\">Salir</a>
                             </li>";
+                        }
+                        else{
+
+                            echo "<li class=\"nav-item\">
+                            <a class=\"nav-link\" href=\"login.php\">ingresar</a>
+                            ";
+                            echo "
+                            <a class=\"nav-link\" href=\"singup.php\">registrar</a>
+                            </li>";
+
                         }
                 ?>
             </div>

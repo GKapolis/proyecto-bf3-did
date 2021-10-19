@@ -8,17 +8,22 @@ if(ISSET($_POST["submit"])) {
     require_once 'dbh.inc.php';
     require_once 'functions.php';
 
-    if (emptyInputLogin($name,$pwd) !== false) 
+    if (inputVacio($name) !== false) 
     {
-        header("location: ../index.php?error=emptyinput");
+        header("location: ../login.php?error=emptyinput");
+        exit();
+    }
+    if (inputVacio($pwd) !== false) 
+    {
+        header("location: ../login.php?error=emptyinput");
         exit();
     }
 
-    loginuser($conn, $name, $pwd);
+    ingresarUser($conn, $name, $pwd);
 
 }
 else {
-    header("location: ../index.php");
+    header("location: ../login.php");
     exit();
 }
 

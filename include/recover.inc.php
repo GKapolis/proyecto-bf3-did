@@ -3,21 +3,20 @@
 
 if(ISSET($_POST["submit"])) {
     $name = $_POST["username"];
-
     require_once 'dbh.inc.php';
     require_once 'functions.php';
 
-    if (emptyInputLogin($name,$name) !== false) 
+    if (inputVacio($name) !== false) 
     {
-        header("location: ../admin.php?error=emptyinput");
+        header("location: ../recover.php?error=emptyinput");
         exit();
     }
 
-    
+    recuperarcontraseña($conn, $name);
 
 }
 else {
-    header("location: ../admin.php");
+    header("location: ../index.php");
     exit();
 }
 
