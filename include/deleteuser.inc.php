@@ -7,13 +7,13 @@ if(ISSET($_POST["submit"])) {
     require_once 'dbh.inc.php';
     require_once 'functions.php';
 
-    if (emptyInputLogin($name,$name) !== false) 
+    if (inputVacio($name,$name) !== false) 
     {
         header("location: ../admin.php?error=emptyinput");
         exit();
     }
 
-    deleteuser($conn,$name);
+    borrarUser($conn,$name);
 
 }
 else {

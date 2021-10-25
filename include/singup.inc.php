@@ -4,7 +4,8 @@
 
 if(ISSET($_POST["submit"])) {
     
-    $name = $_POST["username"];
+    $username = $_POST["username"];
+    $name = $_POST["name"];
     $correo = $_POST["email"];
     $contraseña = $_POST["contraseña"];
     $contraseñarepeat = $_POST["contraseña-repeat"];
@@ -15,6 +16,16 @@ if(ISSET($_POST["submit"])) {
     if (registroFormDatoVacio($name,$correo,$contraseña,$contraseñarepeat) !== false) 
     {
         header("location: ../singup.php?error=emptyinput");
+        exit();
+    }
+    if (inputVacio($username) !== false) 
+    {
+        header("location: ../login.php?error=emptyinput");
+        exit();
+    }
+    if (nombreValido($username))
+    {
+        header("location: ../singup.php?error=nameNotValid");
         exit();
     }
     if (nombreValido($name))
@@ -36,7 +47,7 @@ if(ISSET($_POST["submit"])) {
         exit();
     }
 
-    crearUser($conn, $name, $correo, $contraseña);
+    crearUser($conn,$username, $name, $correo, $contraseña);
     
 }
 else {
