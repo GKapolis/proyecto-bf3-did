@@ -421,4 +421,152 @@ function borrarHorario($conn,$turno,$horautu){
 
 }
 
+
+//  termina seccion de grupos
+//
+//          ______________
+//         /##############\
+//         |####|      \###\_
+//         |####|        \###\
+//         |####|       _/###/
+//         |####\______/###/
+//         |##############/
+//         |####/ 
+//         |####|
+//         |####|
+//         |####|
+//
+//
+// comienza seccion de profesor
+
+/*
+ revisa que el profesor al que se referencio exista en la base de datos usando su ID
+*/
+function revisarExistenciaDelProfesorPormedioDeID($conn, $id) {
+
+    $sql = "SELECT * FROM profesores where idProfesores = ?"; 
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: ../admin.php?error=CouldNotConnect");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "i", $id);
+    mysqli_stmt_execute($stmt);
+
+    $resultdata = mysqli_stmt_get_result($stmt);
+
+    if($row = mysqli_fetch_assoc($resultdata)){
+        return $row;
+    }
+    else {
+        $result = false;    
+        return $result;
+    }
+
+    mysqli_stmt_close($stmt);
+}
+/*
+ revisa que el profesor al que se referencio exista en la base de datos usando su nombre
+*/
+function revisarExistenciaDelProfesorPormedioDeNombre($conn, $Nombre) {
+
+    $sql = "SELECT * FROM profesores where nombreProfesores = ?"; 
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: ../admin.php?error=CouldNotConnect");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "s", $Nombre);
+    mysqli_stmt_execute($stmt);
+
+    $resultdata = mysqli_stmt_get_result($stmt);
+
+    if($row = mysqli_fetch_assoc($resultdata)){
+        return $row;
+    }
+    else {
+        $result = false;    
+        return $result;
+    }
+
+    mysqli_stmt_close($stmt);
+}
+/*
+ inserta un profesor a la base de datos
+*/
+function crearProfesor($conn, $nombre, $apellido){
+    $sql = "INSERT INTO profesores (nombreProfesores,apellidoProfesores) VALUES (?,?);"; 
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: ../admin.php?error=CouldNotConnect");
+        exit();
+    }
+
+    
+
+    mysqli_stmt_bind_param($stmt, "ss", $nombre, $apellido);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ../admin.php?error=userCreated");
+}
+
+/*
+ actualiza los datos de un profesor
+*/
+function actualizarProfesornombreOapellido($conn,$nuevonombre,$id,$cambio){
+
+    $usurexits = revisarExistenciaDelProfesorPormedioDeID($conn, $id);
+
+    if ($usurexits === false) {
+        header("location: ../test.php?error=usernotfound");
+        exit();
+    }
+
+    $sql = "UPDATE profesores SET ". $cambio ."= ? WHERE idProfesores= ?"; 
+    $stmt = mysqli_stmt_init($conn);
+    
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: ../test.php?error=CouldNotConnect");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "si", $nuevonombre, $id);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ../test.php?error=userModfied");
+
+}
+
+/*
+ borra un profesor del sistema
+*/
+function borrarProfesor($conn,$id){
+
+    $usurexits = revisarExistenciaDelProfesorPormedioDeID($conn, $id);
+
+    if ($usurexits === false) {
+        header("location: ../admin.php?error=usernotfound");
+        exit();
+    }
+
+    $sql = "DELETE FROM profesores WHERE idProfesores= ?"; 
+    $stmt = mysqli_stmt_init($conn);
+    
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: ../admin.php?error=CouldNotConnect");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "i", $id);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ../admin.php?error=userDeleted");
+
+}
+
 ?>
