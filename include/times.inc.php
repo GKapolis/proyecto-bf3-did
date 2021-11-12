@@ -7,6 +7,7 @@ if(ISSET($_POST["submit"])) {
     $horafinal = $_POST["horario2"];
     $turno = $_POST["turno"];
     $horautu = $_POST["hora"];
+    $dia = $_POST["dia"];
     $accion = $_POST["action"];
     
     require_once 'dbh.inc.php';
@@ -19,7 +20,7 @@ if(ISSET($_POST["submit"])) {
                 header("location: ../test.php?error=emptyinput");
                 exit();
             }
-            if (revisarExistenciaDelHorario($conn, $turno, $horautu)){
+            if (revisarExistenciaDelHorario($conn, $turno, $horautu, $dia)){
                 header("location: ../test.php?error=nameORemailTaken");
                 exit();
             }
@@ -28,7 +29,7 @@ if(ISSET($_POST["submit"])) {
                 exit();
             }
 
-            crearHorarios($conn,$horainicial,$horafinal,$turno,$horautu);
+            crearHorarios($conn,$horainicial,$horafinal,$turno,$horautu, $dia);
             break;
         case 2:
             if (registroFormDatoVacio($horainicial,$horainicial,$turno,$horautu) !== false) 
@@ -37,7 +38,7 @@ if(ISSET($_POST["submit"])) {
                 exit();
             }
 
-            actualizarHorario($conn,$horainicial,$horafinal,$turno,$horautu);
+            actualizarHorario($conn,$horainicial,$horafinal,$turno,$horautu, $dia);
             break;
         case 3:
             if (inputVacio($turno) !== false) 
@@ -51,7 +52,7 @@ if(ISSET($_POST["submit"])) {
                 exit();
             }
 
-            borrarHorario($conn,$turno,$horautu);
+            borrarHorario($conn,$turno,$horautu, $dia);
             break;
     }
 

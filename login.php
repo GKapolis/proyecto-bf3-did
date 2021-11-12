@@ -1,19 +1,58 @@
 <?php
-include_once 'header.php';
+session_start();
 require_once 'include/errorhandling.php';
-?>
+require_once 'include/panels.inc.php';
+include_once 'include/dbh.inc.php';
 
-            <section class="bg-dark">
-                <h2 class="text-info">aqui podes ingresar</h2>
-                <form action="include/login.inc.php" method="post">
-                    <input type="text" name="username" placeholder="inserte nombre de usuario o correo registrado">
-                    <input type="password" name="contraseña" placeholder="inserte contraseña">
-                    <button type="submit" name="submit">Ingresar</button>
-                </form>
-                
-                <h2 class="text-info"><a class="nav-link" href="recover.php">perdiste tu contraseña ?</a></h2>
-            </section>
-
-<?php
-include_once 'footer.php'
+if (isset($_SESSION["username"])) {
+    header("location: admin.php");
+}
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="css/normalize.css">
+	<link rel="stylesheet" href="css/style.css">
+
+</head>
+<body>
+	<nav>
+		<a href="index.php"><img src="images/logo.png" alt="" class="nav__img-logo"></a>
+	</nav>
+
+	<div class="main-container">
+
+		<span class="main-container__encabezado">Ingrese nombre de usuario y contraseña para acceder...</span>
+
+		<div class="main-container__form-container">
+
+			<div class="flex-item div-candado">
+				<img src="Images/Padlock_perspective_matte_s.png" alt="" class="div-candado__img-candado">
+			</div>
+			
+			<div class="flex-item div-formulario">	
+				<form action="include/login.inc.php" method="post">
+
+					<label for="nombre">Nombre</label>
+					<input type="text" name="username"  placeholder="Ingrese su nombre" id="nombre">
+					
+					<label for="password">Contraseña</label>
+					<input type="password" name="contraseña"  placeholder="Ingrese su contraseña" id="password">
+					
+					<div class="flex-item form__botonera">
+						<input type="submit" name="submit" value="Ingresar" class="submit">
+						<span class="span-usuario"><a href="singup.php">Crear usuario</a></span>
+					</div>
+				
+				</form>
+			</div>
+
+		</div>
+		
+		<span><a href="recover.php">Olvidó su contraseña?</a></span>	
+	</div>	
+</body>
+</html>

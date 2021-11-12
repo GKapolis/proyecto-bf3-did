@@ -303,123 +303,26 @@ function borrarUser($conn,$username){
 
 }
 
-//  termina seccion de usuarios
+//  termina seccion de usuario
 //
-//          ____        ____
-//         /####\      /####\
-//         |####|      |####|
-//         |####|      |####|
-//         |####\______/####|
-//         |################|
-//         |################|
-//         |####/      \####|
-//         |####|      |####|
-//         |####|      |####|
-//         |####|      |####|
+//          _________
+//         /#########\ 
+//        /###########\
+//       /####/   \####\
+//      /####/      \##/
+//     |####/
+//     |####|        ______
+//     |####|      _/######\_
+//     |####|     |##########|
+//     |####|       \#####/
+//      \####\      /####/
+//       \####\____/####/
+//         \##########/
+//           \######/         
 //
 //
-// comienza seccion de Horarios
+// comienza seccion de grupos
 
-
-/*
- revisa la existencia del horario seleccionada
-*/
-function revisarExistenciaDelHorario($conn, $hora, $turno) {
-    $sql = "SELECT * FROM horarios where turnoHorarios = ? AND horaHorarios = ?"; 
-    $stmt = mysqli_stmt_init($conn);
-
-    if(!mysqli_stmt_prepare($stmt, $sql)){
-        header("location: ../test.php?error=CouldNotConnect");
-        exit();
-    }
-
-    mysqli_stmt_bind_param($stmt, "ii", $hora,$turno);
-    mysqli_stmt_execute($stmt);
-
-    $resultdata = mysqli_stmt_get_result($stmt);
-
-    if($row = mysqli_fetch_assoc($resultdata)){
-        return $row;
-    }
-    else {
-        $result = false;    
-        return $result;
-    }
-
-    mysqli_stmt_close($stmt);
-}
-/*
- inserta un horario a la base de datos 
- dos datos tipos times para hora inicial y final
- turno y hora utu son valores tipo int
-*/
-function crearHorarios($conn,$horainicial,$horafinal,$turno,$horautu){
-    $sql = "INSERT INTO horarios (inicioHorarios,terminaHorarios,turnoHorarios,horaHorarios) VALUES (?,?,?,?);"; 
-    $stmt = mysqli_stmt_init($conn);
-
-    if(!mysqli_stmt_prepare($stmt, $sql)){
-        header("location: ../test.php?error=CouldNotConnect");
-        exit();
-    }
-    
-    mysqli_stmt_bind_param($stmt, "ssii", $horainicial,$horafinal,$turno,$horautu);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-    header("location: ../test.php?error=userCreated");
-}
-/*
- actualiza los datos de un horario esta funcion pide dos datos tipos times para hora inicial y final
- turno y hora utu son valores tipo int
-*/
-function actualizarHorario($conn,$newhorainicial,$newhorafinal,$turno,$horautu){
-
-    $usurexits = revisarExistenciaDelHorario($conn, $turno,$horautu);
-
-    if ($usurexits === false) {
-        header("location: ../test.php?error=usernotfound");
-        exit();
-    }
-
-    $sql = "UPDATE horarios SET inicioHorarios= ? , terminaHorarios=?  WHERE idHorarios= ?"; 
-    $stmt = mysqli_stmt_init($conn);
-    
-    if(!mysqli_stmt_prepare($stmt, $sql)){
-        header("location: ../admin.php?error=CouldNotConnect");
-        exit();
-    }
-    $id = $usurexits["idHorarios"];
-    mysqli_stmt_bind_param($stmt, "ssi", $newhorainicial, $newhorafinal,$id);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-    header("location: ../test.php?error=userModfied");
-
-}
-/*
- borra un horario del sistema
-*/
-function borrarHorario($conn,$turno,$horautu){
-
-    $usurexits = revisarExistenciaDelHorario($conn, $turno,$horautu);
-
-    if ($usurexits === false) {
-        header("location: ../test.php?error=usernotfound");
-        exit();
-    }
-
-    $sql = "DELETE FROM horarios WHERE idHorarios= ?"; 
-    $stmt = mysqli_stmt_init($conn);
-    $id = $usurexits["idHorarios"];
-    if(!mysqli_stmt_prepare($stmt, $sql)){
-        header("location: ../test.php?error=CouldNotConnect");
-        exit();
-    }
-
-    mysqli_stmt_bind_param($stmt, "i", $id);
-    mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-    header("location: ../test.php?error=userDeleted");
-
-}
 
 
 //  termina seccion de grupos
@@ -448,7 +351,7 @@ function revisarExistenciaDelProfesorPormedioDeID($conn, $id) {
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt, $sql)){
-        header("location: ../admin.php?error=CouldNotConnect");
+        header("location: ../admin.php?error=CouldNotConnect&panel=profesores");
         exit();
     }
 
@@ -476,7 +379,7 @@ function revisarExistenciaDelProfesorPormedioDeNombre($conn, $Nombre) {
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt, $sql)){
-        header("location: ../admin.php?error=CouldNotConnect");
+        header("location: ../admin.php?error=CouldNotConnect&panel=profesores");
         exit();
     }
 
@@ -503,7 +406,7 @@ function crearProfesor($conn, $nombre, $apellido){
     $stmt = mysqli_stmt_init($conn);
 
     if(!mysqli_stmt_prepare($stmt, $sql)){
-        header("location: ../admin.php?error=CouldNotConnect");
+        header("location: ../admin.php?error=CouldNotConnect&panel=profesores");
         exit();
     }
 
@@ -512,7 +415,7 @@ function crearProfesor($conn, $nombre, $apellido){
     mysqli_stmt_bind_param($stmt, "ss", $nombre, $apellido);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
-    header("location: ../admin.php?error=userCreated");
+    header("location: ../admin.php?error=userCreated&panel=profesores");
 }
 
 /*
@@ -523,7 +426,7 @@ function actualizarProfesornombreOapellido($conn,$nuevonombre,$id,$cambio){
     $usurexits = revisarExistenciaDelProfesorPormedioDeID($conn, $id);
 
     if ($usurexits === false) {
-        header("location: ../test.php?error=usernotfound");
+        header("location: ../admin.php?error=usernotfound&panel=profesores");
         exit();
     }
 
@@ -531,14 +434,14 @@ function actualizarProfesornombreOapellido($conn,$nuevonombre,$id,$cambio){
     $stmt = mysqli_stmt_init($conn);
     
     if(!mysqli_stmt_prepare($stmt, $sql)){
-        header("location: ../test.php?error=CouldNotConnect");
+        header("location: ../admin.php?error=CouldNotConnect&panel=profesores");
         exit();
     }
 
     mysqli_stmt_bind_param($stmt, "si", $nuevonombre, $id);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
-    header("location: ../test.php?error=userModfied");
+    header("location: ../admin.php?error=userModfied&panel=profesores");
 
 }
 
@@ -550,7 +453,7 @@ function borrarProfesor($conn,$id){
     $usurexits = revisarExistenciaDelProfesorPormedioDeID($conn, $id);
 
     if ($usurexits === false) {
-        header("location: ../admin.php?error=usernotfound");
+        header("location: ../admin.php?error=usernotfound&panel=profesores");
         exit();
     }
 
@@ -558,14 +461,148 @@ function borrarProfesor($conn,$id){
     $stmt = mysqli_stmt_init($conn);
     
     if(!mysqli_stmt_prepare($stmt, $sql)){
-        header("location: ../admin.php?error=CouldNotConnect");
+        header("location: ../admin.php?error=CouldNotConnect&panel=profesores");
         exit();
     }
 
     mysqli_stmt_bind_param($stmt, "i", $id);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
-    header("location: ../admin.php?error=userDeleted");
+    header("location: ../admin.php?error=userDeleted&panel=profesores");
+
+}
+
+//  termina seccion de profesor
+//       _____         _____
+//      /#####\       /#####\
+//     |###|###|     |###|###|
+//     /###|###\     /###|###\
+//    |###/ |###|   |###| |###|
+//    |###| |###\   /###| |###|
+//    |###|  \###\ /###/  |###|
+//    |###|   \#######/   |###|
+//    |###|    \_###_/    |###|
+//    |###|               |###|
+//
+// comienza seccion de materias
+
+
+
+//  termina seccion de Materias
+//
+//          ____        ____
+//         /####\      /####\
+//         |####|      |####|
+//         |####|      |####|
+//         |####\______/####|
+//         |################|
+//         |################|
+//         |####/      \####|
+//         |####|      |####|
+//         |####|      |####|
+//         |####|      |####|
+//
+//
+// comienza seccion de Horarios
+
+
+/*
+ revisa la existencia del horario seleccionada
+*/
+function revisarExistenciaDelHorario($conn, $hora, $turno, $dia) {
+    $sql = "SELECT * FROM horarios where turnoHorarios = ? AND horaHorarios = ? AND diaHorarios = ?"; 
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: ../test.php?error=CouldNotConnect");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "iii", $hora, $turno, $dia);
+    mysqli_stmt_execute($stmt);
+
+    $resultdata = mysqli_stmt_get_result($stmt);
+
+    if($row = mysqli_fetch_assoc($resultdata)){
+        return $row;
+    }
+    else {
+        $result = false;    
+        return $result;
+    }
+
+    mysqli_stmt_close($stmt);
+}
+/*
+ inserta un horario a la base de datos 
+ dos datos tipos times para hora inicial y final
+ turno y hora utu son valores tipo int
+*/
+function crearHorarios($conn,$horainicial,$horafinal,$turno,$horautu,$dia){
+    $sql = "INSERT INTO horarios (inicioHorarios,terminaHorarios,turnoHorarios,horaHorarios,diaHorarios) VALUES (?,?,?,?,?);"; 
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: ../test.php?error=CouldNotConnect");
+        exit();
+    }
+    
+    mysqli_stmt_bind_param($stmt, "ssiii", $horainicial,$horafinal,$turno,$horautu,$dia);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ../test.php?error=userCreated");
+}
+/*
+ actualiza los datos de un horario esta funcion pide dos datos tipos times para hora inicial y final
+ turno y hora utu son valores tipo int
+*/
+function actualizarHorario($conn,$newhorainicial,$newhorafinal,$turno,$horautu,$dia){
+
+    $usurexits = revisarExistenciaDelHorario($conn, $turno,$horautu,$dia);
+
+    if ($usurexits === false) {
+        header("location: ../test.php?error=usernotfound");
+        exit();
+    }
+
+    $sql = "UPDATE horarios SET inicioHorarios= ? , terminaHorarios=?  WHERE idHorarios= ?"; 
+    $stmt = mysqli_stmt_init($conn);
+    
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: ../admin.php?error=CouldNotConnect");
+        exit();
+    }
+    $id = $usurexits["idHorarios"];
+    mysqli_stmt_bind_param($stmt, "ssi", $newhorainicial, $newhorafinal,$id);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ../test.php?error=userModfied");
+
+}
+/*
+ borra un horario del sistema
+*/
+function borrarHorario($conn,$turno,$horautu,$dia){
+
+    $usurexits = revisarExistenciaDelHorario($conn, $turno,$horautu,$dia);
+
+    if ($usurexits === false) {
+        header("location: ../test.php?error=usernotfound");
+        exit();
+    }
+
+    $sql = "DELETE FROM horarios WHERE idHorarios= ?"; 
+    $stmt = mysqli_stmt_init($conn);
+    $id = $usurexits["idHorarios"];
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: ../test.php?error=CouldNotConnect");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "i", $id);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ../test.php?error=userDeleted");
 
 }
 

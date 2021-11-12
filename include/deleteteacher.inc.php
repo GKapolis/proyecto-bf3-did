@@ -1,9 +1,8 @@
 <?php
 
-
-if(ISSET($_POST["submit"])) {
+if(ISSET($_GET["id"])) {
     
-    $id = $_POST["id"];
+    $id = $_GET["id"];
 
     require_once 'dbh.inc.php';
     require_once 'functions.php';
@@ -14,6 +13,5 @@ else {
     header("location: ../admin.php?panel=profesores");
     exit();
 }
-
 
 ?>

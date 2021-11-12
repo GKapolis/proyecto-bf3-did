@@ -1,0 +1,145 @@
+nav{
+
+	background-color: #000814;
+	height: 6vh;
+	display: flex;
+	align-items: center;
+}
+
+.nav__img-logo{
+
+	width: 40%;
+	height: 30%;
+	height: 100%;
+	
+}
+.nav-title{
+
+	color: #fff;
+	position: absolute;
+	right: 3%;
+
+}
+
+.banner{
+
+	position: relative;
+	display: flex;
+	align-items: center;
+
+}
+
+.banner__utu-image{
+
+	width: 100vw;
+}
+
+.banner__content{
+
+	display: inline-block;
+	position: absolute;
+	background-color: #fff;
+	top: 50%;
+	bottom: 50%;
+	transform: translate(0,-50%);
+	border-radius: 50%;
+	width: 20px;
+	height: 20px;
+	text-align: center;
+
+}
+
+.banner__right-arrow{
+
+	right: 20px;
+}
+
+.banner__left-arrow{
+
+	left: 20px;	
+}
+.banner__links{
+
+	position: relative;
+	top: 10%;
+	
+}
+
+.banner__title{
+
+	width: 60%;
+	height: 40%;
+	background-color: transparent;
+	text-align: left;
+	left: 5%;
+	border-radius: 0%;
+}
+
+h1,h2{
+
+	color: #fff;
+	margin: 5px;
+
+}
+
+.card-section{
+
+	position: absolute;
+	border: 1px solid #aaa;
+	width: 90%;
+	height: 65%;
+	left: 50%;
+	right: 50%;
+	transform: translate(-50%,-10%);
+	background-color: #fff;
+	display: flex;
+	flex-wrap: wrap;
+	border-bottom: none;
+	overflow-y: auto;
+
+}
+
+
+.card-container{
+
+	width: 40%;
+	height: 40%;
+	position: relative;
+	margin: 5%;
+	display: inline-block;
+}
+
+.card-link{
+
+	color: #000814;
+}
+
+p{
+
+	position: absolute;
+	font-weight: bold;
+}
+.asignature{
+
+	bottom: 20%;
+	left: 5%;
+	font-size: 120%;
+
+}
+.group{
+
+	bottom: -25%;
+	font-size: 250%;
+	left: 5%;
+
+}
+
+.schedules{
+
+	background-color: #001d3d;
+	color: #fff;
+	padding: 5px;
+	right: 5%;
+	bottom: -5%;
+
+}

@@ -12,19 +12,19 @@ if(ISSET($_POST["submit"])) {
 
     if (inputVacio($newdata) !== false) 
     {
-        header("location: ../test.php?error=emptyinput");
+        header("location: ../admin.php?error=emptyinput&panel=profesores&subpanel=modificar&id=".$id);
         exit();
     }
     if (nombreValido($newdata))
     {
-        header("location: ../test.php?error=nameNotValid");
+        header("location: ../admin.php?error=nameNotValid&panel=profesores&subpanel=modificar&id=".$id);
         exit();
     }
 
     actualizarProfesornombreOapellido($conn,$newdata,$id,$datatype);
 }
 else {
-    header("location: ../test.php");
+    header("location: ../admin.php?panel=profesores");
     exit();
 }
 

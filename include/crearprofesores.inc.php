@@ -11,29 +11,29 @@ if(ISSET($_POST["submit"])) {
 
     if (inputVacio($name) !== false) 
     {
-        header("location: ../admin.php?error=emptyinput");
+        header("location: ../admin.php?error=emptyinput&panel=profesores");
         exit();
     }
     if (nombreValido($name))
     {
-        header("location: ../admin.php?error=nameNotValid");
+        header("location: ../admin.php?error=nameNotValid&panel=profesores");
         exit();
     }
     if (inputVacio($surname) !== false) 
     {
-        header("location: ../admin.php?error=emptyinput");
+        header("location: ../admin.php?error=emptyinput&panel=profesores");
         exit();
     }
     if (nombreValido($surname))
     {
-        header("location: ../admin.php?error=nameNotValid");
+        header("location: ../admin.php?error=nameNotValid&panel=profesores");
         exit();
     }
 
     crearProfesor($conn,$name,$surname);
 }
 else {
-    header("location: ../admin.php");
+    header("location: ../admin.php?panel=profesores");
     exit();
 }
 
