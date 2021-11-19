@@ -61,7 +61,6 @@ function contraseñaNoIgual($clave, $contraseñarepeat){
 /*
  revisa que el campo no sea vacios
 */
-
 function inputVacio($Nombre) {
     if (empty($Nombre)) {
         $result = true;
@@ -72,6 +71,8 @@ function inputVacio($Nombre) {
     return $result;
 }
 
+
+// compara horarios para que la hora inicial sea mayor a la final
 function compararhorarios($horainicial,$horafinal) {
     if ($horainicial >= $horafinal) {
         $result = true;
@@ -81,6 +82,125 @@ function compararhorarios($horainicial,$horafinal) {
     }
     return $result;
 }
+
+//genera un array dado 3 elementos se usa para generar un array de los dias y turnos
+function arrayde3lementos($elemento1,$elemento2,$elemento3){
+
+    $dias = array();
+    if($elemento1 >= 1 && $elemento1 !=0) {
+        $dias['elemento1'] = $elemento1;
+    }
+    if($elemento2 >= 1 && $elemento2 !=0 && $elemento2 != $elemento1) {
+        $dias['elemento2'] = $elemento2;
+    }
+    if($elemento3 >= 1 && $elemento3 !=0 && $elemento3 != $elemento2 && $elemento3 != $elemento1) {
+        $dias['elemento3'] = $elemento3;
+    }
+    if (empty($dias)){
+        return false;
+    }
+    return $dias;
+
+};
+//revisa que no se dupliquen valores en un array y que si se dan tea manda error en el sistema NO SIRVE
+/*
+function buscarrepetidosenarray($array,$lugar){
+
+    for($i = 0;$i < count($array);$i++){
+        for($j = 0;$j < count($array);$j++){
+            if ($i !== $j){
+                if($array[$i] = $array[$j]){
+                    header($lugar);
+                    exit();
+                }
+            }
+        }
+    }
+}
+*/
+function removerceros($array){
+    $arraysinceros = array();
+    $notwantednumbers = array(-1,0);
+    $arraysinceros = array_diff($array,$notwantednumbers);
+    return $arraysinceros;
+}
+
+//hora treatment
+function horasarrayychequeo($horas1,$horas2,$horas3,$horas4,$horas5,$horas6,$horas7,$horas8,$horas9,$horas10,$horas11,$horas12){
+
+$horarios = array(array(),array(),array());
+
+$horasdia1 = array($horas1,$horas2,$horas3,$horas4);
+$horasdia1 = removerceros($horasdia1);
+if(empty($horasdia1) == false) {
+    $horasdia1 = array_unique($horasdia1);
+    $horarios[0] = array_replace($horarios[0],$horasdia1);
+}
+else {
+    unset($horarios[0]);
+}
+
+$horasdia2 = array($horas5,$horas6,$horas7,$horas8);
+$horasdia2 = removerceros($horasdia2);
+if(empty($horasdia2) == false) {
+    $horasdia2 = array_unique($horasdia2);
+    $horarios[1] = array_replace($horarios[1],$horasdia2);
+}
+else {
+    unset($horarios[1]);
+}
+
+$horasdia3 = array($horas9,$horas10,$horas11,$horas12);
+$horasdia3 = removerceros($horasdia3);
+if(empty($horasdia3) == false) {
+    $horasdia3 = array_unique($horasdia3);
+    $horarios[2] = array_replace($horarios[2],$horasdia3);
+}
+else {
+    unset($horarios[2]);
+}
+
+return $horarios;
+
+}
+
+//cambiado para trabajar con arrays
+function horasarrayychequeoV2($array1,$array2,$array3){
+
+    $horarios = array(array(),array(),array());
+    
+    
+    $array1 = removerceros($array1);
+    if(empty($array1) == false) {
+        $array1 = array_unique($array1);
+        $horarios[0] = array_replace($horarios[0],$array1);
+    }
+    else {
+        unset($horarios[0]);
+    }
+    
+    
+    $array2 = removerceros($array2);
+    if(empty($array2) == false) {
+        $array3 = array_unique($array2);
+        $horarios[1] = array_replace($horarios[1],$array2);
+    }
+    else {
+        unset($horarios[1]);
+    }
+    
+    $array3 = removerceros($array3);
+    if(empty($array3) == false) {
+        $array3 = array_unique($array3);
+        $horarios[2] = array_replace($horarios[2],$array3);
+    }
+    else {
+        unset($horarios[2]);
+    }
+    
+    return $horarios;
+    
+    }
 
 //  termina seccion de funciones comunes
 //
@@ -135,7 +255,7 @@ function actualizarUser($conn,$username,$newdata,$newdataType,$clave){
     $usurexits = revisarExistenciaDelUsuario($conn, $username, $username);
 
     if ($usurexits === false) {
-        header("location: ../admin.php?error=usernotfound");
+        header("location: ../admin.php?error=usernotfound&panel=user");
         exit();
     }
 
@@ -143,7 +263,7 @@ function actualizarUser($conn,$username,$newdata,$newdataType,$clave){
     $pwdverify = password_verify($clave, $pwdHashed);
 
     if ($pwdverify === false) {
-        header("location: ../admin.php?error=wronglogin");
+        header("location: ../admin.php?error=wronglogin&panel=user");
         exit();
     }
     else {
@@ -156,7 +276,7 @@ function actualizarUser($conn,$username,$newdata,$newdataType,$clave){
             case "CORREOusuarios":
                 if (correoValido($newdata))
                     {
-                        header("location: ../admin.php?error=emailNotValid");
+                        header("location: ../admin.php?error=emailNotValid&panel=user");
                         exit();
                     }
                 break;
@@ -166,14 +286,14 @@ function actualizarUser($conn,$username,$newdata,$newdataType,$clave){
         $stmt = mysqli_stmt_init($conn);
     
         if(!mysqli_stmt_prepare($stmt, $sql)){
-            header("location: ../admin.php?error=CouldNotConnect");
+            header("location: ../admin.php?error=CouldNotConnect&panel=user");
             exit();
         }
 
         mysqli_stmt_bind_param($stmt, "ss", $newdata, $username);
         mysqli_stmt_execute($stmt);
         mysqli_stmt_close($stmt);
-        header("location: ../admin.php?error=userModfied");
+        header("location: ../admin.php?error=userModfied&panel=user");
     }
 
 
@@ -228,6 +348,7 @@ function ingresarUser($conn, $username, $pwd) {
     else {
         session_start();
         $_SESSION["username"] = $usurexits["NOMBREREALusuarios"];
+        $_SESSION["id"] = $usurexits["NOMBREusuarios"];
         header("location: ../admin.php");
         exit();
     }
@@ -256,7 +377,11 @@ function recuperarcontraseña($conn, $username) {
     $digito2 = rand(0,9);
     $digito3 = rand(0,9);
     $digito4 = rand(0,9);
-    $clave = $digito1 . $digito2 . $digito3 . $digito4;
+    $digito5 = rand(0,9);
+    $digito6 = rand(0,9);
+    $digito7 = rand(0,9);
+    $digito8 = rand(0,9);
+    $clave = $digito1 . $digito2 . $digito3 . $digito4 . $digito5 . $digito6 . $digito7 . $digito8;
     $newpassword = password_hash($clave, PASSWORD_DEFAULT);
 
     mysqli_stmt_bind_param($stmt, "sss", $newpassword, $username, $username);
@@ -323,7 +448,128 @@ function borrarUser($conn,$username){
 //
 // comienza seccion de grupos
 
+/*
+ revisa que al grupo al se llama exista en el sistema
+*/
+function revisarExistenciaDelGrupo($conn, $groupname) 
+{
 
+    $sql = "SELECT * FROM grupo where nombreGrupo = ?"; 
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: ../admin.php?error=CouldNotConnect");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "s", $groupname);
+    mysqli_stmt_execute($stmt);
+
+    $resultdata = mysqli_stmt_get_result($stmt);
+
+    if($row = mysqli_fetch_assoc($resultdata)){
+        return $row;
+    }
+    else {
+        $result = false;    
+        return $result;
+    }
+
+    mysqli_stmt_close($stmt);
+
+}
+
+/*
+ crea un grupo en la base de datos
+*/
+function crearGroup($conn, $Nombre, $longname){
+    $sql = "INSERT INTO grupo (nombreGrupo, nombredescriptivoGrupo) VALUES (?, ?);"; 
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: ../admin.php?error=CouldNotConnect");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "ss", $Nombre, $longname);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ../admin.php?error=userCreated");
+}
+
+/*
+ actualiza los datos de un grupo (actualmente solo cambia el nombre descriptivo)
+*/
+function crearGrupoFirstTime($conn, $Nombre, $profesorID, $horarioID, $name, $fullname){
+    crearMateriasnotalldataknowinsideversion($conn, $Nombre);
+    crearGroup($conn,$name,$fullname);
+    $profesores = "profesores_idProfesores";
+    $grupo = "grupo_nombreGrupo";
+    if($profesorID !== 0){
+        actualizarMateriasinsideversion($conn, $Nombre,$profesores,$profesorID);
+    }
+    $idmateria = revisarExistenciaDeLaMateriasPorNombre($conn,$Nombre);
+    foreach($horarioID as $IDporHorario){
+        insertarhorariosymaterias($conn,$IDporHorario,$idmateria["idMaterias"]);
+    }
+    actualizarMateriasinsideversion($conn,$Nombre,$grupo,$name);
+
+
+    header("location: ../admin.php?error=userCreated&panel=grupos");
+}
+function grupomateria($conn,$nombre,$idmateria){
+
+}
+function actualizarGroupnombredescriptivo($conn,$Nombre,$change){
+
+    $usurexits = revisarExistenciaDelGrupo($conn, $Nombre);
+
+    if ($usurexits === false) {
+        header("location: ../admin.php?error=usernotfound");
+        exit();
+    }
+
+    $sql = "UPDATE grupo SET nombredescriptivoGrupo= ? WHERE nombreGrupo= ?"; 
+    $stmt = mysqli_stmt_init($conn);
+    
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: ../admin.php?error=CouldNotConnect");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "ss", $change, $username);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ../admin.php?error=userModfied");
+
+}
+
+/*
+ borra un grupo del sistema
+*/
+function borrarGroup($conn,$username){
+
+    $usurexits = revisarExistenciaDelGrupo($conn, $username);
+
+    if ($usurexits === false) {
+        header("location: ../admin.php?error=usernotfound");
+        exit();
+    }
+
+    $sql = "DELETE FROM grupo WHERE nombreGrupo= ?"; 
+    $stmt = mysqli_stmt_init($conn);
+    
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: ../admin.php?error=CouldNotConnect");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "s", $username);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ../admin.php?error=userDeleted");
+
+}
 
 //  termina seccion de grupos
 //
@@ -486,7 +732,292 @@ function borrarProfesor($conn,$id){
 //
 // comienza seccion de materias
 
+/*
+ revisa la existencia de la materia seleccionada
+*/
+function revisarExistenciaDeLaMateriasPorNombre($conn, $materia) {
+    $sql = "SELECT * FROM materias WHERE NombreMateria = ?"; 
+    $stmt = mysqli_stmt_init($conn);
 
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: ../admin.php?error=CouldNotConnect&panel=materias");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "s", $materia);
+    mysqli_stmt_execute($stmt);
+
+    $resultdata = mysqli_stmt_get_result($stmt);
+
+    if($row = mysqli_fetch_assoc($resultdata)){
+        return $row;
+    }
+    else {
+        $result = false;    
+        return $result;
+    }
+
+    mysqli_stmt_close($stmt);
+}
+function revisarExistenciaDeLaMateriasPorID($conn, $id) {
+    $sql = "SELECT * FROM materias WHERE idMaterias = ?"; 
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: ../admin.php?error=CouldNotConnect&panel=materias");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "i", $id);
+    mysqli_stmt_execute($stmt);
+
+    $resultdata = mysqli_stmt_get_result($stmt);
+
+    if($row = mysqli_fetch_assoc($resultdata)){
+        return $row;
+    }
+    else {
+        $result = false;    
+        return $result;
+    }
+
+    mysqli_stmt_close($stmt);
+}
+/*
+ inserta la materia a la base de datos con todos los datos
+*/
+function crearMateriascomplete($conn, $Nombre, $profesorID, $horarioID){
+
+    crearMateriasnotalldataknowinsideversion($conn, $Nombre);
+    $profesores = "profesores_idProfesores";
+    if($profesorID !== 0){
+        actualizarMateriasinsideversion($conn, $Nombre,$profesores,$profesorID);
+    }
+    $idmateria = revisarExistenciaDeLaMateriasPorNombre($conn,$Nombre);
+    foreach($horarioID as $IDporHorario){
+        insertarhorariosymaterias($conn,$IDporHorario,$idmateria["idMaterias"]);
+    }
+    header("location: ../admin.php?error=userCreated&panel=grupos");
+}
+/*
+ inserta la materia a la base de datos cuando no se sabe todos los datos todavia
+*/
+function crearMateriasnotalldataknow($conn, $Nombre){
+    
+    $sql = "INSERT INTO materias (NombreMateria) VALUES (?);"; 
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: ../admin.php?error=CouldNotConnect&panel=materias");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "s", $Nombre);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ../admin.php?error=userCreated&panel=materias");
+
+}
+function insertarhorariosymaterias($conn, $horarios, $materia){
+    $sql = "INSERT INTO materias_has_horarios (Materias_idMaterias, Horarios_idHorarios) VALUES (?,?);"; 
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: ../admin.php?error=CouldNotConnect&panel=grupos");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "ii",$materia , $horarios);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+}
+function borrarhorariosmaterias($conn, $materia){
+
+    $sql = "DELETE FROM materias_has_horarios WHERE Materias_idMaterias= ?"; 
+    $stmt = mysqli_stmt_init($conn);
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: ../admin.php?error=CouldNotConnect&panel=materias");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "i", $materia);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ../admin.php?error=userDeleted&panel=materias");
+}
+function crearMateriasnotalldataknowinsideversion($conn, $Nombre){
+    
+    $sql = "INSERT INTO materias (NombreMateria) VALUES (?);"; 
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: ../admin.php?error=CouldNotConnect&panel=materias");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "s", $Nombre);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+
+}
+/*
+ actualiza los datos de una materia
+*/
+function actualizarMaterias($conn,$id,$newname){
+
+    $usurexits = revisarExistenciaDeLaMateriasPorID($conn, $id);
+
+    if ($usurexits === false) {
+        header("location: ../admin.php?error=usernotfound&panel=materias");
+        exit();
+    }
+
+    $sql = "UPDATE materias SET NombreMateria= ? WHERE NombreMateria= ?"; 
+    $stmt = mysqli_stmt_init($conn);
+    
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: ../admin.php?error=CouldNotConnect&panel=materias");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "ss", $newname, $id);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ../admin.php?error=userModfied&panel=materias");
+
+}
+function actualizarMateriasinsideversion($conn,$name,$datatype,$newdata){
+
+    $usurexits = revisarExistenciaDeLaMateriasPorNombre($conn, $name);
+
+    if ($usurexits === false) {
+        header("location: ../admin.php?error=usernotfound&panel=grupos");
+        exit();
+    }
+
+    $sql = "UPDATE materias SET ".$datatype." = ? WHERE idMaterias= ?"; 
+    $stmt = mysqli_stmt_init($conn);
+    
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: ../admin.php?error=CouldNotConnect&panel=materias");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "ss", $newdata, $usurexits["idMaterias"]);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+
+}
+function actualizarMateriasinsideversionporID($conn,$id,$datatype,$newdata){
+
+    $usurexits = revisarExistenciaDeLaMateriasPorID($conn, $id);
+
+    if ($usurexits === false) {
+        header("location: ../admin.php?error=usernotfound&panel=grupos");
+        exit();
+    }
+
+    $sql = "UPDATE materias SET ".$datatype." = ? WHERE idMaterias= ?"; 
+    $stmt = mysqli_stmt_init($conn);
+    
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: ../admin.php?error=CouldNotConnect&panel=materias");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "si", $newdata, $usurexits["idMaterias"]);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+
+}
+/*
+ borra un profesor del sistema
+*/
+function borrarMaterias($conn,$id){
+
+    $usurexits = revisarExistenciaDeLaMateriasPorID($conn, $id);
+
+    if ($usurexits === false) {
+        header("location: ../admin.php?error=usernotfound&panel=materias");
+        exit();
+    }
+
+    $sql = "DELETE FROM materias WHERE NombreMateria= ?"; 
+    $stmt = mysqli_stmt_init($conn);
+    
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: ../admin.php?error=CouldNotConnect&panel=materias");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "i", $id);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ../admin.php?error=userDeleted&panel=materias");
+
+}
+function conseguiridsdehorarios($conn,$turnos,$dias,$horas){
+    $i = 0;
+    $j = 0;
+    $lj = 0;
+    $ids = array();
+    foreach ($dias as $d) {
+        if($d != 0) {
+            if ($lj+1 != count($turnos)){
+            $lj++;
+            }
+            for($j; $j < $lj; $j++){
+                // 0 1 2 3 / 4 5 6 7 / 8 9 10 11
+                for($ii = 0; $ii <= 3; $ii++){
+                    if($horas[($i+$ii)] != 0){
+                        $id = revisarExistenciaDelHorario($conn,$horas[$i+$ii],$turnos[$j],$d);
+                        $ids[]=$id["idHorarios"];
+                            
+                    }
+                    if ($ii == 3) {
+                        $i = $i+4;
+                    }
+                }
+                
+            }
+            
+        }
+    }
+    
+    return $ids;
+};
+function borrarhoras($conn, $materiaid){
+    $usurexits = revisarExistenciaDeLaMateriasPorID($conn, $materiaid);
+
+    if ($usurexits === false) {
+        header("location: ../admin.php?error=usernotfound&panel=materias");
+        exit();
+    }
+
+    $sql = "DELETE FROM materias_has_horarios WHERE Materias_idMaterias = ?"; 
+    $stmt = mysqli_stmt_init($conn);
+    
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: ../admin.php?error=CouldNotConnect&panel=materias");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "i", $materiaid);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ../admin.php?error=userDeleted&panel=materias");
+}
+function actualizarmateria($conn, $idmateria, $profesorID, $horarioID){
+    borrarhoras($conn,$idmateria);
+    $profesores = "profesores_idProfesores";
+    if($profesorID !== 0){
+        actualizarMateriasinsideversionporID($conn, $idmateria,$profesores,$profesorID);
+    }
+    foreach($horarioID as $IDporHorario){
+        insertarhorariosymaterias($conn,$IDporHorario,$idmateria);
+    }
+    header("location: ../admin.php?error=userCreated&panel=grupos");
+}
 
 //  termina seccion de Materias
 //

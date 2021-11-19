@@ -9,6 +9,8 @@ if(ISSET($_POST["submit"])) {
     require_once 'dbh.inc.php';
     require_once 'functions.php';
 
+    $nombregrupo = $_POST["grupo"];
+    $nombrelargogrupo = $_POST["fullgrupo"];
     $name = $_POST['name'];
     $profesor = $_POST['profesor'];
     $dia1 = $_POST['dia1'];
@@ -78,11 +80,13 @@ if($dia3 == 0) {
 
     $ids = conseguiridsdehorarios($conn,$turnos,$dias,$horas);
 
-    crearMateriascomplete($conn,$name,$profesor,$ids);
+    crearGrupoFirstTime($conn,$name,$profesor,$ids,$nombregrupo,$nombrelargogrupo);
+    
     
 }
 else {
-    header("location: ../admin.php?panel=grupos");
+    header("location: ../test2.php");
+    //header("location: ../admin.php?panel=grupos");
     exit();
 }
 

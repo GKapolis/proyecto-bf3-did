@@ -1,5 +1,6 @@
 <?php
 session_start();
+include_once "include/panels.inc.php";
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -33,20 +34,9 @@ session_start();
 		</div>	
 	</section>
 
-	<section class="card-section">
-
-		<!-- este div se copia entero cada vez que agregues una tarjeta -->
-		
-			<div class="card-container">
-				<a href="" class="card-link">
-					<img src="Images/tarjeta.svg" alt="" class="card-image">
-					<p class="asignature">Informática</p>
-					<p class="group">3BF</p>
-					<p class="schedules">Ver Horarios</p>
-				</a>
-			</div>
-			
-
-	</section>
+	<?php
+	listadegrupos($conn);
+	?>
+	
 </body>
 </html>

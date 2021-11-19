@@ -28,8 +28,18 @@ if(ISSET($_POST["submit"])) {
                 header("location: ../test.php?error=biggerA");
                 exit();
             }
-
-            crearHorarios($conn,$horainicial,$horafinal,$turno,$horautu, $dia);
+            $lunes = 1;
+            $martes = 2;
+            $miercoles = 3;
+            $jueves = 4;
+            $viernes = 5;
+            $sabado = 6;
+            crearHorarios($conn,$horainicial,$horafinal,$turno,$horautu, $lunes);
+            crearHorarios($conn,$horainicial,$horafinal,$turno,$horautu, $martes);
+            crearHorarios($conn,$horainicial,$horafinal,$turno,$horautu, $miercoles);
+            crearHorarios($conn,$horainicial,$horafinal,$turno,$horautu, $jueves);
+            crearHorarios($conn,$horainicial,$horafinal,$turno,$horautu, $viernes);
+            crearHorarios($conn,$horainicial,$horafinal,$turno,$horautu, $sabado);
             break;
         case 2:
             if (registroFormDatoVacio($horainicial,$horainicial,$turno,$horautu) !== false) 
@@ -37,8 +47,19 @@ if(ISSET($_POST["submit"])) {
                 header("location: ../test.php?error=emptyinput");
                 exit();
             }
-
-            actualizarHorario($conn,$horainicial,$horafinal,$turno,$horautu, $dia);
+            
+            $lunes = 1;
+            $martes = 2;
+            $miercoles = 3;
+            $jueves = 4;
+            $viernes = 5;
+            $sabado = 6;
+            actualizarHorario($conn,$horainicial,$horafinal,$turno,$horautu, $lunes);
+            actualizarHorario($conn,$horainicial,$horafinal,$turno,$horautu, $martes);
+            actualizarHorario($conn,$horainicial,$horafinal,$turno,$horautu, $miercoles);
+            actualizarHorario($conn,$horainicial,$horafinal,$turno,$horautu, $jueves);
+            actualizarHorario($conn,$horainicial,$horafinal,$turno,$horautu, $viernes);
+            actualizarHorario($conn,$horainicial,$horafinal,$turno,$horautu, $sabado);
             break;
         case 3:
             if (inputVacio($turno) !== false) 

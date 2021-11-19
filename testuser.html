@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form action="include/modifyuser.inc.php" method="post" id="profform2">
+        <input type="text" name="name" form="profform2">
+        <br>
+        <label for="t3" class="text-info">nuevo dato:</label>
+        <input type="text" name="new_data" id="t3" form="profform2">
+        <br>
+        <label for="t4" class="text-info">nuevo dato:</label>
+        <select name="data_type" id="t4" form="profform2">
+            <option value="CLAVEusuarios">Contraseña</option>
+            <option value="CORREOusuarios">Correo</option>
+        </select>
+        <br>
+        <label for="t5" class="text-info">su contraseña actual:</label>
+        <input type="text" name="contraseña" id="t5" form="profform2">
+        <br>
+        <button type="submit" name="submit" class="btn btn-secondary">Actualizar</button>
+    </form>
+</body>
+</html>

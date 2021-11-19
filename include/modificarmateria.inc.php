@@ -9,7 +9,7 @@ if(ISSET($_POST["submit"])) {
     require_once 'dbh.inc.php';
     require_once 'functions.php';
 
-    $name = $_POST['name'];
+    $name = $_POST['id'];
     $profesor = $_POST['profesor'];
     $dia1 = $_POST['dia1'];
     $dia2 = $_POST['dia2'];
@@ -78,7 +78,8 @@ if($dia3 == 0) {
 
     $ids = conseguiridsdehorarios($conn,$turnos,$dias,$horas);
 
-    crearMateriascomplete($conn,$name,$profesor,$ids);
+    
+    actualizarmateria($conn,$name,$profesor,$ids);
     
 }
 else {
