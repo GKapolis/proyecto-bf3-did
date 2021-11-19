@@ -1,6 +1,7 @@
 <?php
 session_start();
 include_once "include/panels.inc.php";
+include_once "include/dbh.inc.php";
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -34,9 +35,11 @@ include_once "include/panels.inc.php";
 		</div>	
 	</section>
 
+	<section class="card-section">
 	<?php
 	listadegrupos($conn);
 	?>
+	</section>
 	
 </body>
 </html>
