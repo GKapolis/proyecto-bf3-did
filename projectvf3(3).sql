@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-11-2021 a las 11:37:52
+-- Tiempo de generación: 23-11-2021 a las 21:15:14
 -- Versión del servidor: 10.4.20-MariaDB
 -- Versión de PHP: 8.0.8
 
@@ -24,25 +24,75 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `grupo`
+-- Estructura de tabla para la tabla `clases`
 --
 
-CREATE TABLE `grupo` (
-  `nombreGrupo` varchar(8) NOT NULL,
-  `nombredescriptivoGrupo` varchar(32) NOT NULL,
-  `Materias_idMaterias` int(11) DEFAULT NULL
+CREATE TABLE `clases` (
+  `idClase` int(8) NOT NULL,
+  `idGrupo` int(8) NOT NULL,
+  `idMateria` int(8) NOT NULL,
+  `idProfesor` int(8) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `clases`
+--
+
+INSERT INTO `clases` (`idClase`, `idGrupo`, `idMateria`, `idProfesor`) VALUES
+(1, 1, 1, 4),
+(2, 1, 3, NULL),
+(3, 3, 14, NULL),
+(4, 2, 5, 2),
+(5, 1, 2, 9),
+(6, 1, 7, 6),
+(7, 1, 4, NULL),
+(8, 2, 2, 4);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `grupo_has_materias`
+-- Estructura de tabla para la tabla `clase_has_horarios`
 --
 
-CREATE TABLE `grupo_has_materias` (
-  `grupo_nombreGrupo` varchar(8) NOT NULL,
-  `Materias_idMaterias` int(11) NOT NULL
+CREATE TABLE `clase_has_horarios` (
+  `idClase` int(8) NOT NULL,
+  `idHorario` int(8) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `clase_has_horarios`
+--
+
+INSERT INTO `clase_has_horarios` (`idClase`, `idHorario`) VALUES
+(2, 143),
+(2, 149),
+(2, 157),
+(5, 142),
+(5, 148),
+(1, 171),
+(1, 177);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `grupo`
+--
+
+CREATE TABLE `grupo` (
+  `idGrupo` int(11) NOT NULL,
+  `nombreGrupo` varchar(8) NOT NULL,
+  `nombredescriptivoGrupo` varchar(32) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `grupo`
+--
+
+INSERT INTO `grupo` (`idGrupo`, `nombreGrupo`, `nombredescriptivoGrupo`) VALUES
+(1, 'BF3', 'informatica'),
+(2, 'AF3', 'deporte'),
+(3, 'CD2', 'administracion'),
+(4, 'BC1', 'electronica');
 
 -- --------------------------------------------------------
 
@@ -331,27 +381,28 @@ INSERT INTO `horarios` (`idHorarios`, `inicioHorarios`, `terminaHorarios`, `turn
 
 CREATE TABLE `materias` (
   `idMaterias` int(11) NOT NULL,
-  `NombreMateria` varchar(45) NOT NULL,
-  `profesores_idProfesores` int(11) DEFAULT NULL
+  `NombreMateria` varchar(45) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `materias`
 --
 
-INSERT INTO `materias` (`idMaterias`, `NombreMateria`, `profesores_idProfesores`) VALUES
-(1, '3bf matematica', 4);
-
--- --------------------------------------------------------
-
---
--- Estructura de tabla para la tabla `materias_has_horarios`
---
-
-CREATE TABLE `materias_has_horarios` (
-  `Materias_idMaterias` int(11) NOT NULL,
-  `Horarios_idHorarios` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+INSERT INTO `materias` (`idMaterias`, `NombreMateria`) VALUES
+(14, 'Diseño Web'),
+(11, 'Educacion Fisica'),
+(7, 'Electronica'),
+(2, 'Español'),
+(10, 'Filosofia'),
+(9, 'Formacion Empresarial'),
+(8, 'Frances'),
+(12, 'Geometria'),
+(3, 'Ingles'),
+(5, 'Logica'),
+(1, 'Matematica'),
+(6, 'Metodo Discreto'),
+(4, 'Programacion'),
+(13, 'Sociologia');
 
 -- --------------------------------------------------------
 
@@ -363,21 +414,24 @@ CREATE TABLE `profesores` (
   `idProfesores` int(11) NOT NULL,
   `nombreProfesores` varchar(45) NOT NULL,
   `apellidoProfesores` varchar(45) NOT NULL,
-  `asisteProfesores` tinyint(4) NOT NULL DEFAULT 1
+  `asisteProfesores` tinyint(4) NOT NULL DEFAULT 1,
+  `fecha_baja` timestamp(4) NULL DEFAULT NULL,
+  `fecha_alta` timestamp(4) NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `profesores`
 --
 
-INSERT INTO `profesores` (`idProfesores`, `nombreProfesores`, `apellidoProfesores`, `asisteProfesores`) VALUES
-(1, 'gonzalo', 'marquez', 1),
-(2, 'felipe', 'castro', 1),
-(4, 'johnny', 'melavo', 1),
-(6, 'felipe', 'newman', 1),
-(9, 'Pedro', 'Alvez', 1),
-(11, 'sett', 'navar', 1),
-(14, 'larry', 'mortadela', 1);
+INSERT INTO `profesores` (`idProfesores`, `nombreProfesores`, `apellidoProfesores`, `asisteProfesores`, `fecha_baja`, `fecha_alta`) VALUES
+(1, 'gonzalo', 'marquez', 1, NULL, NULL),
+(2, 'felipe', 'castro', 1, NULL, NULL),
+(4, 'johnny', 'melavo', 0, NULL, NULL),
+(6, 'felipe', 'newman', 1, NULL, NULL),
+(9, 'Pedro', 'Alvez', 1, NULL, NULL),
+(11, 'sett', 'navar', 1, '2021-11-20 13:20:23.4206', NULL),
+(14, 'larry', 'mortadela', 1, '2021-11-21 15:29:34.0000', NULL),
+(15, 'kilombo', 'duarte', 1, '2021-11-21 15:31:33.0000', NULL);
 
 -- --------------------------------------------------------
 
@@ -398,27 +452,34 @@ CREATE TABLE `usuarios` (
 --
 
 INSERT INTO `usuarios` (`NOMBREusuarios`, `NOMBREREALusuarios`, `CORREOusuarios`, `CLAVEusuarios`, `create_time`) VALUES
-('gka', 'luka', 'asociadogamer@hotmail.com', '$2y$10$dJWUkW1PncgxJWIuHammbO/8x5L.c.j2bpqtgM5ubKQ88YIqRp55a', '2021-10-24 07:50:01');
+('gka', 'luka', 'asociadogamer@hotmail.com', '$2y$10$Alo4wHGDl7DSwv1tPMFq3uC3V7zAdlG1ZXED1AMgwiiZ/JlVeZi8W', '2021-10-24 07:50:01');
 
 --
 -- Índices para tablas volcadas
 --
 
 --
+-- Indices de la tabla `clases`
+--
+ALTER TABLE `clases`
+  ADD PRIMARY KEY (`idClase`),
+  ADD KEY `fk_Grupos` (`idGrupo`),
+  ADD KEY `fk_Materias` (`idMateria`),
+  ADD KEY `fk_Profesor` (`idProfesor`);
+
+--
+-- Indices de la tabla `clase_has_horarios`
+--
+ALTER TABLE `clase_has_horarios`
+  ADD KEY `fk_clase` (`idClase`),
+  ADD KEY `fk_materias_horarios` (`idHorario`);
+
+--
 -- Indices de la tabla `grupo`
 --
 ALTER TABLE `grupo`
-  ADD PRIMARY KEY (`nombreGrupo`),
-  ADD UNIQUE KEY `nombre_UNIQUE` (`nombreGrupo`),
-  ADD KEY `fk_grupo_Materias1_idx` (`Materias_idMaterias`);
-
---
--- Indices de la tabla `grupo_has_materias`
---
-ALTER TABLE `grupo_has_materias`
-  ADD PRIMARY KEY (`grupo_nombreGrupo`,`Materias_idMaterias`),
-  ADD KEY `fk_grupo_has_Materias_Materias1_idx` (`Materias_idMaterias`),
-  ADD KEY `fk_grupo_has_Materias_grupo1_idx` (`grupo_nombreGrupo`);
+  ADD PRIMARY KEY (`idGrupo`),
+  ADD KEY `idGrupo` (`idGrupo`,`nombreGrupo`);
 
 --
 -- Indices de la tabla `horarios`
@@ -432,15 +493,7 @@ ALTER TABLE `horarios`
 --
 ALTER TABLE `materias`
   ADD PRIMARY KEY (`idMaterias`),
-  ADD KEY `fk_Materias_profesores1_idx` (`profesores_idProfesores`);
-
---
--- Indices de la tabla `materias_has_horarios`
---
-ALTER TABLE `materias_has_horarios`
-  ADD PRIMARY KEY (`Materias_idMaterias`,`Horarios_idHorarios`),
-  ADD KEY `fk_Materias_has_Horarios_Horarios1_idx` (`Horarios_idHorarios`),
-  ADD KEY `fk_Materias_has_Horarios_Materias1_idx` (`Materias_idMaterias`);
+  ADD KEY `NombreMateria` (`NombreMateria`);
 
 --
 -- Indices de la tabla `profesores`
@@ -462,6 +515,18 @@ ALTER TABLE `usuarios`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `clases`
+--
+ALTER TABLE `clases`
+  MODIFY `idClase` int(8) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT de la tabla `grupo`
+--
+ALTER TABLE `grupo`
+  MODIFY `idGrupo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT de la tabla `horarios`
 --
 ALTER TABLE `horarios`
@@ -471,43 +536,32 @@ ALTER TABLE `horarios`
 -- AUTO_INCREMENT de la tabla `materias`
 --
 ALTER TABLE `materias`
-  MODIFY `idMaterias` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idMaterias` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT de la tabla `profesores`
 --
 ALTER TABLE `profesores`
-  MODIFY `idProfesores` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `idProfesores` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Restricciones para tablas volcadas
 --
 
 --
--- Filtros para la tabla `grupo`
+-- Filtros para la tabla `clases`
 --
-ALTER TABLE `grupo`
-  ADD CONSTRAINT `fk_Materias` FOREIGN KEY (`Materias_idMaterias`) REFERENCES `materias` (`idMaterias`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `clases`
+  ADD CONSTRAINT `fk_Grupos` FOREIGN KEY (`idGrupo`) REFERENCES `grupo` (`idGrupo`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Materias` FOREIGN KEY (`idMateria`) REFERENCES `materias` (`idMaterias`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Profesor` FOREIGN KEY (`idProfesor`) REFERENCES `profesores` (`idProfesores`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
--- Filtros para la tabla `grupo_has_materias`
+-- Filtros para la tabla `clase_has_horarios`
 --
-ALTER TABLE `grupo_has_materias`
-  ADD CONSTRAINT `fk_grupo_has_Materias_Materias1` FOREIGN KEY (`Materias_idMaterias`) REFERENCES `materias` (`idMaterias`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_grupo_has_Materias_grupo1` FOREIGN KEY (`grupo_nombreGrupo`) REFERENCES `grupo` (`nombreGrupo`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `materias`
---
-ALTER TABLE `materias`
-  ADD CONSTRAINT `fk_Materias_profesores1` FOREIGN KEY (`profesores_idProfesores`) REFERENCES `profesores` (`idProfesores`) ON DELETE NO ACTION ON UPDATE NO ACTION;
-
---
--- Filtros para la tabla `materias_has_horarios`
---
-ALTER TABLE `materias_has_horarios`
-  ADD CONSTRAINT `fk_Materias_has_Horarios_Horarios1` FOREIGN KEY (`Horarios_idHorarios`) REFERENCES `horarios` (`idHorarios`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_Materias_has_Horarios_Materias1` FOREIGN KEY (`Materias_idMaterias`) REFERENCES `materias` (`idMaterias`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+ALTER TABLE `clase_has_horarios`
+  ADD CONSTRAINT `fk_clase` FOREIGN KEY (`idClase`) REFERENCES `clases` (`idClase`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_materias_horarios` FOREIGN KEY (`idHorario`) REFERENCES `horarios` (`idHorarios`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

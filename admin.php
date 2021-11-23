@@ -46,8 +46,15 @@ else {
 				</span>
 
 				<span class="aside__span flex-container">
-					<a href="admin.php?panel=grupos" class="links">CLASES</a>
+					<a href="admin.php?panel=materias" class="links">MATERIAS</a>
 				</span>
+				
+				<span class="aside__span flex-container">
+					<a href="admin.php?panel=grupos" class="links">GRUPOS</a>
+				</span>
+
+				
+
 			</aside>			
 		</div>
 
@@ -93,8 +100,56 @@ if (isset($_GET["panel"])){
             break;
 
         case "grupos" :
+<<<<<<< Updated upstream
             
          break;
+=======
+            if (isset($_GET['subpanel'])){
+                switch($_GET['subpanel']){
+                }
+            }
+			
+            creategrupoformulario();
+            groupslistadmin($conn);
+
+        break;
+		case "clases":
+            if (isset($_GET['subpanel'])){
+                switch($_GET['subpanel']){
+
+                }
+            }
+			createclase($conn,$_GET['idGrupo']);
+		break;
+		case "materias":
+            if (isset($_GET['subpanel'])){
+                switch($_GET['subpanel']){
+                    case "modificar":
+                        modifymateriaform($_GET['id']);
+                        break;
+                }
+            }
+
+			createmateriaformulario();
+			materiaslistadmin($conn);
+		break;
+		
+		case "materiaenclase":
+            if (isset($_GET['subpanel'])){
+                switch($_GET['subpanel']){
+					case "profesor":
+						updateclassform($conn,$_GET["idGrupo"],$_GET["idMateria"]);
+						break;
+					case "horario":
+						editmateriahorario($conn,$_GET["idMateria"],$_GET["idGrupo"]);
+						break;
+                }
+            }
+
+		break;
+
+
+>>>>>>> Stashed changes
     }
     
 
