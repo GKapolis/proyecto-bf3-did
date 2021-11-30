@@ -1,0 +1,59 @@
+
+.flex-container{
+
+	display: flex;
+	align-items: center;
+}
+
+.col{
+
+	flex-direction: column;
+}
+
+
+
+section{
+
+	position: absolute;
+	top: 5%;
+	left: 25%;
+	height: 90vh;
+	width: 70%;
+	margin: 10px;
+}
+.section__form-title{
+
+	background-color: #000b3b;
+}
+p{
+
+	color: #fff;
+	padding: 10px;
+	font-weight: bold;
+	font-family: sans-serif;
+}
+
+.form__div{
+
+	width: 40%;
+	padding: 5px;
+	margin: 10px auto;
+	justify-content: space-between;
+
+}
+
+article{
+	
+	border-right: 1px solid #aaa;
+	border-left: 1px solid #aaa;
+	border-bottom: 1px solid #aaa;
+	margin: 5px;
+	padding-bottom: 10px;
+	
+}
+
+
+
+
+
+

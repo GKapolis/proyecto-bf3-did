@@ -7,14 +7,24 @@ include_once "include/dbh.inc.php";
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+	<link rel="stylesheet" href="css/tabla.css">
+	<link rel="stylesheet" href="css/nav.css">
+	<link rel="stylesheet" href="css/normalize.css">
 </head>
 <body>
+
+
+            <nav class="nav">
+                        
+                <a href="index.php" class="links nav-logo-link"><img src="images/logo.png" alt="" class="nav__image"></a>
+                        
+            </nav>
+
     <?php
     if (isset($_GET["tabla"])){
-        drawtable($conn,$_GET["tabla"]);
+        drawtable3($conn,$_GET["tabla"]);
     }
     ?>
 </body>

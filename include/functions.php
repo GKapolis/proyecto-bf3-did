@@ -72,11 +72,9 @@ function inputVacio($Nombre) {
     return $result;
 }
 
-<<<<<<< Updated upstream
-=======
 
 // compara horarios para que la hora inicial no sea mayor a la final
->>>>>>> Stashed changes
+
 function compararhorarios($horainicial,$horafinal) {
     if ($horainicial >= $horafinal) {
         $result = true;
@@ -87,8 +85,7 @@ function compararhorarios($horainicial,$horafinal) {
     return $result;
 }
 
-<<<<<<< Updated upstream
-=======
+
 //genera un array dado 3 elementos se usa para generar un array de los dias y turnos
 function arrayde3lementos($elemento1,$elemento2,$elemento3){
 
@@ -117,7 +114,7 @@ function removerceros($array){
 }
 
 
->>>>>>> Stashed changes
+
 //  termina seccion de funciones comunes
 //
 //
@@ -264,6 +261,7 @@ function ingresarUser($conn, $username, $pwd) {
     else {
         session_start();
         $_SESSION["username"] = $usurexits["NOMBREREALusuarios"];
+        $_SESSION["id"] = $usurexits["NOMBREusuarios"];
         header("location: ../admin.php");
         exit();
     }
@@ -359,9 +357,6 @@ function borrarUser($conn,$username){
 // comienza seccion de grupos
 
 
-<<<<<<< Updated upstream
-=======
-}
 
 /*
  revisa que al grupo al se llama exista en el sistema pero lo hace por medio de su ID
@@ -459,6 +454,34 @@ function actualizarGroupnombredescriptivo($conn,$Nombre,$change){
 
 }
 
+function revisarExistenciaDelGrupo($conn,$name){
+
+
+    $sql = "SELECT * FROM grupo WHERE nombreGrupo= ?"; 
+    $stmt = mysqli_stmt_init($conn);
+    
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: ../admin.php?error=CouldNotConnect");
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "s", $name);
+    mysqli_stmt_execute($stmt);
+    $resultdata = mysqli_stmt_get_result($stmt);
+
+    if($row = mysqli_fetch_assoc($resultdata)){
+        return $row;
+    }
+    else {
+        $result = false;    
+        return $result;
+    }
+    mysqli_stmt_close($stmt);
+    header("location: ../admin.php?error=userModfied");
+
+
+}
+
 /*
  borra un grupo del sistema
 */
@@ -481,11 +504,20 @@ function borrarGroup($conn,$username){
 
     mysqli_stmt_bind_param($stmt, "s", $username);
     mysqli_stmt_execute($stmt);
+
+    $resultdata = mysqli_stmt_get_result($stmt);
+
+    if($row = mysqli_fetch_assoc($resultdata)){
+        return $row;
+    }
+    else {
+        $result = false;    
+        return $result;
+    }
+
     mysqli_stmt_close($stmt);
-    header("location: ../admin.php?error=userDeleted");
 
 }
->>>>>>> Stashed changes
 
 //  termina seccion de grupos
 //
@@ -648,9 +680,7 @@ function borrarProfesor($conn,$id){
 //
 // comienza seccion de materias
 
-<<<<<<< Updated upstream
 
-=======
 /*
  revisa la existencia de la materia seleccionada
 */
@@ -883,7 +913,7 @@ function actualizarmateria($conn, $idmateria,$idgrupo, $horarioID){
     }
     header("location: ../admin.php?error=userCreated&panel=clases&idGrupo=".$idgrupo);
 }
->>>>>>> Stashed changes
+
 
 //  termina seccion de Materias
 //

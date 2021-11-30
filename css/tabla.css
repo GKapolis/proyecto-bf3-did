@@ -1,0 +1,37 @@
+table{
+
+	border-collapse: collapse;
+	border: 2px solid #003566;
+	margin: 5% auto;
+
+}
+
+th,td{
+
+	border: 1px solid #aaa;
+	padding: 10px;	
+}
+th{
+
+	background-color: #003566;
+	color: #fff;
+}
+
+td{
+
+	color: #003566;
+	font-weight: bold;
+	border-color: #003566;
+}
+caption{
+
+	color: #fff;
+	background-color: #001d3d;
+	font-size: 20px;
+	text-align: left;
+	padding: 10px 20px 10px;
+}
+.hora{
+
+	font-size: 24px;
+}

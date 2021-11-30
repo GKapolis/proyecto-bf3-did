@@ -1,0 +1,161 @@
+nav{
+	background: black;
+}
+.nav__img-logo{
+
+	width: 40%;
+	height: 40%;
+}
+
+.main-container{
+
+	border: 1px #003566 solid;
+	border-radius: 10px 10px 10px 10px;
+	display: flex;
+	flex-direction: column;
+	margin: 10% 10%;
+
+
+}
+
+.main-container__encabezado{
+
+	display: inline;
+}
+
+.main-container__form-container{
+
+	display: flex;
+	justify-content: space-evenly;
+	flex-wrap: wrap-reverse;
+	align-items: center;
+
+
+}
+
+.flex-item{
+
+	min-width: 150px;
+
+}
+
+.div-candado{
+
+	text-align: center;
+
+}
+
+.div-formulario{
+
+	width: 60%;
+}
+
+form{
+	
+	display: flex;
+	height: 200px;
+	align-items: center;
+	flex-direction: column;
+	justify-content: space-around;
+
+}
+input{
+
+	margin-bottom: 20px;
+	width: 80%;
+	border: 1px solid #505050;
+
+
+}
+
+span{
+
+	text-align: center;
+	padding: 10px 0;
+	
+}
+
+.div-candado__img-candado{
+
+	width: 50%;
+	height: 50%;
+
+}
+label{
+
+	color: #003566;
+}
+
+.form__botonera{
+	
+	display: flex;
+	flex-wrap: wrap;
+	border: 1px solid #505050;
+	width: 80%;
+}
+
+.submit{
+
+	background-color: #fff;
+	width: 50%;
+	height: 100%;
+
+}
+
+.span-usuario{
+
+	width: 50%;
+	text-align: center;
+	height: 50%;
+}
+
+.submit:hover{
+
+	background-color: #eee;
+
+}
+
+.span-usuario:hover{
+
+	background-color: #eee;
+}
+
+input:focus{
+
+	background-color: #eee;
+}
+
+@media only screen and (max-width: 400px){
+
+	.nav__img-logo{
+
+		width: 100%;
+		height: 100%;
+	}
+	.main-container{
+
+		margin: 5% 5%;
+	}
+	.div-candado{
+
+		margin-top: 40px;
+	}
+	
+	#nombre{
+
+		width: 100%;
+	}
+
+	#password{
+
+		width: 100%;
+	}
+
+	.form__botonera{
+
+		width: 100%;
+	}
+}
+
+
+

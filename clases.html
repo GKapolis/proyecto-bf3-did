@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Clases</title>
+	<link rel="stylesheet" href="normalize.css">
+	<link rel="stylesheet" href="aside_y_nav.css">
+	<link rel="stylesheet" href="clases.css">
+	
+</head>
+<body>
+
+<!----------------------ASIDE--------------------------------------------->
+
+	<aside class="aside"> 
+		<h1 class="aside__title">ADSCRIPCIÓN</h1>
+				
+		<img src="images/usuario.png" class="aside__user-image">
+						
+		<p class="aside__username">Daniela</P>
+		
+		<div class="edit-user-container">
+			<span class="aside__span">
+				<a href="" class="links edit-user__text">EDITAR USUARIO</a>
+ 			</span>
+ 			<img src="images/configurar.png" class="edit-user__icon">
+ 		</div>
+		
+		<span class="aside__span">
+			<a href="" class="links">CLASES</a>
+		</span>
+	</aside>			
+			
+	<nav class="nav">		
+		<a href="" class="links nav-logo-link"><img src="images/logo.png" alt="" class="nav__image"></a>
+			
+		<div class="nav__text">
+			<p class="nav__welcome">BIENVENIDA Daniela</p>
+			<a href="" class="links nav__exit">salir</a>
+		</div>		
+	</nav>
+
+				
+	<section>
+		
+				
+		<article>	
+			<header class="section__form-title">
+				<p>Nuevo Grupo</p>
+			</header>
+			
+			<form method="post" action="" class="flex-container col">
+					
+				<div class="form__div flex-container">
+					<label for="nombre">Nombre</label>
+					<input type="text" required placeholder="ej. 3BF" id="nombre" name="nombre">
+				</div>
+						
+				<div class="form__div flex-container">
+					<label for="descripcion">Descripción</label>
+					<input type="text" required placeholder="ej. Deportes" name="descripcion" id="descripcion">
+				</div>
+						
+				<div class="form__div flex-container">
+					<label for="tipo">Tipo</label>
+					<select name="tipo" id="tipo">
+						<option value="bachillerato">Bachillerato</option>
+					</select>
+				</div>
+						
+				<div class="form__div flex-container">
+					<label>Grado</label>
+						
+					<div>
+						<input type="radio" name="grado" id="primer-grado">
+						<label for="primer-grado">1°</label>
+					</div>
+							
+					<div>
+						<input type="radio" name="grado" id="segundo-grado">
+						<label for="segundo-grado">2°</label>
+					</div>
+						
+					<div>	
+						<input type="radio" name="grado" id="tercer-grado">
+						<label for="tercer-grado">3°</label>
+					</div>
+				</div>
+								
+				<input type="submit" name="confirmar" value="Confirmar Grupo">
+
+			</form>
+		</article>
+			
+		<article>
+			
+			<header class="section__form-title">
+				<p>Nueva Materia</p>
+			</header>	
+							 
+			    <form method="post" action="" class="asignature flex-container col"> 
+					<div>
+						<label for="materia">Nombre</label>
+						<input type="text" name="materia" id="materia" required placeholder="ej. Matemáticas">
+					</div>
+
+					<div>
+						<label for="profesor">Profesor</label>
+						<select name="profesor" id="profesor">
+	<!--AQUI VAN ETIQUETAS OPTION CON EL NOMBRE SACADO DE LA B.D.-->
+							<option value="Juan Pérez">Juan Pérez</option>
+						</select>
+					</div>
+
+					<div>
+					<label for="dia-1">Día 1</label>
+						<select name="dia'1" id="dia-1">
+							<option value="no">No</option>
+							<option value="lunes">Lunes</option>
+							<option value="martes">Martes</option>
+							<option value="miercoles">Miércoles</option>
+							<option value="jueves">Jueves</option>
+							<option value="viernes">Viernes</option>
+							<option value="sabado">Sábado</option>
+						</select>
+							
+						<label>Horas</label>
+							
+						<select name="hora-1" id="hora-1">
+							<option value="no">No</option>
+							<option value="1">1°</option>
+							<option value="2">2°</option>
+							<option value="3">3°</option>
+							<option value="4">4°</option>
+							<option value="5">5°</option>
+							<option value="6">6°</option>
+							<option value="7">7°</option>
+							<option value="8">8°</option>
+						</select>
+							
+						<select name="hora-1" id="hora-1">
+							<option value="no">No</option>
+							<option value="1">1°</option>
+							<option value="2">2°</option>
+							<option value="3">3°</option>
+							<option value="4">4°</option>
+							<option value="5">5°</option>
+							<option value="6">6°</option>
+							<option value="7">7°</option>
+							<option value="8">8°</option>
+						</select>
+								
+						<select name="hora-1" id="hora-1">
+							<option value="no">No</option>
+							<option value="1">1°</option>
+							<option value="2">2°</option>
+							<option value="3">3°</option>
+							<option value="4">4°</option>
+							<option value="5">5°</option>
+							<option value="6">6°</option>
+							<option value="7">7°</option>
+							<option value="8">8°</option>
+						</select>
+							
+						<select name="hora-1" id="hora-1">
+							<option value="no">No</option>
+							<option value="1">1°</option>
+							<option value="2">2°</option>
+							<option value="3">3°</option>
+							<option value="4">4°</option>
+							<option value="5">5°</option>
+							<option value="6">6°</option>
+							<option value="7">7°</option>
+							<option value="8">8°</option>
+						</select>
+					</div>
+
+					<div>
+						<label for="dia-2">Día 2</label>
+						<select name="dia'1" id="dia-1">
+							<option value="no">No</option>
+							<option value="lunes">Lunes</option>
+							<option value="martes">Martes</option>
+							<option value="miercoles">Miércoles</option>
+							<option value="jueves">Jueves</option>
+							<option value="viernes">Viernes</option>
+							<option value="sabado">Sábado</option>
+						</select>
+							
+						<label>Horas</label>
+						<select name="hora-1" id="hora-1">
+							<option value="no">No</option>
+							<option value="1">1°</option>
+							<option value="2">2°</option>
+							<option value="3">3°</option>
+							<option value="4">4°</option>
+							<option value="5">5°</option>
+							<option value="6">6°</option>
+							<option value="7">7°</option>
+							<option value="8">8°</option>
+						</select>
+							
+						<select name="hora-1" id="hora-1">
+							<option value="no">No</option>
+							<option value="1">1°</option>
+							<option value="2">2°</option>
+							<option value="3">3°</option>
+							<option value="4">4°</option>
+							<option value="5">5°</option>
+							<option value="6">6°</option>
+							<option value="7">7°</option>
+							<option value="8">8°</option>
+						</select>
+							
+						<select name="hora-1" id="hora-1">
+							<option value="no">No</option>
+							<option value="1">1°</option>
+							<option value="2">2°</option>
+							<option value="3">3°</option>
+							<option value="4">4°</option>
+							<option value="5">5°</option>
+							<option value="6">6°</option>
+							<option value="7">7°</option>
+							<option value="8">8°</option>
+						</select>
+						
+						<select name="hora-1" id="hora-1">
+							<option value="no">No</option>
+							<option value="1">1°</option>
+							<option value="2">2°</option>
+							<option value="3">3°</option>
+							<option value="4">4°</option>
+							<option value="5">5°</option>
+							<option value="6">6°</option>
+							<option value="7">7°</option>
+							<option value="8">8°</option>
+						</select>
+					</div>
+
+					<div>
+						<label for="dia-3">Día 3</label>
+						<select name="dia'1" id="dia-1">
+							<option value="no">No</option>
+							<option value="lunes">Lunes</option>
+							<option value="martes">Martes</option>
+							<option value="miercoles">Miércoles</option>
+							<option value="jueves">Jueves</option>
+							<option value="viernes">Viernes</option>
+							<option value="sabado">Sábado</option>
+						</select>
+							
+						<label>Horas</label>
+						<select name="hora-1" id="hora-1">
+							<option value="no">No</option>
+							<option value="1">1°</option>
+							<option value="2">2°</option>
+							<option value="3">3°</option>
+							<option value="4">4°</option>
+							<option value="5">5°</option>
+							<option value="6">6°</option>
+							<option value="7">7°</option>
+							<option value="8">8°</option>
+						</select>
+							
+						<select name="hora-1" id="hora-1">
+							<option value="no">No</option>
+							<option value="1">1°</option>
+							<option value="2">2°</option>
+							<option value="3">3°</option>
+							<option value="4">4°</option>
+							<option value="5">5°</option>
+							<option value="6">6°</option>
+							<option value="7">7°</option>
+							<option value="8">8°</option>
+						</select>
+							
+						<select name="hora-1" id="hora-1">
+							<option value="no">No</option>
+							<option value="1">1°</option>
+							<option value="2">2°</option>
+							<option value="3">3°</option>
+							<option value="4">4°</option>
+							<option value="5">5°</option>
+							<option value="6">6°</option>
+							<option value="7">7°</option>
+							<option value="8">8°</option>	
+						</select>
+								
+						<select name="hora-1" id="hora-1">
+							<option value="no">No</option>
+							<option value="1">1°</option>
+							<option value="2">2°</option>
+							<option value="3">3°</option>
+							<option value="4">4°</option>
+							<option value="5">5°</option>
+							<option value="6">6°</option>
+							<option value="7">7°</option>
+							<option value="8">8°</option>
+						</select>
+					</div>
+					
+					<input type="submit" name="agregar-materia" value="Añadir Materia">
+
+				</form>
+			
+		</article>	
+	</section>
+						
+</body>
+</html>

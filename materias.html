@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Materias</title>
+	<link rel="stylesheet" href="normalize.css">
+	<link rel="stylesheet" href="materias.css">
+	<link rel="stylesheet" href="nav.css">
+	<link rel="stylesheet" href="aside.css">
+</head>
+<body>
+
+	<nav class="nav">
+				
+		<a href="" class="links nav-logo-link"><img src="images/logo.png" alt="" class="nav__image"></a>
+			
+		<div class="nav__text">
+			<p class="nav__welcome">BIENVENIDA Daniela</p>
+			<a href="" class="links nav__exit">salir</a>
+		</div>	
+			
+	</nav>
+
+	<aside class="aside"> 
+		<h1 class="aside__title">ADSCRIPCIÓN</h1>
+		
+		
+		<div class="user-image-container">		
+			<img src="images/usuario.png" class="aside__user-image">	
+		</div>		
+	
+		<p class="aside__username">Daniela</P>
+
+		<div class="edit-user-container">
+			<span class="aside__span">
+				<a href="" class="links edit-user__text">EDITAR USUARIO</a>
+ 			</span>
+ 			<img src="images/configurar.png" class="edit-user__icon">
+ 		</div>
+		
+		<span class="aside__span">
+			<a href="" class="links">PROFESORES</a>
+		</span>
+
+		<span class="aside__span">
+			<a href="" class="links">MATERIAS</a>
+		</span>
+
+		<span class="aside__span">
+			<a href="" class="links">CLASES</a>
+		</span>
+	</aside>		
+			
+	<section class="main-section flex-container col">
+			
+	 	<article>
+
+	 		<p class="titles">Añadir Materia</p>
+		
+			<form action="" class="form-container__form flex-container col">
+				
+				<div class="inputs flex-container">
+					<label for="nombre">Materia:</label>
+					<select name="materia" id="">
+						<option value="Matemáticas">Matemáticas</option>
+					</select>
+				</div>
+
+				<div class="inputs flex-container">
+					<label for="nombre">Profesor:</label>
+					<select name="materia" id="">
+						<option value="Diego Rodríguez">Diego Rodríguez</option>
+					</select>
+				</div>
+					
+			<input type="submit" value="Añadir" class="form__send">
+			
+		</form>
+		</article>
+
+
+		<article class="asignatures-list">
+			<p class="titles">Lista de materias</p>
+
+			
+<!-- DIV CLASS DEPLOYABLE CREA UN DESPLEGABLE -->
+			<div class="deployable">
+				<p class="deployable__title">Sistemas Operativos</p>
+				<div class="deployed">
+					
+					<div class="deployed-content">
+						<p class="deployed-text">Profesor: Dante Palombo</p>
+					</div>
+					<div class="deployed-content">
+						<a href="" class="deployed-link">Editar</a>
+						<img src="Images/editar.png" alt="" class="deployed__icon">	
+					</div>
+				</div>
+			</div>
+<!-- --------------------------------------------------------- -->
+			<div class="deployable">
+				<p class="deployable__title">Matemáticas</p>
+				<div class="deployed">
+					
+					<div class="deployed-content">
+						<p class="deployed-text">Profesor: Diego Rodríguez</p>
+					</div>
+					<div class="deployed-content">
+						<a href="" class="deployed-link">Editar</a>
+						<img src="Images/editar.png" alt="" class="deployed__icon">	
+					</div>
+				</div>
+			</div>
+		</article>
+	</section>
+			
+</body>
+</html>

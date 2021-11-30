@@ -1,0 +1,131 @@
+.flex-container{
+
+	display: flex;
+}
+.col{
+
+	flex-direction: column;
+}
+
+.main-container{
+
+	position: absolute;
+	top: 5%;
+	left: 25%;
+
+}
+
+.main-section{
+
+	position: absolute;
+	top: 8%;
+	left: 27%;
+	width: 70vw;
+	height: 80vh;
+	background-color: #fff;
+
+	border: 1px solid #aaa;
+	box-shadow: -1px 1px #ccc;
+	margin: 10px auto;
+ 
+
+
+}
+
+h1{
+
+	padding: 30px 30px 5px 30px;
+	font-size: 20px;
+}
+
+
+.titles{
+
+	padding-left: 10px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	background-color: #001d3d;
+	color: #fff;
+	margin-top: 0;
+	font-size: 24px;
+	font-weight: bold;	
+}
+
+.inputs{
+
+	justify-content: space-evenly;
+	margin: 5px 0;
+	
+}
+
+label{
+
+	width: 60px;
+	height: 20px;
+	margin-left: 20px;
+	font-weight: bolder;
+}
+
+.inputs__entry{
+
+	width: 70%;
+}
+
+.form__send{
+
+	width: 25%;
+	background-color: #001d3d;
+	color: #fff;
+	margin: 5px auto;
+	font-weight: bolder;
+	font-size: 20px;
+	padding: 5px;
+
+}
+
+.section__table{
+
+	height: 50%;
+	overflow: auto;
+
+
+}
+
+table{
+
+	margin: 5px 0 5px 10px;
+}
+table, th, td{
+
+	text-align: center;
+	border-right: 1px solid #aaa;
+	border-collapse: collapse;
+
+}
+th{
+
+	border-bottom: 1px solid #aaa;
+}
+.teacher-table__icon{
+
+	width: 5%;
+	height: 5%;
+}
+
+th, td{
+    
+    width: 20%;
+}
+
+.table-link{
+
+ color: blue !important; 
+
+
+
+}
+
+
+
+
+

@@ -20,57 +20,54 @@ else {
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Adscripción</title>
 	<link rel="stylesheet" href="css/normalize.css">
-	<link rel="stylesheet" href="css/adscripcion.css">
+	<link rel="stylesheet" href="css/grupos.css">
+	<link rel="stylesheet" href="css/nav.css">
+	<link rel="stylesheet" href="css/materias.css">
+	<link rel="stylesheet" href="css/aside.css">
 </head>
 <body>
 
-	<div class="main-container flex-container">
+	
+<nav class="nav">
+				
+				<a href="index.php" class="links nav-logo-link"><img src="images/logo.png" alt="" class="nav__image"></a>
+					
+				<div class="nav__text">
+					<p class="nav__welcome">BIENVENIDO/A <?php echo $_SESSION["username"]; ?></p>
+					<a href="include/logout.inc.php" class="links nav__exit">salir</a>
+				</div>	
+					
+			</nav>
 		
-		<div class="main-container__aside">
-			<aside class="flex-container col"> 
+			<aside class="aside"> 
 				<h1 class="aside__title">ADSCRIPCIÓN</h1>
 				
-				<div class="aside__user-image-container flex-container">
-					<a href="admin.php?panel=user" ><img src="images/usuario.png" alt="" class="user-image-container__image"></a>
-				</div>	
 				
-				<p class="aside__username"><?php echo $_SESSION["username"]; ?></P>
+				<div class="user-image-container">		
+					<img src="images/usuario.png" class="aside__user-image">	
+				</div>		
 			
-				<span class="aside__span flex-container">
-					<a href="admin.php?panel=user" class="links edit-user__text">EDITAR USUARIO</a>
-					<img src="images/configurar.png" alt="" class="edit-user__icon">
- 				</span>
-
-				<span class="aside__span flex-container">
+				<p class="aside__username"><?php echo $_SESSION["username"]; ?></P>
+		
+				<div class="edit-user-container">
+					<span class="aside__span">
+						<a href="admin.php?panel=user" class="links edit-user__text">EDITAR USUARIO</a>
+					 </span>
+					 <img src="images/configurar.png" class="edit-user__icon">
+				 </div>
+				
+				<span class="aside__span">
 					<a href="admin.php?panel=profesores" class="links">PROFESORES</a>
 				</span>
-
-				<span class="aside__span flex-container">
+		
+				<span class="aside__span">
 					<a href="admin.php?panel=materias" class="links">MATERIAS</a>
 				</span>
-				
-				<span class="aside__span flex-container">
-					<a href="admin.php?panel=grupos" class="links">GRUPOS</a>
+		
+				<span class="aside__span">
+					<a href="admin.php?panel=grupos" class="links">CLASES</a>
 				</span>
-
-				
-
-			</aside>			
-		</div>
-
-		
-		
-		<div class="main-container__main-content">
-			
-			<nav class="main-content__nav flex-container">
-				
-				<img src="images/logo.png" alt="" class="nav__image">
-				<div class="nav__text flex-container">
-					<p class="nav__welcome">BIENVENIDO/A <?php echo $_SESSION["username"] ?></p>
-					<a href="include/logout.inc.php" class="nav__exit">salir</a>
-				</div>	
-			
-			</nav>
+			</aside>	
 
 <?php
 
@@ -96,14 +93,12 @@ if (isset($_GET["panel"])){
         break;
 
         case "user":
-            modifyuserpanel($_SESSION["username"]);
+            modifyuserpane2($_SESSION["username"]);
             break;
 
         case "grupos" :
-<<<<<<< Updated upstream
-            
-         break;
-=======
+
+
             if (isset($_GET['subpanel'])){
                 switch($_GET['subpanel']){
                 }
@@ -111,6 +106,7 @@ if (isset($_GET["panel"])){
 			
             creategrupoformulario();
             groupslistadmin($conn);
+			
 
         break;
 		case "clases":
@@ -120,7 +116,7 @@ if (isset($_GET["panel"])){
                 }
             }
 			createclase($conn,$_GET['idGrupo']);
-		break;
+			break;
 		case "materias":
             if (isset($_GET['subpanel'])){
                 switch($_GET['subpanel']){
@@ -138,7 +134,7 @@ if (isset($_GET["panel"])){
             if (isset($_GET['subpanel'])){
                 switch($_GET['subpanel']){
 					case "profesor":
-						updateclassform($conn,$_GET["idGrupo"],$_GET["idMateria"]);
+						updateclassform($conn,$_GET["idMateria"],$_GET["idGrupo"]);
 						break;
 					case "horario":
 						editmateriahorario($conn,$_GET["idMateria"],$_GET["idGrupo"]);
@@ -149,7 +145,7 @@ if (isset($_GET["panel"])){
 		break;
 
 
->>>>>>> Stashed changes
+
     }
     
 

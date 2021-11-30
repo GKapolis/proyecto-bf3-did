@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Grupos</title>
+	<link rel="stylesheet" href="normalize.css">
+	<link rel="stylesheet" href="grupos.css">
+	<link rel="stylesheet" href="nav.css">
+	<link rel="stylesheet" href="aside.css">
+</head>
+<body>
+
+	<nav class="nav">
+				
+		<a href="" class="links nav-logo-link"><img src="images/logo.png" alt="" class="nav__image"></a>
+			
+		<div class="nav__text">
+			<p class="nav__welcome">BIENVENIDA Daniela</p>
+			<a href="" class="links nav__exit">salir</a>
+		</div>	
+			
+	</nav>
+
+	<aside class="aside"> 
+		<h1 class="aside__title">ADSCRIPCIÓN</h1>
+		
+		
+		<div class="user-image-container">		
+			<img src="images/usuario.png" class="aside__user-image">	
+		</div>		
+	
+		<p class="aside__username">Daniela</P>
+
+		<div class="edit-user-container">
+			<span class="aside__span">
+				<a href="" class="links edit-user__text">EDITAR USUARIO</a>
+ 			</span>
+ 			<img src="images/configurar.png" class="edit-user__icon">
+ 		</div>
+		
+		<span class="aside__span">
+			<a href="" class="links">PROFESORES</a>
+		</span>
+
+		<span class="aside__span">
+			<a href="" class="links">MATERIAS</a>
+		</span>
+
+		<span class="aside__span">
+			<a href="" class="links">CLASES</a>
+		</span>
+	</aside>		
+	
+	
+	
+		
+			
+	<section class="main-section flex-container col">
+			
+	 	<article>
+
+	 		<p class="titles">NUEVO GRUPO</p>
+		
+			<form action="" class="form-container__form flex-container col">
+				
+				<div class="inputs flex-container">
+					<label for="nombre">Nombre:</label>
+					<input type="text" name="nombre" required class="inputs__entry"
+					placeholder="ej: 3°BF">
+				</div>
+				
+				<div class="inputs flex-container">			
+					<label for="descriptivo" class="label-description">Nombre Descriptivo:</label>
+					<input type="text" name="descriptivo" required class="inputs__entry" placeholder="ej: Informática" >
+				</div>
+				
+			<input type="submit" value="Confirmar grupo" class="form__send">
+			
+		</form>
+		</article>
+
+
+		<article class="group-list">
+			<p class="titles">Lista de grupos</p>
+
+			<table>
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Nombre</th>
+						<th>Nombre Descriptivo</th>
+						<th></th>
+					</tr>
+				</thead>	
+				
+				<tr>
+					<td>1</td>
+					<td>3°BF</td>
+					<td>Informática</td>
+					<td>
+						<a href="" class="table-link">Editar</a>
+						<img src="Images/editar.png" alt="" class="group-table__icon">	
+					</td>
+				</tr>
+			</table>
+		</article>
+	</section>
+			
+</body>
+</html>

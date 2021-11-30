@@ -1,0 +1,33 @@
+.nav{
+
+	height: 5vh;
+	background-color: #000814;
+	justify-content: space-between;
+	display: flex;
+
+}
+
+.nav__text{
+
+	margin-right: 5%;
+	display: flex;
+	align-items: center;
+}
+
+.nav__welcome{
+
+	color: #fff;
+	margin: 10px;
+
+}
+.nav__exit{
+
+	font-size: 24px;
+	padding-right: 15px;
+
+}
+
+.nav__exit:visited{
+
+	color: #fff;
+}

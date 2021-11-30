@@ -1,5 +1,7 @@
 <?php
 session_start();
+include_once "include/panels.inc.php";
+include_once "include/dbh.inc.php";
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -8,12 +10,13 @@ session_start();
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Pagina Princial</title>
 	<link rel="stylesheet" href="css/normalize.css">
-	<link rel="stylesheet" href="bedelia.css">
+	<link rel="stylesheet" href="css/bedelia.css">
+	<link rel="stylesheet" href="css/nav.css">
 </head>
 <body>
-	<nav>
+	<nav class="nav">
 		<img src="images/logo.png" alt="" class="nav__img-logo">
-		<h1 class="nav-title"><a href="login.php">BEDELIA</a></h1>
+		<a href="login.php" class="links nav__exit">BEDELIA</a>
 	</nav>
 	
 	<section class="banner">
@@ -35,17 +38,9 @@ session_start();
 
 	<section class="card-section">
 
-		<!-- este div se copia entero cada vez que agregues una tarjeta -->
-		
-			<div class="card-container">
-				<a href="" class="card-link">
-					<img src="Images/tarjeta.svg" alt="" class="card-image">
-					<p class="asignature">Informática</p>
-					<p class="group">3BF</p>
-					<p class="schedules">Ver Horarios</p>
-				</a>
-			</div>
-			
+		<?php 
+		listadegrupos($conn);
+		?>
 
 	</section>
 </body>

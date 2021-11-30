@@ -1,25 +1,5 @@
-nav{
 
-	background-color: #000814;
-	height: 6vh;
-	display: flex;
-	align-items: center;
-}
 
-.nav__img-logo{
-
-	width: 40%;
-	height: 30%;
-	height: 100%;
-	
-}
-.nav-title{
-
-	color: #fff;
-	position: absolute;
-	right: 3%;
-
-}
 
 .banner{
 
@@ -114,7 +94,7 @@ h1,h2{
 	color: #000814;
 }
 
-p{
+.paragraph{
 
 	position: absolute;
 	font-weight: bold;

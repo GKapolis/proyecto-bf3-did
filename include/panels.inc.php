@@ -1,6 +1,4 @@
 <?php
-<<<<<<< Updated upstream
-=======
 include_once "functions.php";
 
 
@@ -39,6 +37,7 @@ function listadegrupos($conn){
 
     mysqli_stmt_execute($stmt);
 
+
     $resultdata = mysqli_stmt_get_result($stmt);
     if(mysqli_num_rows($resultdata) > 0) {
         while($row = mysqli_fetch_assoc($resultdata)){
@@ -48,9 +47,9 @@ function listadegrupos($conn){
 			<div class=\"card-container\">
 				<a href=\"tables.php?tabla=".$row["idGrupo"]."\" class=\"card-link\">
 					<img src=\"Images/tarjeta.svg\" alt=\"\" class=\"card-image\">
-					<p class=\"asignature\">".$row["nombredescriptivoGrupo"]."</p>
-					<p class=\"group\">".$row["nombreGrupo"]."</p>
-					<p class=\"schedules\">Ver Horarios</p>
+					<p class=\"asignature paragraph\">".ucfirst($row['nombredescriptivoGrupo'])."</p>
+					<p class=\"group paragraph\">".strtoupper($row['nombreGrupo'])."</p>
+					<p class=\"schedules paragraph\">Ver Horarios</p>
 				</a>
 			</div>
             ";
@@ -100,10 +99,6 @@ function drawtable($conn,$grupo){
             
     mysqli_stmt_close($stmt);
 
-    $horasids = array();
-
-    $horas = array();
-
     for($i = 0 ; $i < count($ids) ; $i++){
 
         $materiaexistance = revisarExistenciaDeLaMateriasPorID($conn,$materias[$i]);
@@ -120,58 +115,269 @@ function drawtable($conn,$grupo){
         echo "<h2>".$materiaexistance['NombreMateria']."</h2>".
         "<p>Profesor: ".$profesorexiste['nombreProfesores']." ".$profesorexiste['apellidoProfesores']." ".getasistencia($profesorexiste['asisteProfesores'])." </p><br>";
         writehorarios($conn,$materias[$i],$grupo);
-        $horasids[] = gethorarios($conn,$materias[$i],$grupo);
     }
-    foreach($horasids as $h) {
-        if($h){
-            foreach ($h as $k){
-                $horas[] = revisarExistenciaDelHorarioID($conn,$k);
-            }
+}
+
+
+// drawtable 2
+//
+//
+// segunda version de mostrar los datos al usuario ahora con sorting para que se ordene en orden de materias
+function drawtable2($conn,$grupo){
+
+    $ids2 = idsortingfortablesandlists($conn,$grupo);
+
+    $ids2 = array_unique($ids2);
+
+    $ids = array();
+
+    $materias = array();
+    $profesores = array();
+    
+
+    foreach ($ids2 as $v){
+        $ids[] = getclases($conn,$grupo,$v);
+    }
+
+    foreach ($ids as $key => $value){
+        foreach($ids[$key]["materias"] as $v){
+            $materias[] = $v;
+        }
+        foreach($ids[$key]["profesores"] as $v){
+            $profesores[] = $v;
         }
     }
-    /*echo "<table class=\"teacher-list__teacher-table\">
-            <thead>
-                <tr>
+    
+    for($i = 0 ; $i < count($ids2) ; $i++){
+
+        $materiaexistance = revisarExistenciaDeLaMateriasPorID($conn,$materias[$i]);
+
+        if($profesores[$i] != 0){
+            $profesorexiste = revisarExistenciaDelProfesorPormedioDeID($conn,$profesores[$i]);
+            
+        }
+        else {
+            $profesorexiste['nombreProfesores']= " ";
+            $profesorexiste['apellidoProfesores']= " ";
+            $profesorexiste['asisteProfesores'] = -1;
+        }
+        echo "<h2>".$materiaexistance['NombreMateria']."</h2>".
+        "<p>Profesor: ".ucfirst($profesorexiste['nombreProfesores'])." ".ucfirst($profesorexiste['apellidoProfesores'])." ".getasistencia($profesorexiste['asisteProfesores'])." </p><br>";
+        writehorarios($conn,$materias[$i],$grupo);
+        $horasids[] = gethorarios($conn,$materias[$i],$grupo);
+    }
+    
+
+}
+
+function idsortingfortablesandlists($conn,$grupo){
+    //sortings de IDS
+
+        $ids = array();
+
+        $ids2 = array();
+    
+        $ids3 = array();
+    
+        $horasids = array();
+    
+        $horasids2 = array();
+    
+        $ids = array();
+        
+        $sql = "SELECT idClase FROM clases WHERE idGrupo = ?"; 
+        $stmt = mysqli_stmt_init($conn);
+                
+        if(!mysqli_stmt_prepare($stmt, $sql)){
+            header("location: index.php?error=wentwrong&panel=grupos&idGrupo=".$grupo);
+            exit();
+        }
+    
+                
+        mysqli_stmt_bind_param($stmt, "i", $grupo);
+        mysqli_stmt_execute($stmt);
+                
+        $resultdata = mysqli_stmt_get_result($stmt);
+        if(mysqli_num_rows($resultdata) > 0) {
+            while($row = mysqli_fetch_assoc($resultdata)){
+                $ids[] = $row['idClase'];
+            }
+                
+            }
+            else {
+                echo "<h1>no hay datos pertinentes en el sistema</h1>";
+                exit();
+            }
+                
+        mysqli_stmt_close($stmt);
+    
+    
+        foreach ($ids as $id){
+            $horasids[] = gethorariosporIDclase($conn,$id,$grupo);
+        }
+    
+        foreach($horasids as $key => $value) {
+            if(!$value) {
+                unset($horasids[$key]);
+            }
+        }
+    
+    
+        foreach($horasids as $key => $value) {
+            foreach($horasids[$key] as $v){
+                $horasids2[] = $v;
+            }
+        }
+    
+        asort($horasids2);
+    
+    
+        foreach ($horasids2 as $id){
+            $ids2[] = getclaseIDhora($conn,$id,$grupo);
+        }
+    
+        foreach($ids2 as $key => $value) {
+            foreach($ids2[$key] as $v){
+                $ids3[] = $v;
+            }
+        }
+    
+        $ids = array_diff($ids,$ids3); 
+    
+        $ids2 = array_merge($ids3,$ids);
+    
+
+        return $ids2;
+    
+    // TERMINA EL SORTING DE IDS
+
+}
+
+
+// drawtable 3
+//
+//
+// tercera version y con suerte final de mostrar los datos al usuario ahora 
+// con sorting para que se ordene en orden de materias y ademas muestre como tabla
+function drawtable3($conn,$grupo){
+    $ids2 = idsortingfortablesandlists($conn,$grupo);
+    $index = 0;
+
+    $nombregrupo = revisarExistenciaDelGrupoID($conn,$grupo);
+
+    
+
+    echo "<table>
+            <caption>".strtoupper($nombregrupo["nombreGrupo"])." ".ucfirst($nombregrupo["nombredescriptivoGrupo"])."</caption>
+            <thead class=\"table-head\">
+                
+                    <th></th>
                     <th>Lunes</th>
                     <th>Martes</th>
                     <th>Miercoles</th>
                     <th>Jueves</th>
                     <th>Viernes</th>
                     <th>Sabado</th>
-                </tr>
-            </thead>";*/
-    $index = 0;
-    $day = 0;
-    $hora45 = 0;
-    /*while($index < count($horas)){
-        if($day <= 6){
-            $day++;
-            if($hora45 <= 9){
-                $hora45++;
-                if(($horas[$index]["diaHorarios"] == $day)&&($horas[$index]["horaHorarios"] == $hora45)) {
-                    
-            /*echo "<tr class=\"teacher-table__rows\">";
-            echo "<td>".$row['idProfesores']."</td>";
-            echo "<td>".$row['nombreProfesores']."</td>";
-            echo "<td>".$row['apellidoProfesores']."</td>";
-            echo "<td colspan=\"1\"><a>".$row['asisteProfesores']."</a> ".modifylink($row['idProfesores'])." 
-            <img src=\"Images/editar.png\" alt=\"\" class=\"teacher-table__icon\">
-             ".deletelink($row['idProfesores'],($row['nombreProfesores']." ".$row['apellidoProfesores']))."
-             <img src=\"Images/error.png\" alt=\"\"class=\"teacher-table__icon\"> </td>";
-            echo "</tr>";*//*
-                }
-                else{
+                
+            </thead>";
+            if(count($ids2) > 0){
 
+                for($hora = 1 ; $hora < 10; $hora++){
+                    echo "<tr>";
+                    echo "<td>".$hora."</td>";
+                    for($day = 1 ; $day < 7; $day++){
+                        if($table = buildtable($conn,$day,$hora,$ids2[$index],$grupo)){
+                            $index++;
+                            echo "<td>".$table."</td>";
+                        }
+                        else{
+                            echo "<td></td>";
+                        }
+                    }
+                    echo "</tr>";
                 }
+
             }
             else{
-                $hora45 = 0;
+                echo "<h1> no hay datos de materias</h1>";
+            }
+}
+
+function buildtable($conn,$day,$hour,$classid,$grupo){
+    for($i = 1 ; $i <= 5 ; $i++){
+        if($result = revisarExistenciaDelHorario($conn,$hour,$i,$day)){
+            if ($result2 = compararhorarioscontablaclase($conn,$result["idHorarios"],$classid,$grupo)){
+                $result2 = revisarExistenciaDeLaMateriasPorID($conn,$result2[0]);
+                return $result2["NombreMateria"];
             }
         }
-        else {
-            $day = 0;
+    }
+    return false;
+}
+
+function compararhorarioscontablaclase($conn,$result,$classid,$grupo){
+
+    
+
+    $sql = "SELECT * FROM clase_has_horarios WHERE idClase = ? AND idHorario = ?"; 
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: index.php?error=wentwrong&panel=grupos&idGrupo=".$grupo);
+        exit();
+    }
+            
+    mysqli_stmt_bind_param($stmt, "ii", $classid, $result);
+    mysqli_stmt_execute($stmt);
+            
+    $resultdata = mysqli_stmt_get_result($stmt);
+    if(mysqli_num_rows($resultdata) <= 0) {
+        $result = false;
+    }
+    else{
+        $result = getclases($conn,$grupo,$classid);
+        $result = $result["materias"];
+    }
+
+    mysqli_stmt_close($stmt);
+
+    return $result;
+}
+
+function getclases($conn,$grupo,$clase){
+
+    $materias = array();
+    $profesores = array();
+
+    $sql = "SELECT * FROM clases WHERE idClase = ?"; 
+    $stmt = mysqli_stmt_init($conn);
+            
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: index.php?error=wentwrong&panel=grupos&idGrupo=".$grupo);
+        exit();
+    }
+            
+    mysqli_stmt_bind_param($stmt, "i", $clase);
+    mysqli_stmt_execute($stmt);
+            
+    $resultdata = mysqli_stmt_get_result($stmt);
+    if(mysqli_num_rows($resultdata) > 0) {
+        while($row = mysqli_fetch_assoc($resultdata)){
+            $materias[] = $row['idMateria'];
+            if($row['idProfesor']){
+                $profesores[] = $row['idProfesor'];
+            }
+            else{
+                $profesores[] = 0;
+            }
         }
-    }*/
+    }
+    mysqli_stmt_close($stmt);
+
+    $ids = array();
+    $ids['profesores'] = $profesores;
+    $ids['materias'] = $materias;
+    return $ids;
 }
 
 function getasistencia($asiste){
@@ -190,7 +396,6 @@ function getasistencia($asiste){
     return $hilo;
 }
 
->>>>>>> Stashed changes
 
 //  comienzan los paneles para mostar el debido contenido al usuario
 //
@@ -244,7 +449,7 @@ function deleteteacher($id,$nombre) {
 
 //genera un link para modificar un profesor
 function modifylink($id) {
-    $modificar = "<a class=\"text-info\" href=\"admin.php?panel=profesores&subpanel=modificar&id=".$id."\">modificar</a>";
+    $modificar = "<a class=\"table-link\" href=\"admin.php?panel=profesores&subpanel=modificar&id=".$id."\">modificar</a>";
     return $modificar;
 }
 
@@ -253,7 +458,7 @@ function deletelink($id/*,$nombre*/) {
     //este link lleva a una confirmacion
     //$borrar = "<a class=\"text-info\" href=\"admin.php?panel=profesores&subpanel=borrar&id=".$id."&nombre=".$nombre."\">borrar</a>";
     //este otro link elimina directamente al profesor sin pedir confirmacion
-    $borrar = "<a class=\"text-info\" href=\"include\deleteteacher.inc.php?id=".$id."\">borrar</a>";
+    $borrar = "<a class=\"table-link\" href=\"include\deleteteacher.inc.php?id=".$id."\">borrar</a>";
     return $borrar;
 }
 
@@ -262,7 +467,7 @@ function createteacherformexample() {
     
     echo "
     <section class=\"main-section flex-container col\">
-				
+        <article>			
 				 	<p class=\"titles\">Añadir Profesor</p>
 			
 				<form action=\"include/crearprofesores.inc.php\" method=\"post\" class=\"form-container__form flex-container col\">
@@ -280,8 +485,7 @@ function createteacherformexample() {
 					<input type=\"submit\" name=\"submit\" value=\"Añadir\" class=\"form__send\">
 				
 				</form>
-			
-			</section>
+		</article>
 	        ";
 }
 
@@ -301,7 +505,7 @@ function teacherslist($conn) {
     $resultdata = mysqli_stmt_get_result($stmt);
     if(mysqli_num_rows($resultdata) > 0) {
         echo "
-        <section class=\"main-section section__table\">
+        <article class=\"teacher-list\">
         <p class=\"titles\">Lista de profesores</p>
 
         <table class=\"teacher-list__teacher-table\">
@@ -320,16 +524,17 @@ function teacherslist($conn) {
             else{
             echo "<tr class=\"teacher-table__rows\">";
             echo "<td>".$row['idProfesores']."</td>";
-            echo "<td>".$row['nombreProfesores']."</td>";
-            echo "<td>".$row['apellidoProfesores']."</td>";
-            echo "<td colspan=\"1\"><a>".$row['asisteProfesores']."</a> ".modifylink($row['idProfesores'])." 
-            <img src=\"Images/editar.png\" alt=\"\" class=\"teacher-table__icon\">
+            echo "<td>".ucfirst($row['nombreProfesores'])."</td>";
+            echo "<td>".ucfirst($row['apellidoProfesores'])."</td>";
+            echo "<td colspan=\"1\"> ".modifylink($row['idProfesores'])." 
+            <img src=\"Images/editar.png\" alt=\"\" class=\"group-table__icon\">
              ".deletelink($row['idProfesores'],($row['nombreProfesores']." ".$row['apellidoProfesores']))."
-             <img src=\"Images/error.png\" alt=\"\"class=\"teacher-table__icon\"> </td>";
+             <img src=\"Images/error.png\" alt=\"\"class=\"group-table__icon\"> </td>";
             echo "</tr>";
             }
         }
         echo "</table>";
+        echo "</aricle>";
 
     }
     else {
@@ -337,6 +542,7 @@ function teacherslist($conn) {
     }
 
     mysqli_stmt_close($stmt);
+    echo "</section>";
 
 }
 
@@ -356,8 +562,6 @@ function teacherslist($conn) {
 //
 // comienza seccion de paneles para editar profesores
 
-<<<<<<< Updated upstream
-=======
     //forma para modificar materias
     function modifymateriaform($id) {
 
@@ -739,6 +943,7 @@ function teacherslist($conn) {
     // crea el formulario para editar materias
     function editmateriahorario($conn,$materia,$grupo) {
         //materia / grupo / dia1-3 / hora 1-12 / turno 1-3
+        echo "<section class=\"main-section flex-container col\">";
         $groupexist = revisarExistenciaDelGrupoID($conn,$grupo);
 
                 if($groupexist == false){
@@ -980,7 +1185,7 @@ function teacherslist($conn) {
                         </select>";
         echo "<br>";
         echo "<button type=\"submit\" name=\"submit\" class=\"btn btn-danger\">Eliminar</button>";
-        echo "</form>";
+        echo "</form> </section>";
 
 
     }
@@ -988,7 +1193,7 @@ function teacherslist($conn) {
     function createmateriaformulario(){
         echo "
         <section class=\"main-section flex-container col\">
-                    
+                    <article>
                         <p class=\"titles\">Añadir Materias</p>
                 
                     <form action=\"include/crearmateria2.inc.php\" method=\"post\" class=\"form-container__form flex-container col\">
@@ -1001,8 +1206,8 @@ function teacherslist($conn) {
                         <input type=\"submit\" name=\"submit\" value=\"Añadir\" class=\"form__send\">
                     
                     </form>
+                    </article>
                 
-                </section>
                 ";
     }
 
@@ -1021,21 +1226,18 @@ function teacherslist($conn) {
         $resultdata = mysqli_stmt_get_result($stmt);
         if(mysqli_num_rows($resultdata) > 0) {
             echo "
-            <section class=\"main-section section__table\">
             <p class=\"titles\">Lista de materias</p>
 
             <table class=\"teacher-list__teacher-table\">
                 <thead>
                     <tr>
-                        <th>ID</th>
                         <th>Nombre</th>
                     </tr>
                 </thead>";	
             while($row = mysqli_fetch_assoc($resultdata)){
                 
                 echo "<tr class=\"teacher-table__rows\">";
-                echo "<td>".$row['idMaterias']."</td>";
-                echo "<td>".modifylinkmateria($row['idMaterias']).$row['NombreMateria']."</a></td>";
+                echo "<td colspan=\"1\">".modifylinkmateria($row['idMaterias']).ucfirst($row['NombreMateria'])."</a></td>";
                 echo "</tr>";
             }
             echo "</table>";
@@ -1046,10 +1248,10 @@ function teacherslist($conn) {
         }
 
         mysqli_stmt_close($stmt);
+        echo "</section>";
 
     }
 
->>>>>>> Stashed changes
 //  termina seccion de materias
 //
 //          _________
@@ -1070,12 +1272,10 @@ function teacherslist($conn) {
 //
 // comienza seccion de grupos
 
-<<<<<<< Updated upstream
-=======
 
 //genera el vinculo entre los grupos y las clases
 function linktoclass($id){
-    $vinculo = "<a class=\"text-info\" href=\"admin.php?panel=clases&idGrupo=".$id."\"><p>Ver mas</p>";
+    $vinculo = "<a class=\"table-link\" href=\"admin.php?panel=clases&idGrupo=".$id."\">Ver mas";
     return $vinculo;
 }
 //crea el formulario de grupo primer intento
@@ -1355,26 +1555,28 @@ function creategrupoformexample($conn) {
 function creategrupoformulario(){
     echo "
     <section class=\"main-section flex-container col\">
+
+            <article>
 				
 				 	<p class=\"titles\">Añadir Grupos</p>
 			
 				<form action=\"include/creargrupo.inc.php\" method=\"post\" class=\"form-container__form flex-container col\">
 					
 					<div class=\"inputs flex-container\">
-						<label for=\"nombre\">Nombre:</label>
+						<label for=\"grupo\">Nombre:</label>
 						<input type=\"text\" name=\"grupo\" required class=\"inputs__entry\">
 					</div>
 					
 					<div class=\"inputs flex-container\">			
-						<label for=\"apellido\">Nombre Descriptivo:</label>
+						<label for=\"fullgrupo\" class=\"label-description\">Nombre Descriptivo:</label>
 						<input type=\"text\" name=\"fullgrupo\" required class=\"inputs__entry\">
 					</div>
 					
 					<input type=\"submit\" name=\"submit\" value=\"Añadir\" class=\"form__send\">
 				
 				</form>
+            </article>
 			
-			</section>
 	        ";
 }
 
@@ -1393,13 +1595,13 @@ function groupslistadmin($conn) {
     $resultdata = mysqli_stmt_get_result($stmt);
     if(mysqli_num_rows($resultdata) > 0) {
         echo "
-        <section class=\"main-section section__table\">
+        <article class=\"group-list\">
         <p class=\"titles\">Lista de grupos</p>
 
         <table class=\"teacher-list__teacher-table\">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    
                     <th>Nombre</th>
                     <th>NombreDescriptivo</th>
                     <th></th>
@@ -1408,14 +1610,12 @@ function groupslistadmin($conn) {
         while($row = mysqli_fetch_assoc($resultdata)){
             
             echo "<tr class=\"teacher-table__rows\">";
-            echo "<td>".$row['idGrupo']."</td>";
-            echo "<td>".$row['nombreGrupo']."</td>";
-            echo "<td>".$row['nombredescriptivoGrupo']."</td></a>";
-            echo "<td colspan=\"1\">".linktoclass($row['idGrupo'])." 
-            <img src=\"Images/editar.png\" alt=\"\" class=\"teacher-table__icon\"></a></td>";
+            echo "<td>".strtoupper($row['nombreGrupo'])."</td>";
+            echo "<td>".ucfirst($row['nombredescriptivoGrupo'])."</td></a>";
+            echo "<td colspan=\"1\">".linktoclass($row['idGrupo'])."<img src=\"Images/editar.png\" alt=\"\" class=\"group-table__icon\"></a></td>";
             echo "</tr>";
         }
-        echo "</table>";
+        echo "</table></article>";
 
     }
     else {
@@ -1424,20 +1624,21 @@ function groupslistadmin($conn) {
 
     mysqli_stmt_close($stmt);
 
+    echo "</section>";
+
 }
 
->>>>>>> Stashed changes
 //  termina seccion de grupos
 //
 //
-//          |##\              /##|
-//          |###\            /###|
-//          |###|            |###|
-//          |###\            /###|
-//          \####\_       __/####/
-//            \####\_____/#####/
-//              \##########/
-//                \######/
+//        |##\              /##|
+//        |###\            /###|
+//        |###|            |###|
+//        |###\            /###|
+//        \####\_       __/####/
+//          \####\_____/#####/
+//            \##########/
+//              \######/
 //
 //
 // comienza seccion de usuarios
@@ -1447,7 +1648,7 @@ function modifyuserpanel($name){
     
 
     echo "<h2 class=\"text-info\">aqui podes modificar tus datos</h2>
-                <form action=\"include/modificarprofesores.inc.php\" method=\"post\" id=\"profform2\">
+                <form action=\"include/modifyuser.inc.php\" method=\"post\" id=\"profform2\">
                     <input type=\"hidden\" name=\"name\" value=\"".$name."\" id=\"t\" form=\"profform2\">
                     <br>
                     <label for=\"t3\" class=\"text-info\">nuevo dato:</label>
@@ -1464,6 +1665,44 @@ function modifyuserpanel($name){
                     <br>
                     <button type=\"submit\" name=\"submit\" class=\"btn btn-secondary\">Actualizar</button>
                 </form>";
+
+}
+
+//panel para modificar usuarios
+function modifyuserpane2($name){
+    
+
+    echo "
+    <section class=\"main-section flex-container col\">
+    <div class=\"main-container\">
+        
+    <p class=\"titles\">Cambiar Contraseña</p>
+
+    <div class=\"main-container__form-container\">
+
+        
+        <div class=\"flex-item div-formulario\">
+                <form action=\"include/modifyuser.inc.php\" method=\"post\" id=\"profform2\">
+                    <input type=\"hidden\" name=\"name\" value=\"".$name."\" id=\"t\" form=\"profform2\">
+                    <br>
+                    <label for=\"t3\" class=\"text-info\">Nueva Contraseña:</label>
+                    <input type=\"password\" name=\"new_data\" id=\"t3\" form=\"profform2\">
+                    <br>
+                    <input type=\"hidden\" name=\"data_type\" value=\"CLAVEusuarios\" id=\"t\" form=\"profform2\">
+                    <br>
+                    <label for=\"t5\" class=\"text-info\">su contraseña actual:</label>
+                    <input type=\"password\" name=\"contraseña\" id=\"t5\" form=\"profform2\">
+                    <br><div class=\"flex-item form__botonera\">
+                    <input type=\"submit\" name=\"submit\" value=\"Actualizar\" class=\"submit\">
+                </div>
+                </form>
+                </div>
+    
+            </div>
+            
+            
+        </div>	
+        </section>";
 
 }
 
@@ -1696,7 +1935,9 @@ function createclase($conn,$grupo){
 
                 // selector de materias
 
-                echo "<label for=\"t2\" class=\"text-info\">Materias:</label>";
+                echo "
+                <div class=\"inputs flex-container\">
+                <label for=\"t2\" class=\"text-info\">Materias:</label>";
                 echo "<select name=\"materias\" id=\"t3\">";
                 $sql = "SELECT * FROM materias ORDER BY idMaterias ASC"; 
                 $stmt = mysqli_stmt_init($conn);
@@ -1720,14 +1961,15 @@ function createclase($conn,$grupo){
                 }
             
                 mysqli_stmt_close($stmt);
-                echo "</select> <br>";
+                echo "</select> </div>  <br>";
                 
 
                 // selectro de profesores
 
 
                 echo "<br>
-                <label for=\"t2\" class=\"text-info\">Profesor:</label>
+                <div class=\"inputs flex-container\">
+                <label for=\"t2\">Profesor:</label>
                 <select name=\"profesor\" id=\"t2\">";
                 echo "<option value=\"0\">sin profesor</option>";
                 $sql = "SELECT * FROM profesores ORDER BY idProfesores ASC"; 
@@ -1747,7 +1989,7 @@ function createclase($conn,$grupo){
 
                         }
                         else{
-                            echo "<option value=\"".$row['idProfesores']."\">".$row['nombreProfesores']." ".$row['apellidoProfesores']."</option>";
+                            echo "<option value=\"".$row['idProfesores']."\">".ucfirst($row['nombreProfesores'])." ".$row['apellidoProfesores']."</option>";
                         }
                         
                     }
@@ -1758,13 +2000,13 @@ function createclase($conn,$grupo){
                 }
             
                 mysqli_stmt_close($stmt);
-                echo "</select> <br>";
+                echo "</select> </div> <br>";
 					
 				echo "<input type=\"submit\" name=\"submit\" value=\"Añadir\" class=\"form__send\">
 				
 				</form>
 			
-			</section>
+			
 	        ";
 
             listamateriasengrupo($conn,$grupo);
@@ -1773,8 +2015,12 @@ function createclase($conn,$grupo){
 
 function listamateriasengrupo($conn,$grupo){
 
+    echo "<article class=\"asignatures-list\">
+    <p class=\"titles\">Lista de materias</p>";
+
     $sql = "SELECT idMateria,idProfesor FROM clases WHERE idGrupo = ?"; 
     $stmt = mysqli_stmt_init($conn);
+    $materias = array();
             
     if(!mysqli_stmt_prepare($stmt, $sql)){
         header("location: admin.php?error=wentwrong&panel=grupos&idGrupo=".$grupo);
@@ -1805,9 +2051,13 @@ function listamateriasengrupo($conn,$grupo){
             
     mysqli_stmt_close($stmt);
 
-    for($i = 0 ; $i < count($materias) ; $i++){
-        printclasstable($conn,$materias[$i],$profesores[$i],$grupo);
+    if($materias){
+        for($i = 0 ; $i < count($materias) ; $i++){
+            printclasstable2($conn,$materias[$i],$profesores[$i],$grupo);
+        }
     }
+
+    echo "</section>";
 
 }
 
@@ -1822,7 +2072,8 @@ function printclasstable($conn, $materia, $profesor,$grupo){
         $profesorexiste['nombreProfesores']= "-";
         $profesorexiste['apellidoProfesores']= "-";
     }
-
+            
+    
     echo "<h2>".$materiaexistance['NombreMateria']."</h2>".
     "<p>Profesor: ".$profesorexiste['nombreProfesores']." ".$profesorexiste['apellidoProfesores']."</p><br>";
     echo "<a href=\"admin.php?panel=materiaenclase&idGrupo=".$grupo."&idMateria=".$materia."&subpanel=profesor\"><p>Editar Profesor</p></a></br>";
@@ -1831,20 +2082,81 @@ function printclasstable($conn, $materia, $profesor,$grupo){
 
 }
 
+function printclasstable2($conn, $materia, $profesor,$grupo){
+
+    $materiaexistance = revisarExistenciaDeLaMateriasPorID($conn,$materia);
+
+    if($profesor != 0){
+        $profesorexiste = revisarExistenciaDelProfesorPormedioDeID($conn,$profesor);
+    }
+    else {
+        $profesorexiste['nombreProfesores']= "-";
+        $profesorexiste['apellidoProfesores']= "-";
+    }
+
+    /*<div class="deployable">
+				<p class="deployable__title">Sistemas Operativos</p>
+				<div class="deployed">
+					
+					<div class="deployed-content">
+						<p class="deployed-text">Profesor: Dante Palombo</p>
+					</div>
+					<div class="deployed-content">
+						<a href="" class="deployed-link">Editar</a>
+						<img src="Images/editar.png" alt="" class="deployed__icon">	
+					</div>
+				</div>
+			</div>*/
+            
+    
+    echo "<div class=\"deployable\">
+    <p class=\"deployable__title\">".$materiaexistance['NombreMateria']."</p>
+    <div class=\"deployed\">
+        
+        <div class=\"deployed-content\">
+            <p class=\"deployed-text\">Profesor: ".$profesorexiste['nombreProfesores']." ".$profesorexiste['apellidoProfesores']."</p>
+            <a href=\"admin.php?panel=materiaenclase&idGrupo=".$grupo."&idMateria=".$materia."&subpanel=profesor\" class=\"deployed-link\">Editar</a>
+            <img src=\"Images/editar.png\" alt=\"\" class=\"deployed__icon\">
+            </div>
+            <div class=\"deployed-content\">
+            <p class=\"deployed-text\">Horarios:<br>".writehorarios2($conn,$materia,$grupo)."</p>
+            <a href=\"admin.php?panel=materiaenclase&idGrupo=".$grupo."&idMateria=".$materia."&subpanel=horario\" class=\"deployed-link\">Editar</a>
+            <img src=\"Images/editar.png\" alt=\"\" class=\"deployed__icon\">
+        </div>
+    </div>
+</div>";
+}
+
 function writehorarios($conn,$materia,$grupo){
     $horas = gethorarios($conn,$materia,$grupo) ?? false;
     if ($horas){
         foreach($horas as $k){
             $horarios[] = revisarExistenciaDelHorarioID($conn,$k);
         }
-        writeeachhorario($horarios);
+        writeeachhorario3($horarios);
         
     }
     else {
         echo "no hay horarios en el sistema";
     }
 }
+function writehorarios2($conn,$materia,$grupo){
+    $horas = gethorarios($conn,$materia,$grupo) ?? false;
+    $result = array();
+    if ($horas){
+        foreach($horas as $k){
+            $horarios[] = revisarExistenciaDelHorarioID($conn,$k);
+        }
+        $result = writeeachhorario2($horarios);
+        
+    }
+    else {
+        return "no hay horarios en el sistema";
+    }
+    return implode(" ",$result);
+}
 
+//selecciona todas las combinaciones de horarios y clases en las que coincida la clase seleccionada
 function gethorarios($conn,$materia,$grupo){
 
     $classexists = revisarExistenciaDelaClase($conn,$grupo,$materia);
@@ -1877,6 +2189,68 @@ function gethorarios($conn,$materia,$grupo){
 
 }
 
+//consigue un horario en base a un id de clase y los ordena de tal forma que el horario mas temprano de la lista sea el primero
+function gethorariosporIDclase($conn,$id,$grupo){
+    
+    $horasid = array();
+
+    $sql = "SELECT idHorario FROM clase_has_horarios WHERE idClase = ? ORDER BY idHorario ASC"; 
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: index.php?error=wentwrongH&panel=grupos&idGrupo=".$grupo);
+        exit();
+    }
+
+            
+    mysqli_stmt_bind_param($stmt, "i", $id);
+    mysqli_stmt_execute($stmt);
+            
+    $resultdata = mysqli_stmt_get_result($stmt);
+    if(mysqli_num_rows($resultdata) > 0) {
+        while($row = mysqli_fetch_assoc($resultdata)){
+            $horasid[] = $row["idHorario"];
+        }
+            
+    }
+
+    mysqli_stmt_close($stmt);
+    
+    return $horasid;
+
+}
+
+// consigue la ID de una Clase en base a su horario
+function getclaseIDhora($conn,$id,$grupo){
+    
+    $horasid = array();
+
+    $sql = "SELECT idClase FROM clase_has_horarios WHERE idHorario = ?"; 
+    $stmt = mysqli_stmt_init($conn);
+
+    if(!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: index.php?error=wentwrongH&panel=grupos&idGrupo=".$grupo);
+        exit();
+    }
+
+            
+    mysqli_stmt_bind_param($stmt, "i", $id);
+    mysqli_stmt_execute($stmt);
+            
+    $resultdata = mysqli_stmt_get_result($stmt);
+    if(mysqli_num_rows($resultdata) > 0) {
+        while($row = mysqli_fetch_assoc($resultdata)){
+            $horasid[] = $row["idClase"];
+        }
+            
+    }
+
+    mysqli_stmt_close($stmt);
+    
+    return $horasid;
+
+}
+
 //escribe los horarios de forma en que escriba los horarios del dia de forma corrida y escriba cada dia aparte aparte
 function writeeachhorario($array){
 
@@ -1885,8 +2259,44 @@ function writeeachhorario($array){
     while($i < count($array)){
         for ($j = count($array)-1; $j >= 0 ; $j--){
             if (($array[$i]["turnoHorarios"]==$array[$j]["turnoHorarios"])&&($array[$i]["diaHorarios"]==$array[$j]["diaHorarios"])){
-                echo getstringdia($array[$i]["diaHorarios"]).": ".$array[$i]["inicioHorarios"]."-".$array[$j]["terminaHorarios"]." | ".getstringturno($array[$i]["turnoHorarios"]);
-                echo "<br>";
+                echo "<p class=\"deployed-text\">".getstringdia($array[$i]["diaHorarios"]).": ".$array[$i]["inicioHorarios"]."-".$array[$j]["terminaHorarios"]." | ".getstringturno($array[$i]["turnoHorarios"])."</p>";
+                $i = $j+1;
+                break;
+            }
+        }
+    }
+
+
+}
+//devuelve un string con los horarios de forma en que escriba los horarios del dia de forma corrida y escriba cada dia aparte aparte
+function writeeachhorario2($array){
+
+    /*Array ( [0] => Array ( [idHorarios] => 144 [inicioHorarios] => 07:30:00 [terminaHorarios] => 08:15:00 [turnoHorarios] => 1 [horaHorarios] => 1 [diaHorarios] => 3 )*/
+    $i=0;
+    $horas = array();
+    while($i < count($array)){
+        for ($j = count($array)-1; $j >= 0 ; $j--){
+            if (($array[$i]["turnoHorarios"]==$array[$j]["turnoHorarios"])&&($array[$i]["diaHorarios"]==$array[$j]["diaHorarios"])){
+                
+                $horas[] = getstringdia($array[$i]["diaHorarios"]).": ".$array[$i]["inicioHorarios"]."-".$array[$j]["terminaHorarios"]." | ".getstringturno($array[$i]["turnoHorarios"])."<br>";
+                
+                $i = $j+1;
+                break;
+            }
+        }
+    }
+    return $horas;
+
+}
+
+function writeeachhorario3($array){
+
+    /*Array ( [0] => Array ( [idHorarios] => 144 [inicioHorarios] => 07:30:00 [terminaHorarios] => 08:15:00 [turnoHorarios] => 1 [horaHorarios] => 1 [diaHorarios] => 3 )*/
+    $i=0;
+    while($i < count($array)){
+        for ($j = count($array)-1; $j >= 0 ; $j--){
+            if (($array[$i]["turnoHorarios"]==$array[$j]["turnoHorarios"])&&($array[$i]["diaHorarios"]==$array[$j]["diaHorarios"])){
+                echo getstringdia($array[$i]["diaHorarios"]).": ".$array[$i]["inicioHorarios"]."-".$array[$j]["terminaHorarios"]." | ".getstringturno($array[$i]["turnoHorarios"])."<br>";
                 $i = $j+1;
                 break;
             }
@@ -1912,10 +2322,6 @@ function writeeachhorario($array){
 //
 //
 // comienza seccion de Horarios
-
-function updatehorarios($conn,$grupó,$materia){
-
-}
 
 function getstringturno($turno){
     $result = "";
