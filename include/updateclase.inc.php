@@ -12,7 +12,6 @@ if(ISSET($_POST["submit"])) {
     if($profesor == 0){
         $profesor = NULL;
     }
-    
 
     actualziarprofesorenclase($conn,$profesor,$group,$materia);
 

@@ -1,6 +1,5 @@
 <?php
 session_start();
-require_once 'include/errorhandling.php';
 require_once 'include/panels.inc.php';
 include_once 'include/dbh.inc.php';
 
@@ -20,10 +19,7 @@ else {
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Adscripción</title>
 	<link rel="stylesheet" href="css/normalize.css">
-	<link rel="stylesheet" href="css/grupos.css">
-	<link rel="stylesheet" href="css/nav.css">
-	<link rel="stylesheet" href="css/materias.css">
-	<link rel="stylesheet" href="css/aside.css">
+	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
@@ -33,44 +29,47 @@ else {
 				<a href="index.php" class="links nav-logo-link"><img src="images/logo.png" alt="" class="nav__image"></a>
 					
 				<div class="nav__text">
-					<p class="nav__welcome">BIENVENIDO/A <?php echo $_SESSION["username"]; ?></p>
-					<a href="include/logout.inc.php" class="links nav__exit">salir</a>
+					<p class="nav__welcome white-text">BIENVENIDO/A <?php echo $_SESSION["username"]; ?></p>
+					<a href="include/logout.inc.php" class="nav__exit font-24">salir</a>
 				</div>	
 					
 			</nav>
 		
 			<aside class="aside"> 
-				<h1 class="aside__title">ADSCRIPCIÓN</h1>
+				<h1 class="aside__title white-text">ADSCRIPCIÓN</h1>
 				
 				
 				<div class="user-image-container">		
 					<img src="images/usuario.png" class="aside__user-image">	
 				</div>		
 			
-				<p class="aside__username"><?php echo $_SESSION["username"]; ?></P>
+				<p class="white-text"><?php echo $_SESSION["username"]; ?></P>
 		
 				<div class="edit-user-container">
 					<span class="aside__span">
-						<a href="admin.php?panel=user" class="links edit-user__text">EDITAR USUARIO</a>
+						<a href="admin.php?panel=user" class="white-text">EDITAR USUARIO</a>
 					 </span>
 					 <img src="images/configurar.png" class="edit-user__icon">
 				 </div>
 				
 				<span class="aside__span">
-					<a href="admin.php?panel=profesores" class="links">PROFESORES</a>
+					<a href="admin.php?panel=profesores" class="links white-text">PROFESORES</a>
 				</span>
 		
 				<span class="aside__span">
-					<a href="admin.php?panel=materias" class="links">MATERIAS</a>
+					<a href="admin.php?panel=materias" class="links white-text">MATERIAS</a>
 				</span>
 		
 				<span class="aside__span">
-					<a href="admin.php?panel=grupos" class="links">CLASES</a>
+					<a href="admin.php?panel=grupos" class="links white-text">CLASES</a>
 				</span>
-			</aside>	
+			</aside>
+			
+			<section class="right-side-section">
 
 <?php
 
+require_once 'include/errorhandling.php';
 
 if (isset($_GET["panel"])){
     switch($_GET["panel"]){
@@ -93,7 +92,7 @@ if (isset($_GET["panel"])){
         break;
 
         case "user":
-            modifyuserpane2($_SESSION["username"]);
+            modifyuserpane2($_SESSION["id"]);
             break;
 
         case "grupos" :
@@ -121,7 +120,7 @@ if (isset($_GET["panel"])){
             if (isset($_GET['subpanel'])){
                 switch($_GET['subpanel']){
                     case "modificar":
-                        modifymateriaform($_GET['id']);
+                        modifymateriaform2($_GET['id']);
                         break;
                 }
             }
@@ -134,10 +133,10 @@ if (isset($_GET["panel"])){
             if (isset($_GET['subpanel'])){
                 switch($_GET['subpanel']){
 					case "profesor":
-						updateclassform($conn,$_GET["idMateria"],$_GET["idGrupo"]);
+						updateclassform2($conn,$_GET["idMateria"],$_GET["idGrupo"]);
 						break;
 					case "horario":
-						editmateriahorario($conn,$_GET["idMateria"],$_GET["idGrupo"]);
+						editmateriahorario2($conn,$_GET["idMateria"],$_GET["idGrupo"]);
 						break;
                 }
             }
@@ -158,6 +157,8 @@ if (isset($_GET["panel"])){
 	
 	
 	</div>
+	
+	</section>
 	
 </body>
 </html>

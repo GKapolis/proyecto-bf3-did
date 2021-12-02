@@ -1,48 +1,280 @@
-nav{
-	background: black;
-}
-.nav__img-logo{
+.flex-container{
 
-	width: 40%;
+	display: flex;
+}
+.col{
+
+	flex-direction: column;
+	align-items: center;
+}
+
+.nav{
+
+	height: 5vh;
+	background-color: #000814;
+	justify-content: space-between;
+	display: flex;
+
+}
+
+.nav__text{
+
+	margin-right: 5%;
+	display: flex;
+	align-items: center;
+}
+
+.nav__welcome{
+
+	margin: 10px;
+}
+.nav__exit{
+
+	padding-right: 15px;
+}
+
+.nav__exit:visited{
+
+	color: #fff;
+}
+
+.aside{
+
+	background-color: #000b3b;
+	width: 25vw;
+	height: 140vh;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	
+}
+
+.aside__user-image{
+
+	width: 30%;
+	border-radius: 50%;
+	background-color: #fff;
+}
+
+.user-image-container{
+
+	text-align: center;
+}
+
+.aside__title{
+
+	font-size: 150%;
+	margin: 10px 10px;
+}
+
+
+
+.aside__span{
+
+	margin: 10px;
+	display: block;
+	text-align: center;
+	padding: 10px 0;
+	width: 100%;
+
+}
+
+.aside__span:hover{
+
+	background-color: #003566;
+}
+
+.edit-user__icon{
+
+	background-color: #001d3d;
+	border-radius: 50%;
 	height: 40%;
+	position: relative;
+	top: 50%;
+	bottom: 50%;
+	transform: translate(-50%,-50%);
+	right: 10%;
+}
+.edit-user-container{
+
+	display: flex;
+	width: 100%;
 }
 
-.main-container{
+.edit-user-container:hover{
+
+	background-color: #003566;
+}
+
+.links:visited{
+
+	color: #fff;
+}
+
+.right-side-section{
+
+	position: absolute;
+	left: 30vw;
+	top: 10vh;
+	width: 65vw;
+	height: 85vh;
+	
+}
+
+article{
+
+	border: 1px solid #aaa;
+	margin-bottom: 5vh;
+	box-shadow: -2px 2px #ccc;
+
+}
+
+.article-title{
+
+	margin-top: 0px;
+	padding: 5px 15px;
+}
+
+.white-text{
+
+	color: #fff;
+	text-decoration: none;
+}
+
+.blue-text{
+
+	color: #003566;
+}
+
+.blue-background{
+
+	background-color: #003566;
+}
+
+.font-18{
+
+	font-size: 18px;
+	font-weight: bold;
+}
+.font-24{
+
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.overflow__icon{
+
+	width: 12px;	
+}
+
+.input-label{
+
+	width: 60px;
+	height: 20px;
+	margin-right: 20px;
+	font-weight: bolder;
+}
+
+.inputs{
+
+	display: inline-flex;
+	width: 90%;
+	justify-content: space-evenly;
+	margin: 5px;	
+}
+
+.input__entry{
+
+	width: 70%;
+}
+
+.form__submit{
+
+	padding: 5px 15px;
+	margin: 10px;
+}
+
+.overflow-article{
+
+	height: 50%;
+	overflow-y: auto;	
+}
+
+.article__table,
+ .table__th,
+  .table__td{
+
+	text-align: center;
+	border-right: 1px solid #aaa;
+	border-left: 1px solid #aaa;
+	border-collapse: collapse;
+}
+
+.article__table{
+
+	margin: 5px auto;
+}
+
+.table__th,
+.table__td{
+
+	width: 20%;
+	padding: 5px;
+}
+
+.table__th{
+
+	border-bottom: 1px solid #aaa;
+}
+
+.table-link{
+
+ 	color: blue; 
+}
+
+.table-link:visited{
+
+	color: blue;
+}
+
+/* esto es de horarios especificamente*/
+.form-intro{
+
+	margin-left: 10px;
+}
+
+.form-content{
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.form-content  *{
+
+	margin: 5px 10px;
+
+}
+/*---------------LOGIN-----------------------*/
+.login-container{
 
 	border: 1px #003566 solid;
 	border-radius: 10px 10px 10px 10px;
-	display: flex;
-	flex-direction: column;
 	margin: 10% 10%;
-
-
 }
 
-.main-container__encabezado{
-
-	display: inline;
-}
-
-.main-container__form-container{
+.login-container__form-container{
 
 	display: flex;
 	justify-content: space-evenly;
 	flex-wrap: wrap-reverse;
 	align-items: center;
-
-
-}
-
-.flex-item{
-
-	min-width: 150px;
-
+	width: 100%;
 }
 
 .div-candado{
 
 	text-align: center;
-
 }
 
 .div-formulario{
@@ -50,43 +282,29 @@ nav{
 	width: 60%;
 }
 
-form{
-	
+.div-candado,
+.div-formulario,
+.form-botonera{
+
+	min-width: 150px;
+}
+
+.login-form{
+
 	display: flex;
 	height: 200px;
 	align-items: center;
 	flex-direction: column;
 	justify-content: space-around;
-
-}
-input{
-
-	margin-bottom: 20px;
-	width: 80%;
-	border: 1px solid #505050;
-
-
-}
-
-span{
-
-	text-align: center;
-	padding: 10px 0;
-	
 }
 
 .div-candado__img-candado{
 
 	width: 50%;
 	height: 50%;
-
-}
-label{
-
-	color: #003566;
 }
 
-.form__botonera{
+.login-form__buttons{
 	
 	display: flex;
 	flex-wrap: wrap;
@@ -94,35 +312,42 @@ label{
 	width: 80%;
 }
 
-.submit{
+.login-input{
+
+	margin-bottom: 20px;
+	width: 80%;
+	border: 1px solid #505050;
+}
+
+.login-input:focus{
+
+	background-color: #eee;
+}
+
+.login-span{
+
+	text-align: center;
+	padding: 10px 0;
+}
+
+.span-user{
+
+	width: 50%;
+	height: 50%;
+}
+
+.login-submit{
 
 	background-color: #fff;
 	width: 50%;
 	height: 100%;
-
+	border: none;
+	border-right: 1px solid #aaa;
 }
 
-.span-usuario{
+.form-label{
 
-	width: 50%;
-	text-align: center;
-	height: 50%;
-}
-
-.submit:hover{
-
-	background-color: #eee;
-
-}
-
-.span-usuario:hover{
-
-	background-color: #eee;
-}
-
-input:focus{
-
-	background-color: #eee;
+	color: #003566;
 }
 
 @media only screen and (max-width: 400px){
@@ -132,7 +357,7 @@ input:focus{
 		width: 100%;
 		height: 100%;
 	}
-	.main-container{
+	.login-container{
 
 		margin: 5% 5%;
 	}
@@ -141,21 +366,257 @@ input:focus{
 		margin-top: 40px;
 	}
 	
-	#nombre{
-
-		width: 100%;
-	}
-
-	#password{
-
-		width: 100%;
-	}
-
-	.form__botonera{
+	#nombre,
+	#password,
+	.login-form__buttons{
 
 		width: 100%;
 	}
 }
 
+/*-----------------------------*/
+
+#description-label{
+
+	font-size: 12px;
+}
+
+/*-----descripcion-grupos---------*/
+
+.deployable{
+
+	position: relative;
+	margin: 5px auto;
+
+}
+
+.deployable__title{
+
+	background-color: #001d3d;
+	color: #fff;
+	font-size: 20px;
+	padding: 5px;
+}
+
+.deployed{
+
+	display: none;
+	height: 5vh;
+	position: absolute;	
+	z-index: 1;
+	width: 100%;
+	top: 30%;
+
+}
+
+.deployable:hover{
+
+	border: 1px solid #003566;
+	border-top: none;
+	height: 24vh;
+}
+.deployable:hover .deployed{
+
+	display: inline-flex;
+	text-align: center;
+	justify-content: space-around;
+}
+
+.deployed__icon{
+
+	width: 10%;
+}
+
+.deployed-text{
+
+	font-size: 18px;
+	display: inline;
+}
+
+.deployed-content{
+
+	display: inline-block;
+	width: 33%;
+}
+
+.inputs__select{
+
+	width: 40vw;
+	text-align: center;
+	margin: 5px auto;
+}
+
+/*----------BEDELIA--------------*/
+
+.banner{
+
+	position: relative;
+	display: flex;
+	align-items: center;
+
+}
+
+.banner__utu-image{
+
+	width: 100vw;
+}
+
+.banner__content{
+
+	display: inline-block;
+	position: absolute;
+	background-color: #fff;
+	top: 50%;
+	bottom: 50%;
+	transform: translate(0,-50%);
+	border-radius: 50%;
+	width: 20px;
+	height: 20px;
+	text-align: center;
+
+}
+
+.banner__right-arrow{
+
+	right: 20px;
+}
+
+.banner__left-arrow{
+
+	left: 20px;	
+}
+.banner__links{
+
+	position: relative;
+	top: 10%;
+	
+}
+
+.banner__title{
+
+	width: 60%;
+	height: 40%;
+	background-color: transparent;
+	text-align: left;
+	left: 5%;
+	border-radius: 0%;
+}
+
+.card-section{
+
+	position: absolute;
+	border: 1px solid #aaa;
+	width: 90%;
+	height: 65%;
+	left: 50%;
+	right: 50%;
+	transform: translate(-50%,-10%);
+	background-color: #fff;
+	display: flex;
+	flex-wrap: wrap;
+	border-bottom: none;
+	overflow-y: auto;
+
+}
 
 
+.card-container{
+
+	width: 40%;
+	height: 40%;
+	position: relative;
+	margin: 5%;
+	display: inline-block;
+}
+
+.card-link{
+
+	color: #000814;
+}
+
+.paragraph{
+
+	position: absolute;
+	font-weight: bold;
+}
+.asignature{
+
+	bottom: 20%;
+	left: 5%;
+	font-size: 120%;
+
+}
+.group{
+
+	bottom: -25%;
+	font-size: 250%;
+	left: 5%;
+
+}
+
+.schedules{
+
+	background-color: #001d3d;
+	color: #fff;
+	padding: 5px;
+	right: 5%;
+	bottom: -5%;
+
+}
+.schedule-table{
+
+	border-collapse: collapse;
+	border: 2px solid #003566;
+	margin: 5% auto;
+
+}
+
+.schedule-table__th,
+.schedule-table__td{
+
+	border: 1px solid #aaa;
+	padding: 10px;	
+}
+.schedule-table__th{
+
+	background-color: #003566;
+	color: #fff;
+}
+
+.schedule-table__td{
+
+	color: #003566;
+	font-weight: bold;
+	border-color: #003566;
+}
+caption{
+
+	color: #fff;
+	background-color: #001d3d;
+	font-size: 20px;
+	text-align: left;
+	padding: 10px 20px 10px;
+}
+.hora{
+
+	font-size: 24px;
+}
+
+.message{
+
+	position: absolute;
+	bottom: 1%;
+	font-weight: bold;
+	color: #008800;
+	font-size: 24px;
+}
+
+.exito{
+
+	color: #008800;
+}
+
+.error{
+
+	color: #ff0000;
+}

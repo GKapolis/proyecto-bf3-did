@@ -1,15 +1,14 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Materias</title>
+	<title>Usuarios</title>
 	<link rel="stylesheet" href="normalize.css">
 	<link rel="stylesheet" href="style.css">
-	
 </head>
 <body>
-
+	
 	<nav class="nav">
 				
 		<a href=""><img src="images/logo.png" alt="" class="nav__image"></a>
@@ -50,45 +49,25 @@
 			<a href="" class="links white-text">CLASES</a>
 		</span>
 	</aside>		
-			
+
 	<section class="right-side-section">
-			
-	 	<article>
+		<article>
+			<header>
+				<p class="article-title white-text blue-background font-24">Cambiar Contraseña</p>
+			</header>
 
-	 		<p class="article-title white-text blue-background font-24">Añadir Materia</p>
-		
-			<form action="" class="form-container__form flex-container col">
-				
+			<form action="post" method="" class="flex-container col">
 				<div class="inputs">
-					<label for="nombre" class="input-label">Materia:</label>
-					<input type="text" name="nombre" required class="input__entry">
+					<label for="current-password">Contraseña Actual</label>
+					<input type="password" id="current-password" required minlength="8" placeholder="-contraseña actual-" class="input__entry">
 				</div>
-
-				<!--  -->
-					
-			<input type="submit" value="Añadir" class="form__submit white-text blue-background font-18">
-			
-		</form>
-		</article>
-
-
-		<article class="overflow-article">
-			<p class="article-title white-text blue-background font-24">Lista de Materias</p>
-
-			<table class="article__table">
-				<thead>
-					<tr>
-						<th class="table__th">Materia</th>
-					</tr>
-				</thead>	
-				
-				<tr>
-					<td class="table__td">Matemáticas <a href="" class="table-link">Editar</a>
-						<img src="Images/editar.png" alt="" class="overflow__icon"></td>	
-				</tr>	
-			</table>
+				<div class="inputs">
+					<label for="new-password">Nueva Contraseña</label>
+					<input type="password" id="new-password" required minlength="8" placeholder="-nueva contraseña-" class="input__entry">
+				</div>
+				<input type="submit" value="Confirmar" class="form__submit white-text blue-background font-18">
+            </form>
 		</article>
 	</section>
-			
 </body>
 </html>

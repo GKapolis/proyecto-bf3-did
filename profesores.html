@@ -5,106 +5,101 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Profesores</title>
 	<link rel="stylesheet" href="normalize.css">
-	<link rel="stylesheet" href="profesores.css">
-	<link rel="stylesheet" href="nav.css">
-	<link rel="stylesheet" href="aside.css">
+	<link rel="stylesheet" href="style.css">
 </head>
+
 <body>
 
 	<nav class="nav">
 				
-		<a href="" class="links nav-logo-link"><img src="images/logo.png" alt="" class="nav__image"></a>
+		<a href=""><img src="images/logo.png" alt="" class="nav__image"></a>
 			
 		<div class="nav__text">
-			<p class="nav__welcome">BIENVENIDA Daniela</p>
-			<a href="" class="links nav__exit">salir</a>
+			<p class="nav__welcome white-text">BIENVENIDA Daniela</p>
+			<a href="" class="nav__exit font-24">salir</a>
 		</div>	
 			
 	</nav>
 
 	<aside class="aside"> 
-		<h1 class="aside__title">ADSCRIPCIÓN</h1>
+		<h1 class="aside__title white-text">ADSCRIPCIÓN</h1>
 		
 		
 		<div class="user-image-container">		
 			<img src="images/usuario.png" class="aside__user-image">	
 		</div>		
 	
-		<p class="aside__username">Daniela</P>
+		<p class="white-text">Daniela</P>
 
 		<div class="edit-user-container">
 			<span class="aside__span">
-				<a href="" class="links edit-user__text">EDITAR USUARIO</a>
+				<a href="" class="white-text">EDITAR USUARIO</a>
  			</span>
  			<img src="images/configurar.png" class="edit-user__icon">
  		</div>
 		
 		<span class="aside__span">
-			<a href="" class="links">PROFESORES</a>
+			<a href="" class="links white-text">PROFESORES</a>
 		</span>
 
 		<span class="aside__span">
-			<a href="" class="links">MATERIAS</a>
+			<a href="" class="links white-text">MATERIAS</a>
 		</span>
 
 		<span class="aside__span">
-			<a href="" class="links">CLASES</a>
+			<a href="" class="links white-text">CLASES</a>
 		</span>
 	</aside>		
-	
-	
-	
 		
 			
-	<section class="main-section flex-container col">
+	<section class="right-side-section">
 			
 	 	<article>
 
-	 		<p class="titles">Añadir Profesor</p>
+	 		<p class="article-title white-text blue-background font-24">Añadir Profesor</p>
 		
 			<form action="" class="form-container__form flex-container col">
 				
-				<div class="inputs flex-container">
-					<label for="nombre">Nombre:</label>
-					<input type="text" name="nombre" required class="inputs__entry">
+				<div class="inputs">
+					<label for="nombre" class="input-label">Nombre:</label>
+					<input type="text" name="nombre" required class="input__entry">
 				</div>
 				
-				<div class="inputs flex-container">			
-					<label for="apellido">Apellido:</label>
-					<input type="text" name="apellido" required class="inputs__entry">
+				<div class="inputs">			
+					<label for="apellido" class="input-label">Apellido:</label>
+					<input type="text" name="apellido" required class="input__entry">
 				</div>
 				
-			<input type="submit" value="Añadir" class="form__send">
+				<input type="submit" value="Añadir" class="form__submit white-text blue-background font-18">
 			
-		</form>
+			</form>
 		</article>
 
 
-		<article class="teacher-list">
-			<p class="titles">Lista de profesores</p>
+		<article class="overflow-article">
+			<p class="article-title white-text blue-background font-24">Lista de profesores</p>
 
-			<table class="teacher-list__teacher-table">
+			<table class="article__table">
 				<thead>
 					<tr>
-						<th>ID</th>
-						<th>Nombre</th>
-						<th>Apellido</th>
-						<th></th>
+						<th class="table__th">ID</th>
+						<th class="table__th">Nombre</th>
+						<th class="table__th">Apellido</th>
+						<th class="table__th"></th>
 					</tr>
 				</thead>	
 				
-				<tr class="teacher-table__rows">
-					<td>1</td>
-					<td>Diego</td>
-					<td>Rodriguez</td>
-					<td>
+				<tr>
+					<td class="table__td">1</td>
+					<td class="table__td">Diego</td>
+					<td class="table__td">Rodriguez</td>
+					<td class="table__td">
 						<a href="" class="table-link">Editar</a>
-						<img src="Images/editar.png" alt="" class="teacher-table__icon">
+						<img src="Images/editar.png" alt="" class="overflow__icon">
 						<a href="" class="table-link">Borrar</a>
-						<img src="Images/error.png" alt=""class="teacher-table__icon">
+						<img src="Images/error.png" alt=""class="overflow__icon">
 					</td>
 				</tr>
-				
 			</table>
 		</article>
 	</section>

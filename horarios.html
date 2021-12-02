@@ -5,65 +5,63 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Horarios</title>
 	<link rel="stylesheet" href="normalize.css">
-	<link rel="stylesheet" href="horarios.css">
-	<link rel="stylesheet" href="nav.css">
-	<link rel="stylesheet" href="aside.css">
+	<link rel="stylesheet" href="style.css">
 </head>
 <body>
 
 	<nav class="nav">
 				
-		<a href="" class="links nav-logo-link"><img src="images/logo.png" alt="" class="nav__image"></a>
+		<a href=""><img src="images/logo.png" alt="" class="nav__image"></a>
 			
 		<div class="nav__text">
-			<p class="nav__welcome">BIENVENIDA Daniela</p>
-			<a href="" class="links nav__exit">salir</a>
+			<p class="nav__welcome white-text">BIENVENIDA Daniela</p>
+			<a href="" class="nav__exit font-24">salir</a>
 		</div>	
 			
 	</nav>
 
 	<aside class="aside"> 
-		<h1 class="aside__title">ADSCRIPCIÓN</h1>
+		<h1 class="aside__title white-text">ADSCRIPCIÓN</h1>
 		
 		
 		<div class="user-image-container">		
 			<img src="images/usuario.png" class="aside__user-image">	
 		</div>		
 	
-		<p class="aside__username">Daniela</P>
+		<p class="white-text">Daniela</P>
 
 		<div class="edit-user-container">
 			<span class="aside__span">
-				<a href="" class="links edit-user__text">EDITAR USUARIO</a>
+				<a href="" class="white-text">EDITAR USUARIO</a>
  			</span>
  			<img src="images/configurar.png" class="edit-user__icon">
  		</div>
 		
 		<span class="aside__span">
-			<a href="" class="links">PROFESORES</a>
+			<a href="" class="links white-text">PROFESORES</a>
 		</span>
 
 		<span class="aside__span">
-			<a href="" class="links">MATERIAS</a>
+			<a href="" class="links white-text">MATERIAS</a>
 		</span>
 
 		<span class="aside__span">
-			<a href="" class="links">CLASES</a>
+			<a href="" class="links white-text">CLASES</a>
 		</span>
-	</aside>		
+	</aside>			
 
-	<section>
+	<section class="right-side-section">
 		<article>
 			
 			<header class="section__form-title">
-				<p class="header__title">Editar Horario</p>
+				<p class="article-title white-text blue-background font-24">Editar Horario</p>
 			</header>	
 							 
 		    <form method="post" action="" class="asignature flex-container col"> 
 				
 				<div class="form-intro">	
 					<div>
-						<p>3°BF Informática</p>
+						<p>Grupo: 3°BF Informática</p>
 					</div>
 					<div>
 						<p>Materia: Formación Empresarial</p>
@@ -71,8 +69,7 @@
 				</div>		
 				
 				<div class="form-content">	
-					<div
-					>
+					<div>
 						<label for="dia-1">Día 1</label>
 						<select name="dia'1" id="dia-1">
 							<option value="no">No</option>
@@ -259,7 +256,7 @@
 						</select>
 					</div>
 					
-					<input type="submit" name="confirmar-materia" value="Confirmar">
+					<input type="submit" name="confirmar-materia" value="Confirmar" class="form__submit blue-background white-text font-18">
 				</div>		
 			</form>
 			

@@ -61,33 +61,62 @@
 				
 				<div class="inputs">
 					<label for="nombre" class="input-label">Materia:</label>
-					<input type="text" name="nombre" required class="input__entry">
+					<select name="materia" id="" class="inputs__select">
+						<option value="Matemáticas">Matemáticas</option>
+					</select>
 				</div>
 
-				<!--  -->
+				<div class="inputs">
+					<label for="nombre" class="input-label">Profesor:</label>
+					<select name="materia" id="" class="inputs__select">
+						<option value="Diego Rodríguez">Diego Rodríguez</option>
+					</select>
+				</div>
 					
 			<input type="submit" value="Añadir" class="form__submit white-text blue-background font-18">
 			
 		</form>
 		</article>
-
-
-		<article class="overflow-article">
-			<p class="article-title white-text blue-background font-24">Lista de Materias</p>
-
-			<table class="article__table">
-				<thead>
-					<tr>
-						<th class="table__th">Materia</th>
-					</tr>
-				</thead>	
+ 
+		<div class="deployable">
+			<p class="deployable__title">Sistemas Operativos</p>
+			<div class="deployed">
 				
-				<tr>
-					<td class="table__td">Matemáticas <a href="" class="table-link">Editar</a>
-						<img src="Images/editar.png" alt="" class="overflow__icon"></td>	
-				</tr>	
-			</table>
-		</article>
+				<div class="deployed-content">
+					<p class="deployed-text">Profesor: Dante Palombo</p>
+				</div>
+				<div class="deployed-content">
+					<a href="" class="deployed-link">Editar</a>
+					<img src="Images/editar.png" alt="" class="overflow__icon">	
+				</div>
+			</div>
+		</div>
+
+		<div class="deployable">
+			<p class="deployable__title">Matemáticas</p>
+			<div class="deployed">
+				
+				<div class="deployed-content">
+					<p class="deployed-text">Profesor: Diego Rodríguez</p>
+				</div>
+
+				<div class="deployed-content">
+					<p class="deployed-text">Horarios: Vespertino</p>
+				</div>
+
+				<div class="deployed-content">
+					<p class="deployed-text">Martes 12:15-1:55</p>
+					<p class="deployed-text">Martes 12:15-1:55</p>
+					<p class="deployed-text">Martes 12:15-1:55</p>
+					<p class="deployed-text">Martes 12:15-1:55</p>
+				</div>
+
+				<div class="deployed-content">
+					<a href="" class="deployed-link">Editar</a>
+					<img src="Images/editar.png" alt="" class="overflow__icon">	
+				</div>
+			</div>
+		</div> 
 	</section>
 			
 </body>

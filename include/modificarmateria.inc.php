@@ -14,9 +14,9 @@ if(ISSET($_POST["submit"])) {
     $dia1 = $_POST['dia1'];
     $dia2 = $_POST['dia2'];
     $dia3 = $_POST['dia3'];
-    $turno1 = $_POST['turno1'];
-    $turno2 = $_POST['turno2'];
-    $turno3 = $_POST['turno3'];
+    $turno1 = 1;//$_POST['turno1'];
+    $turno2 = 1;//$_POST['turno2'];
+    $turno3 = 1;//$_POST['turno3'];
     $hora1 = $_POST['hora1'];
     $hora2 = $_POST['hora2'];
     $hora3 = $_POST['hora3'];
@@ -35,17 +35,14 @@ if(ISSET($_POST["submit"])) {
     $turnos = array($turno1,$turno2,$turno3);
     $dias = array($dia1,$dia2,$dia3);
     
-    $horas = array();
+    $horas = array($hora1,$hora2,$hora3,$hora4,$hora5,$hora6,$hora7,$hora8,$hora9,$hora10,$hora11,$hora12);
 
 if($dia1 == 0) {
     $hora1 = 0;
     $hora2 = 0;
     $hora3 = 0;
     $hora4 = 0;
-    $horas = array($hora5,$hora6,$hora7,$hora8,$hora9,$hora10,$hora11,$hora12,$hora1,$hora2,$hora3,$hora4);
-}
-else{
-    $horas = array($hora1,$hora2,$hora3,$hora4,$hora5,$hora6,$hora7,$hora8,$hora9,$hora10,$hora11,$hora12);
+    
 }
 if($dia2 == 0) {
     $hora8 = 0;
@@ -63,6 +60,8 @@ if($dia3 == 0) {
     if ((($dia1 == 0)&&(0 == $dia2))){
         rsort($horas);
     }
+
+    
 
     $ids = conseguiridsdehorarios($conn,$turnos,$dias,$horas);
 

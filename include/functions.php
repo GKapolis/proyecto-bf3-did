@@ -1063,18 +1063,26 @@ function borrarHorario($conn,$turno,$horautu,$dia){
 
 function conseguiridsdehorarios($conn,$turnos,$dias,$horas){
     $ids = array();
-    $i = 0;
+    //if($id = revisarExistenciaDelHorario($conn,$horas[$ii],$turnos[0],$dias[0])){
+    //$horas = removerceros($horas);
+
+        $i = 0;
     for ($i; $i < 4 ; $i++){
-        $id = revisarExistenciaDelHorario($conn,$horas[$i],$turnos[0],$dias[0]);
-        $ids[] = $id["idHorarios"];
+        if($id = revisarExistenciaDelHorario($conn,$horas[$i],$turnos[0],$dias[0])){
+            $ids[] = $id["idHorarios"];
+        }
     }
     for ($i; $i < 8 ; $i++){
-        $id = revisarExistenciaDelHorario($conn,$horas[$i],$turnos[1],$dias[1]);
+        if($id = revisarExistenciaDelHorario($conn,$horas[$i],$turnos[1],$dias[1])){
+            $ids[] = $id["idHorarios"];
+        }
     }
     for ($i; $i < 12 ; $i++){
-        $id = revisarExistenciaDelHorario($conn,$horas[$i],$turnos[2],$dias[2]);
+        if($id = revisarExistenciaDelHorario($conn,$horas[$i],$turnos[2],$dias[2])){
+            $ids[] = $id["idHorarios"];
+        }
     }
-
+    print_r($ids);
     return $ids;
 };
 function borrarhoras($conn, $materiaid,$grupoid){

@@ -267,31 +267,36 @@ function drawtable3($conn,$grupo){
 
     
 
-    echo "<table>
+    echo "<table class=\"schedule-table\">
             <caption>".strtoupper($nombregrupo["nombreGrupo"])." ".ucfirst($nombregrupo["nombredescriptivoGrupo"])."</caption>
             <thead class=\"table-head\">
                 
-                    <th></th>
-                    <th>Lunes</th>
-                    <th>Martes</th>
-                    <th>Miercoles</th>
-                    <th>Jueves</th>
-                    <th>Viernes</th>
-                    <th>Sabado</th>
+                    <th  class=\"schedule-table__th\"></th>
+                    <th  class=\"schedule-table__th\">Lunes</th>
+                    <th  class=\"schedule-table__th\">Martes</th>
+                    <th  class=\"schedule-table__th\">Miércoles</th>
+                    <th  class=\"schedule-table__th\">Jueves</th>
+                    <th  class=\"schedule-table__th\">Viernes</th>
+                    <th  class=\"schedule-table__th\">Sábado</th>
                 
             </thead>";
             if(count($ids2) > 0){
 
                 for($hora = 1 ; $hora < 10; $hora++){
-                    echo "<tr>";
-                    echo "<td>".$hora."</td>";
+                    echo "<tr  class=\"schedule-table__td\">";
+                    echo "<td >".$hora."</td>";
                     for($day = 1 ; $day < 7; $day++){
-                        if($table = buildtable($conn,$day,$hora,$ids2[$index],$grupo)){
-                            $index++;
-                            echo "<td>".$table."</td>";
+                        if($index < count($ids2)){
+                            if($table = buildtable($conn,$day,$hora,$ids2[$index],$grupo)){
+                                $index++;
+                                echo "<td  class=\"schedule-table__td\">".$table."</td>";
+                            }
+                            else{
+                                echo "<td  class=\"schedule-table__td\"></td>";
+                            }
                         }
                         else{
-                            echo "<td></td>";
+                            echo "<td  class=\"schedule-table__td\"></td>";
                         }
                     }
                     echo "</tr>";
@@ -418,20 +423,27 @@ function getasistencia($asiste){
 // crea un panel para modificar al profesor
 function modifyteacherform($id) {
 
-    echo "<h2 class=\"text-info\">aqui podes modificar profesores</h2>
-                <form action=\"include/modificarprofesores.inc.php\" method=\"post\" id=\"profform2\">
-                    <input type=\"hidden\" name=\"id\" value=\"".$id."\" id=\"t\" form=\"profform2\">
-                    <br>
-                    <label for=\"t3\" class=\"text-info\">nombre/apellido Profesor :</label>
-                    <input type=\"text\" name=\"data\" id=\"t3\" form=\"profform2\">
-                    <br>
-                    <select name=\"datatype\" id=\"t3\" form=\"profform2\">
-                        <option value=\"nombreProfesores\">nombre</option>
-                        <option value=\"apellidoProfesores\">apellido</option>
-                    </select>
-                    <br>
-                    <button type=\"submit\" name=\"submit\" class=\"btn btn-secondary\">Actualizar</button>
-                </form>";
+    echo "<article>
+    <p class=\"article-title white-text blue-background font-24\">Modificar Profesor</h2>
+            <form action=\"\" class=\"form-container__form flex-container col\">
+                        
+                    <div class=\"inputs\">
+                        <label for=\"nombre\" class=\"input-label\">Nombre:</label>
+                        <input type=\"text\" name=\"nombre\" required class=\"input__entry\"
+                        placeholder=\"ej: 3°BF\">
+                    </div>
+
+                    <div class=\"inputs\" style=\"margin-top:30px\">
+                        <label for=\"nombre\" class=\"input-label\">Profesor:</label>
+                        <select name=\"materia\" id=\"\" class=\"inputs__select\">
+                            <option value=\"Diego Rodríguez\">Diego Rodríguez</option>
+                        </select>
+                    </div>
+                        
+                <input type=\"submit\" value=\"Añadir\" class=\"form__submit white-text blue-background font-18\">
+
+            </form>
+        </article>";
 
 }
 
@@ -466,23 +478,22 @@ function deletelink($id/*,$nombre*/) {
 function createteacherformexample() {
     
     echo "
-    <section class=\"main-section flex-container col\">
         <article>			
-				 	<p class=\"titles\">Añadir Profesor</p>
+				 	<p class=\"article-title white-text blue-background font-24\">Añadir Profesor</p>
 			
-				<form action=\"include/crearprofesores.inc.php\" method=\"post\" class=\"form-container__form flex-container col\">
+				<form action=\"include/crearprofesores.inc.php\" method=\"post\" class=\"flex-container col\">
 					
-					<div class=\"inputs flex-container\">
-						<label for=\"nombre\">Nombre:</label>
-						<input type=\"text\" name=\"name\" required class=\"inputs__entry\">
+					<div class=\"inputs\">
+						<label for=\"nombre\" class=\"input-label\">Nombre:</label>
+						<input type=\"text\" name=\"name\" required class=\"input__entry\">
 					</div>
 					
-					<div class=\"inputs flex-container\">			
-						<label for=\"apellido\">Apellido:</label>
-						<input type=\"text\" name=\"surname\" required class=\"inputs__entry\">
+					<div class=\"inputs\">			
+						<label for=\"apellido\" class=\"input-label\">Apellido:</label>
+						<input type=\"text\" name=\"surname\" required class=\"input__entry\">
 					</div>
 					
-					<input type=\"submit\" name=\"submit\" value=\"Añadir\" class=\"form__send\">
+					<input type=\"submit\" name=\"submit\" value=\"Añadir\" class=\"form__submit blue-background white-text font-18\">
 				
 				</form>
 		</article>
@@ -505,31 +516,28 @@ function teacherslist($conn) {
     $resultdata = mysqli_stmt_get_result($stmt);
     if(mysqli_num_rows($resultdata) > 0) {
         echo "
-        <article class=\"teacher-list\">
-        <p class=\"titles\">Lista de profesores</p>
+        <article class=\"overflow-article\">
+        <p class=\"article-title white-text blue-background font-24\">Lista de Profesores</p>
 
-        <table class=\"teacher-list__teacher-table\">
+        <table class=\"article__table\">
             <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nombre</th>
-                    <th>Apellido</th>
-                    <th></th>
-                </tr>
+                    <th class=\"table__th\">ID</th>
+                    <th class=\"table__th\">Nombre</th>
+                    <th class=\"table__th\">Apellido</th>
+                    <th class=\"table__th\">Opciones</th>
             </thead>";	
         while($row = mysqli_fetch_assoc($resultdata)){
             if($row["fecha_baja"]){
 
             }
             else{
-            echo "<tr class=\"teacher-table__rows\">";
-            echo "<td>".$row['idProfesores']."</td>";
-            echo "<td>".ucfirst($row['nombreProfesores'])."</td>";
-            echo "<td>".ucfirst($row['apellidoProfesores'])."</td>";
-            echo "<td colspan=\"1\"> ".modifylink($row['idProfesores'])." 
-            <img src=\"Images/editar.png\" alt=\"\" class=\"group-table__icon\">
-             ".deletelink($row['idProfesores'],($row['nombreProfesores']." ".$row['apellidoProfesores']))."
-             <img src=\"Images/error.png\" alt=\"\"class=\"group-table__icon\"> </td>";
+            echo "<tr>";
+            echo "<td class=\"table__td\">".$row['idProfesores']."</td>";
+            echo "<td class=\"table__td\">".ucfirst($row['nombreProfesores'])."</td>";
+            echo "<td class=\"table__td\">".ucfirst($row['apellidoProfesores'])."</td>";
+            echo "<td class=\"table__td\"> ".modifylink($row['idProfesores'])." 
+            <img src=\"Images/editar.png\" alt=\"\" class=\"overflow__icon\">
+            </td>";
             echo "</tr>";
             }
         }
@@ -538,11 +546,10 @@ function teacherslist($conn) {
 
     }
     else {
-        echo "<h1 class=\"text-info\"> no se encontro profesores </h1>";
+        echo "<h1 class=\"text-info\"> No hay profesores en el sistema, ingrese algunos.</h1>";
     }
 
     mysqli_stmt_close($stmt);
-    echo "</section>";
 
 }
 
@@ -574,6 +581,30 @@ function teacherslist($conn) {
                         <br>
                         <button type=\"submit\" name=\"submit\" class=\"btn btn-secondary\">Actualizar</button>
                     </form>";
+
+    }
+
+    //forma para modificar materias
+    function modifymateriaform2($id) {
+
+        echo "
+                    <article>
+                        <p class=\"article-title white-text blue-background font-24\">Actualizar Materia</p>
+                
+                    <form action=\"include/modificarmateria2.inc.php\" method=\"post\" class=\"flex-container col\">
+                    <input type=\"hidden\" name=\"id\" value=\"".$id."\">
+                        <div class=\"inputs\">
+					<label for=\"name\" class=\"input-label\">Nuevo Nombre:</label>
+					<input type=\"text\" name=\"name\" required class=\"input__entry\"
+					>
+				</div>
+                        
+                        <input type=\"submit\" name=\"submit\" value=\"Actualizar\" class=\"form__submit blue-background white-text font-18\">
+                    
+                    </form>
+                    </article>
+                
+                ";
 
     }
 
@@ -943,7 +974,11 @@ function teacherslist($conn) {
     // crea el formulario para editar materias
     function editmateriahorario($conn,$materia,$grupo) {
         //materia / grupo / dia1-3 / hora 1-12 / turno 1-3
-        echo "<section class=\"main-section flex-container col\">";
+        echo "<article>
+			
+        <header class=\"section__form-title\">
+            <p class=\"article-title white-text blue-background font-24\">Editar Horario</p>
+        </header> <form action=\"include/modificarmateria.inc.php\" method=\"post\" id=\"subjform1\"> <div class=\"form-intro\">";
         $groupexist = revisarExistenciaDelGrupoID($conn,$grupo);
 
                 if($groupexist == false){
@@ -951,7 +986,7 @@ function teacherslist($conn) {
                     exit();
                 }
 
-                echo "<p>Grupo: ".$groupexist['nombreGrupo']." | ".$groupexist['nombredescriptivoGrupo']."</p> <br>";
+                echo "<div><p>Grupo: ".strtoupper($groupexist['nombreGrupo'])." | ".ucfirst($groupexist['nombredescriptivoGrupo'])."</p> </div>";
 
                 $materiaexistance = revisarExistenciaDeLaMateriasPorID($conn,$materia);
 
@@ -960,10 +995,10 @@ function teacherslist($conn) {
                     exit();
                 }
 
-                echo "<p>Materia: ".$materiaexistance['NombreMateria']."</p><br>";
+                echo "<div><p>Materia: ".ucfirst($materiaexistance['NombreMateria'])."</p></div></div>";
 
         
-        echo "<form action=\"include/modificarmateria.inc.php\" method=\"post\" id=\"subjform1\">";
+        
         echo "<br>";
         echo "<input type=\"hidden\" name=\"idGrupo\" value=\"".$grupo."\">";
         echo "<input type=\"hidden\" name=\"idMateria\" value=\"".$materia."\">";
@@ -1190,20 +1225,273 @@ function teacherslist($conn) {
 
     }
 
+    function editmateriahorario2($conn,$materia,$grupo) {
+
+        $groupexist = revisarExistenciaDelGrupoID($conn,$grupo);
+        if($groupexist == false){
+            header("location: admin.php?panel=grupos&error=classnotexist");
+            exit();
+        }
+
+        $materiaexistance = revisarExistenciaDeLaMateriasPorID($conn,$materia);
+
+                if($materiaexistance == false){
+                    header("location: admin.php?panel=grupos&error=classnotexist");
+                    exit();
+                }
+
+        echo "<article>
+			
+        <header class=\"section__form-title\">
+            <p class=\"article-title white-text blue-background font-24\">Editar Horario</p>
+        </header>	
+                         
+        <form method=\"post\" action=\"include/modificarmateria.inc.php\" class=\"asignature flex-container col\"> 
+        
+        <input type=\"hidden\" name=\"idGrupo\" value=\"".$grupo."\">
+        <input type=\"hidden\" name=\"idMateria\" value=\"".$materia."\">
+        <div class=\"form-intro\">	
+					<div>
+						<p>Grupo: ".strtoupper($groupexist['nombreGrupo'])." ".ucfirst($groupexist['nombredescriptivoGrupo'])."</p>
+					</div>
+					<div>
+						<p>Materia: ".ucfirst($materiaexistance['NombreMateria'])."</p>
+					</div>
+				</div>	<div class=\"form-content\">	
+                <div>
+                    <label for=\"dia-1\">Día 1</label>
+                    <select name=\"dia1\" id=\"dia-1\">
+                        <option value=\"0\">No</option>
+                        <option value=\"1\">Lunes</option>
+                        <option value=\"2\">Martes</option>
+                        <option value=\"3\">Miércoles</option>
+                        <option value=\"4\">Jueves</option>
+                        <option value=\"5\">Viernes</option>
+                        <option value=\"6\">Sábado</option>
+                    </select>
+                        
+                    <label>Horas</label>
+                        
+                    <select name=\"hora1\" id=\"hora-1\">
+                        <option value=\"0\">No</option>
+                        <option value=\"1\">1°</option>
+                        <option value=\"2\">2°</option>
+                        <option value=\"3\">3°</option>
+                        <option value=\"4\">4°</option>
+                        <option value=\"5\">5°</option>
+                        <option value=\"6\">6°</option>
+                        <option value=\"7\">7°</option>
+                        <option value=\"8\">8°</option>
+                        <option value=\"9\">9°</option>
+                    </select>
+                        
+                    <select name=\"hora2\" id=\"hora-2\">
+                        <option value=\"0\">No</option>
+                        <option value=\"1\">1°</option>
+                        <option value=\"2\">2°</option>
+                        <option value=\"3\">3°</option>
+                        <option value=\"4\">4°</option>
+                        <option value=\"5\">5°</option>
+                        <option value=\"6\">6°</option>
+                        <option value=\"7\">7°</option>
+                        <option value=\"8\">8°</option>
+                        <option value=\"9\">9°</option>
+                    </select>
+                            
+                    <select name=\"hora3\" id=\"hora-3\">
+                        <option value=\"0\">No</option>
+                        <option value=\"1\">1°</option>
+                        <option value=\"2\">2°</option>
+                        <option value=\"3\">3°</option>
+                        <option value=\"4\">4°</option>
+                        <option value=\"5\">5°</option>
+                        <option value=\"6\">6°</option>
+                        <option value=\"7\">7°</option>
+                        <option value=\"8\">8°</option>
+                        <option value=\"9\">9°</option>
+                    </select>
+                        
+                    <select name=\"hora4\" id=\"hora-4\">
+                        <option value=\"0\">No</option>
+                        <option value=\"1\">1°</option>
+                        <option value=\"2\">2°</option>
+                        <option value=\"3\">3°</option>
+                        <option value=\"4\">4°</option>
+                        <option value=\"5\">5°</option>
+                        <option value=\"6\">6°</option>
+                        <option value=\"7\">7°</option>
+                        <option value=\"8\">8°</option>
+                        <option value=\"9\">9°</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for=\"dia-2\">Día 2</label>
+                    <select name=\"dia2\" id=\"dia-2\">
+                        <option value=\"0\">No</option>
+                        <option value=\"1\">Lunes</option>
+                        <option value=\"2\">Martes</option>
+                        <option value=\"3\">Miércoles</option>
+                        <option value=\"4\">Jueves</option>
+                        <option value=\"5\">Viernes</option>
+                        <option value=\"6\">Sábado</option>
+                    </select>
+                        
+                    <label>Horas</label>
+                    <select name=\"hora5\" id=\"hora-5\">
+                        <option value=\"0\">No</option>
+                        <option value=\"1\">1°</option>
+                        <option value=\"2\">2°</option>
+                        <option value=\"3\">3°</option>
+                        <option value=\"4\">4°</option>
+                        <option value=\"5\">5°</option>
+                        <option value=\"6\">6°</option>
+                        <option value=\"7\">7°</option>
+                        <option value=\"8\">8°</option>
+                        <option value=\"9\">9°</option>
+                    </select>
+                        
+                    <select name=\"hora6\" id=\"hora-6\">
+                        <option value=\"0\">No</option>
+                        <option value=\"1\">1°</option>
+                        <option value=\"2\">2°</option>
+                        <option value=\"3\">3°</option>
+                        <option value=\"4\">4°</option>
+                        <option value=\"5\">5°</option>
+                        <option value=\"6\">6°</option>
+                        <option value=\"7\">7°</option>
+                        <option value=\"8\">8°</option>
+                        <option value=\"9\">9°</option>
+                    </select>
+                            
+                    <select name=\"hora7\" id=\"hora-7\">
+                        <option value=\"0\">No</option>
+                        <option value=\"1\">1°</option>
+                        <option value=\"2\">2°</option>
+                        <option value=\"3\">3°</option>
+                        <option value=\"4\">4°</option>
+                        <option value=\"5\">5°</option>
+                        <option value=\"6\">6°</option>
+                        <option value=\"7\">7°</option>
+                        <option value=\"8\">8°</option>
+                        <option value=\"9\">9°</option>
+                    </select>
+                        
+                    <select name=\"hora8\" id=\"hora-8\">
+                        <option value=\"0\">No</option>
+                        <option value=\"1\">1°</option>
+                        <option value=\"2\">2°</option>
+                        <option value=\"3\">3°</option>
+                        <option value=\"4\">4°</option>
+                        <option value=\"5\">5°</option>
+                        <option value=\"6\">6°</option>
+                        <option value=\"7\">7°</option>
+                        <option value=\"8\">8°</option>
+                        <option value=\"9\">9°</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label for=\"dia-3\">Día 3</label>
+                    <select name=\"dia3\" id=\"dia-3\">
+                        <option value=\"0\">No</option>
+                        <option value=\"1\">Lunes</option>
+                        <option value=\"2\">Martes</option>
+                        <option value=\"3\">Miércoles</option>
+                        <option value=\"4\">Jueves</option>
+                        <option value=\"5\">Viernes</option>
+                        <option value=\"6\">Sábado</option>
+                    </select>
+                        
+                    <label>Horas</label>
+                    <select name=\"hora9\" id=\"hora-9\">
+                        <option value=\"0\">No</option>
+                        <option value=\"1\">1°</option>
+                        <option value=\"2\">2°</option>
+                        <option value=\"3\">3°</option>
+                        <option value=\"4\">4°</option>
+                        <option value=\"5\">5°</option>
+                        <option value=\"6\">6°</option>
+                        <option value=\"7\">7°</option>
+                        <option value=\"8\">8°</option>
+                        <option value=\"9\">9°</option>
+                    </select>
+                        
+                    <select name=\"hora10\" id=\"hora-10\">
+                        <option value=\"0\">No</option>
+                        <option value=\"1\">1°</option>
+                        <option value=\"2\">2°</option>
+                        <option value=\"3\">3°</option>
+                        <option value=\"4\">4°</option>
+                        <option value=\"5\">5°</option>
+                        <option value=\"6\">6°</option>
+                        <option value=\"7\">7°</option>
+                        <option value=\"8\">8°</option>
+                        <option value=\"9\">9°</option>
+                    </select>
+                            
+                    <select name=\"hora11\" id=\"hora-11\">
+                        <option value=\"0\">No</option>
+                        <option value=\"1\">1°</option>
+                        <option value=\"2\">2°</option>
+                        <option value=\"3\">3°</option>
+                        <option value=\"4\">4°</option>
+                        <option value=\"5\">5°</option>
+                        <option value=\"6\">6°</option>
+                        <option value=\"7\">7°</option>
+                        <option value=\"8\">8°</option>
+                        <option value=\"9\">9°</option>
+                    </select>
+                        
+                    <select name=\"hora12\" id=\"hora-12\">
+                        <option value=\"0\">No</option>
+                        <option value=\"1\">1°</option>
+                        <option value=\"2\">2°</option>
+                        <option value=\"3\">3°</option>
+                        <option value=\"4\">4°</option>
+                        <option value=\"5\">5°</option>
+                        <option value=\"6\">6°</option>
+                        <option value=\"7\">7°</option>
+                        <option value=\"8\">8°</option>
+                        <option value=\"9\">9°</option>
+                    </select>
+                </div>
+                
+                <input type=\"submit\" name=\"submit\" value=\"Confirmar\" class=\"form__submit blue-background white-text font-18\">
+            </div>		
+        </form>
+        
+    </article>
+</section>	";
+        
+
+
+    }
+
+    //          #####       #####   ###########   #####
+    //          #####       #####   ##########    #####
+    //          #####       #####   #####         #####
+    //          #################   #####         #####
+    //          #################   ###########   #####
+    //          #################   #####         #####
+    //          #####       #####   #####         #####
+    //          #####       #####   ##########    #############
+    //          #####       #####   ###########   #############
+
     function createmateriaformulario(){
         echo "
-        <section class=\"main-section flex-container col\">
                     <article>
-                        <p class=\"titles\">Añadir Materias</p>
+                        <p class=\"article-title white-text blue-background font-24\">Añadir Materias</p>
                 
-                    <form action=\"include/crearmateria2.inc.php\" method=\"post\" class=\"form-container__form flex-container col\">
+                    <form action=\"include/crearmateria2.inc.php\" method=\"post\" class=\"flex-container col\">
                         
-                        <div class=\"inputs flex-container\">
-                            <label for=\"nombre\">Nombre:</label>
-                            <input type=\"text\" name=\"name\" required class=\"inputs__entry\">
-                        </div>
+                        <div class=\"inputs\">
+					<label for=\"name\" class=\"input-label\">Nombre:</label>
+					<input type=\"text\" name=\"name\" required class=\"input__entry\"
+					>
+				</div>
                         
-                        <input type=\"submit\" name=\"submit\" value=\"Añadir\" class=\"form__send\">
+                        <input type=\"submit\" name=\"submit\" value=\"Añadir\" class=\"form__submit blue-background white-text font-18\">
                     
                     </form>
                     </article>
@@ -1226,21 +1514,25 @@ function teacherslist($conn) {
         $resultdata = mysqli_stmt_get_result($stmt);
         if(mysqli_num_rows($resultdata) > 0) {
             echo "
-            <p class=\"titles\">Lista de materias</p>
+            <article>
+            <p class=\"article-title white-text blue-background font-24\">Lista de Materias</p>
 
-            <table class=\"teacher-list__teacher-table\">
+            <table class=\"article__table\">
                 <thead>
-                    <tr>
-                        <th>Nombre</th>
-                    </tr>
+                    
+                        <th class=\"table__th\">Nombre</th>
+                        <th class=\"table__th\">Opciones</th>
+                   
                 </thead>";	
             while($row = mysqli_fetch_assoc($resultdata)){
                 
-                echo "<tr class=\"teacher-table__rows\">";
-                echo "<td colspan=\"1\">".modifylinkmateria($row['idMaterias']).ucfirst($row['NombreMateria'])."</a></td>";
+                echo "<tr>";
+                echo "<td class=\"table__td\">".ucfirst($row['NombreMateria'])."</td>";
+                echo "<td class=\"table__td\">".modifylinkmateria($row['idMaterias'])."Editar<img src=\"Images/editar.png\" alt=\"\" class=\"overflow__icon\"></a></td>";
                 echo "</tr>";
             }
-            echo "</table>";
+            echo "</table></article>";
+            
 
         }
         else {
@@ -1248,7 +1540,6 @@ function teacherslist($conn) {
         }
 
         mysqli_stmt_close($stmt);
-        echo "</section>";
 
     }
 
@@ -1275,7 +1566,7 @@ function teacherslist($conn) {
 
 //genera el vinculo entre los grupos y las clases
 function linktoclass($id){
-    $vinculo = "<a class=\"table-link\" href=\"admin.php?panel=clases&idGrupo=".$id."\">Ver mas";
+    $vinculo = "<a class=\"table-link\" href=\"admin.php?panel=clases&idGrupo=".$id."\">Ver màs";
     return $vinculo;
 }
 //crea el formulario de grupo primer intento
@@ -1554,25 +1845,26 @@ function creategrupoformexample($conn) {
 
 function creategrupoformulario(){
     echo "
-    <section class=\"main-section flex-container col\">
 
             <article>
 				
-				 	<p class=\"titles\">Añadir Grupos</p>
+				 	<p class=\"article-title white-text blue-background font-24\">Añadir Grupos</p>
 			
-				<form action=\"include/creargrupo.inc.php\" method=\"post\" class=\"form-container__form flex-container col\">
+				<form action=\"include/creargrupo.inc.php\" method=\"post\" class=\"flex-container col\">
 					
-					<div class=\"inputs flex-container\">
-						<label for=\"grupo\">Nombre:</label>
-						<input type=\"text\" name=\"grupo\" required class=\"inputs__entry\">
-					</div>
+					<div class=\"inputs\">
+					<label for=\"grupo\" class=\"input-label\">Nombre:</label>
+					<input type=\"text\" name=\"grupo\" required class=\"input__entry\"
+					>
+				</div>
 					
-					<div class=\"inputs flex-container\">			
-						<label for=\"fullgrupo\" class=\"label-description\">Nombre Descriptivo:</label>
-						<input type=\"text\" name=\"fullgrupo\" required class=\"inputs__entry\">
-					</div>
+					<div class=\"inputs\" style=\"margin-top:10px\">
+					<label for=\"fullgrupo\" class=\"input-label\">Nombre Descriptivo:</label>
+					<input type=\"text\" name=\"fullgrupo\" required class=\"input__entry\"
+					>
+				</div>
 					
-					<input type=\"submit\" name=\"submit\" value=\"Añadir\" class=\"form__send\">
+					<input type=\"submit\" name=\"submit\" value=\"Añadir\" class=\"form__submit blue-background white-text font-18\">
 				
 				</form>
             </article>
@@ -1596,23 +1888,23 @@ function groupslistadmin($conn) {
     if(mysqli_num_rows($resultdata) > 0) {
         echo "
         <article class=\"group-list\">
-        <p class=\"titles\">Lista de grupos</p>
+        <p class=\"article-title white-text blue-background font-24\">Lista de Grupos</p>
 
         <table class=\"teacher-list__teacher-table\">
             <thead>
                 <tr>
                     
-                    <th>Nombre</th>
-                    <th>NombreDescriptivo</th>
-                    <th></th>
+                    <th class=\"table__th\">Nombre</th>
+                    <th class=\"table__th\">Nombre Descriptivo</th>
+                    <th class=\"table__th\">Opciones</th>
                 </tr>
             </thead>";	
         while($row = mysqli_fetch_assoc($resultdata)){
             
-            echo "<tr class=\"teacher-table__rows\">";
-            echo "<td>".strtoupper($row['nombreGrupo'])."</td>";
-            echo "<td>".ucfirst($row['nombredescriptivoGrupo'])."</td></a>";
-            echo "<td colspan=\"1\">".linktoclass($row['idGrupo'])."<img src=\"Images/editar.png\" alt=\"\" class=\"group-table__icon\"></a></td>";
+            echo "<tr>";
+            echo "<td class=\"table__td\">".strtoupper($row['nombreGrupo'])."</td>";
+            echo "<td class=\"table__td\">".ucfirst($row['nombredescriptivoGrupo'])."</td></a>";
+            echo "<td class=\"table__td\">".linktoclass($row['idGrupo'])."<img src=\"Images/editar.png\" alt=\"\" class=\"overflow__icon\"></a></td>";
             echo "</tr>";
         }
         echo "</table></article>";
@@ -1624,7 +1916,6 @@ function groupslistadmin($conn) {
 
     mysqli_stmt_close($stmt);
 
-    echo "</section>";
 
 }
 
@@ -1673,36 +1964,30 @@ function modifyuserpane2($name){
     
 
     echo "
-    <section class=\"main-section flex-container col\">
-    <div class=\"main-container\">
-        
-    <p class=\"titles\">Cambiar Contraseña</p>
-
-    <div class=\"main-container__form-container\">
-
-        
-        <div class=\"flex-item div-formulario\">
-                <form action=\"include/modifyuser.inc.php\" method=\"post\" id=\"profform2\">
+                    <article>
+                        <p class=\"article-title white-text blue-background font-24\">Cambiar Constraseña</p>
+                
+                    <form action=\"include/modifyuser.inc.php\" method=\"post\" class=\"form-container__form flex-container col\">
                     <input type=\"hidden\" name=\"name\" value=\"".$name."\" id=\"t\" form=\"profform2\">
-                    <br>
-                    <label for=\"t3\" class=\"text-info\">Nueva Contraseña:</label>
-                    <input type=\"password\" name=\"new_data\" id=\"t3\" form=\"profform2\">
-                    <br>
-                    <input type=\"hidden\" name=\"data_type\" value=\"CLAVEusuarios\" id=\"t\" form=\"profform2\">
-                    <br>
-                    <label for=\"t5\" class=\"text-info\">su contraseña actual:</label>
-                    <input type=\"password\" name=\"contraseña\" id=\"t5\" form=\"profform2\">
-                    <br><div class=\"flex-item form__botonera\">
-                    <input type=\"submit\" name=\"submit\" value=\"Actualizar\" class=\"submit\">
-                </div>
-                </form>
-                </div>
-    
+                        
+                    <div class=\"inputs\">
+					<label for=\"grupo\" class=\"input-label\">Nueva Contraseña:</label>
+					<input type=\"text\" name=\"grupo\" required class=\"input__entry\"
+					>
+				</div>
+                        
+                <div class=\"inputs\" style=\"margin-top:30px\">
+                <label for=\"fullgrupo\" class=\"input-label\">Contraseña Actual:</label>
+                <input type=\"text\" name=\"fullgrupo\" required class=\"input__entry\"
+                >
             </div>
-            
-            
-        </div>	
-        </section>";
+                        
+                        <input type=\"submit\" name=\"submit\" value=\"Añadir\" class=\"form__submit blue-background white-text font-18\">
+                    
+                    </form>
+                    </article>
+
+                ";
 
 }
 
@@ -1731,7 +2016,7 @@ function createclassfirstmodel($conn){
     echo "
     <section class=\"main-section flex-container col\">
 				
-				 	<p class=\"titles\">Añadir Clases</p>
+				 	<p class=\"article-title white-text blue-background font-24\">Añadir Clases</p>
 			
 				<form action=\"include/crearclase.inc.php\" method=\"post\" class=\"form-container__form flex-container col\">";
 				
@@ -1826,7 +2111,7 @@ function createclassfirstmodel($conn){
                 mysqli_stmt_close($stmt);
                 echo "</select> <br>";
 					
-				echo "<input type=\"submit\" name=\"submit\" value=\"Añadir\" class=\"form__send\">
+				echo "<input type=\"submit\" name=\"submit\" value=\"Añadir\" class=\"form__submit blue-background white-text font-18\">
 				
 				</form>
 			
@@ -1838,7 +2123,7 @@ function updateclassform($conn,$materia,$grupo){
     echo "
     <section class=\"main-section flex-container col\">
 				
-				 	<p class=\"titles\">Añadir Materias al Grupo</p>
+				 	<p class=\"article-title white-text blue-background font-24\">Vinculacion De Profesor</p>
 			
 				<form action=\"include/updateclase.inc.php\" method=\"post\" class=\"form-container__form flex-container col\">";
 				
@@ -1851,8 +2136,8 @@ function updateclassform($conn,$materia,$grupo){
                     header("location: admin.php?panel=grupos&error=classnotexist");
                     exit();
                 }
-
-                echo "<p>Grupo: ".$groupexist['nombreGrupo']." | ".$groupexist['nombredescriptivoGrupo']."</p> <br>";
+                
+                echo "<p>Grupo: ".strtoupper($groupexist['nombreGrupo'])." ".ucfirst($groupexist['nombredescriptivoGrupo'])."</p> <br>";
                 echo "<input type=\"hidden\" name=\"Grupo\" value=\"".$grupo."\">";
 
                 // selector de materias
@@ -1864,7 +2149,7 @@ function updateclassform($conn,$materia,$grupo){
                     exit();
                 }
 
-                echo "<p>Materia: ".$materiaexistance['NombreMateria']."</p><br>";
+                echo "<p>Materia: ".ucfirst($materiaexistance['NombreMateria'])."</p><br>";
                 echo "<input type=\"hidden\" name=\"materia\" value=\"".$materia."\">";
                 
 
@@ -1874,7 +2159,7 @@ function updateclassform($conn,$materia,$grupo){
                 echo "<br>
                 <label for=\"t2\" class=\"text-info\">Profesor:</label>
                 <select name=\"profesor\" id=\"t2\">";
-                echo "<option value=\"0\">sin profesor</option>";
+                echo "<option value=\"0\">Sin profesor</option>";
                 $sql = "SELECT * FROM profesores ORDER BY idProfesores ASC"; 
                 $stmt = mysqli_stmt_init($conn);
             
@@ -1892,7 +2177,7 @@ function updateclassform($conn,$materia,$grupo){
 
                         }
                         else{
-                            echo "<option value=\"".$row['idProfesores']."\">".$row['nombreProfesores']." ".$row['apellidoProfesores']."</option>";
+                            echo "<option value=\"".$row['idProfesores']."\">".ucfirst($row['nombreProfesores'])." ".$row['apellidoProfesores']."</option>";
                         }
                     }
             
@@ -1904,74 +2189,49 @@ function updateclassform($conn,$materia,$grupo){
                 mysqli_stmt_close($stmt);
                 echo "</select> <br>";
 					
-				echo "<input type=\"submit\" name=\"submit\" class=\"form__send\">
+				echo "<input type=\"submit\" name=\"submit\" class=\"form__submit blue-background white-text font-18\" value=\"Enviar Consulta\">
 				
 				</form>
 			
 			</section>
 	        ";
 }
-function createclase($conn,$grupo){
+function updateclassform2($conn,$materia,$grupo){
+    $groupexist = revisarExistenciaDelGrupoID($conn,$grupo);
+        if($groupexist == false){
+            header("location: admin.php?panel=grupos&error=classnotexist");
+            exit();
+        }
 
-    echo "
-    <section class=\"main-section flex-container col\">
-				
-				 	<p class=\"titles\">Añadir Materias al Grupo</p>
+    $materiaexistance = revisarExistenciaDeLaMateriasPorID($conn,$materia);
+
+        if($materiaexistance == false){
+            header("location: admin.php?panel=grupos&error=classnotexist");
+            exit();
+        }
+
+    echo "<article>
 			
-				<form action=\"include/crearclase.inc.php\" method=\"post\" class=\"form-container__form flex-container col\">";
-				
-                // selector de grupos
-
-                
-                $groupexist = revisarExistenciaDelGrupoID($conn,$grupo);
-
-                if($groupexist == false){
-                    header("location: admin.php?panel=grupos&error=classnotexist");
-                    exit();
-                }
-
-                echo "<p>Grupo: ".$groupexist['nombreGrupo']." | ".$groupexist['nombredescriptivoGrupo']."</p> <br>";
-                echo "<input type=\"hidden\" name=\"Grupo\" value=\"".$grupo."\">";
-
-                // selector de materias
-
-                echo "
-                <div class=\"inputs flex-container\">
-                <label for=\"t2\" class=\"text-info\">Materias:</label>";
-                echo "<select name=\"materias\" id=\"t3\">";
-                $sql = "SELECT * FROM materias ORDER BY idMaterias ASC"; 
-                $stmt = mysqli_stmt_init($conn);
-            
-                if(!mysqli_stmt_prepare($stmt, $sql)){
-                    header("location: ../admin.php?error=CouldNotConnect&panel=clases");
-                    exit();
-                }
-            
-                mysqli_stmt_execute($stmt);
-            
-                $resultdata = mysqli_stmt_get_result($stmt);
-                if(mysqli_num_rows($resultdata) > 0) {
-                    while($row = mysqli_fetch_assoc($resultdata)){
-                        echo "<option value=\"".$row['idMaterias']."\">".$row['NombreMateria']."</option>";
-                    }
-            
-                }
-                else {
-                    echo "<option value=\"-1\">no hay materias en el sistema</option>";
-                }
-            
-                mysqli_stmt_close($stmt);
-                echo "</select> </div>  <br>";
-                
-
-                // selectro de profesores
-
-
-                echo "<br>
-                <div class=\"inputs flex-container\">
-                <label for=\"t2\">Profesor:</label>
-                <select name=\"profesor\" id=\"t2\">";
-                echo "<option value=\"0\">sin profesor</option>";
+        <header class=\"section__form-title\">
+            <p class=\"article-title white-text blue-background font-24\">Vinculacion de profesor</p>
+        </header>	
+                         
+        <form method=\"post\" action=\"include/updateclase.inc.php\" class=\"asignature flex-container col\"> 
+        
+        <input type=\"hidden\" name=\"Grupo\" value=\"".$grupo."\">
+        <input type=\"hidden\" name=\"materia\" value=\"".$materia."\">
+        <div class=\"form-intro\">	
+					<div>
+						<p>Grupo: ".strtoupper($groupexist['nombreGrupo'])." ".ucfirst($groupexist['nombredescriptivoGrupo'])."</p>
+					</div>
+					<div>
+						<p>Materia: ".ucfirst($materiaexistance['NombreMateria'])."</p>
+					</div>
+				</div>	
+        <div class=\"form-content\">
+        <label for=\"t2\" class=\"input-label\">Profesor:</label>
+        <select name=\"profesor\"  class=\"inputs__select\" id=\"t2\">";
+        echo "<option value=\"0\">Sin profesor</option>";
                 $sql = "SELECT * FROM profesores ORDER BY idProfesores ASC"; 
                 $stmt = mysqli_stmt_init($conn);
             
@@ -2002,7 +2262,105 @@ function createclase($conn,$grupo){
                 mysqli_stmt_close($stmt);
                 echo "</select> </div> <br>";
 					
-				echo "<input type=\"submit\" name=\"submit\" value=\"Añadir\" class=\"form__send\">
+				echo "<input type=\"submit\" name=\"submit\" value=\"Vincular\" class=\"form__submit white-text blue-background font-18\">
+				
+				</form>
+			
+			
+	        ";
+                
+}
+function createclase($conn,$grupo){
+
+    echo "
+				
+				<p class=\"article-title white-text blue-background font-24\">Añadir Materias al Grupo</p>
+			
+				<form action=\"include/crearclase.inc.php\" method=\"post\" class=\"form-container__form flex-container col\">";
+				
+                // selector de grupos
+
+                
+                $groupexist = revisarExistenciaDelGrupoID($conn,$grupo);
+
+                if($groupexist == false){
+                    header("location: admin.php?panel=grupos&error=classnotexist");
+                    exit();
+                }
+                
+                echo "<p>Grupo: ".strtoupper($groupexist['nombreGrupo'])." | ".ucfirst($groupexist['nombredescriptivoGrupo'])."</p> <br>";
+                echo "<input type=\"hidden\" name=\"Grupo\" value=\"".$grupo."\">";
+
+                // selector de materias
+
+                echo "
+                <div class=\"inputs\">
+                <label for=\"t2\"  class=\"input-label\">Materias:</label>";
+                echo "<select name=\"materias\"  class=\"inputs__select\" id=\"t3\">";
+                $sql = "SELECT * FROM materias ORDER BY idMaterias ASC"; 
+                $stmt = mysqli_stmt_init($conn);
+            
+                if(!mysqli_stmt_prepare($stmt, $sql)){
+                    header("location: ../admin.php?error=CouldNotConnect&panel=clases");
+                    exit();
+                }
+            
+                mysqli_stmt_execute($stmt);
+            
+                $resultdata = mysqli_stmt_get_result($stmt);
+                if(mysqli_num_rows($resultdata) > 0) {
+                    while($row = mysqli_fetch_assoc($resultdata)){
+                        echo "<option value=\"".$row['idMaterias']."\">".$row['NombreMateria']."</option>";
+                    }
+            
+                }
+                else {
+                    echo "<option value=\"-1\">no hay materias en el sistema</option>";
+                }
+            
+                mysqli_stmt_close($stmt);
+                echo "</select> </div>  <br>";
+                
+
+                // selectro de profesores
+
+
+                echo "<br>
+                <div class=\"inputs\">
+                <label for=\"t2\" class=\"input-label\">Profesor:</label>
+                <select name=\"profesor\"  class=\"inputs__select\" id=\"t2\">";
+                echo "<option value=\"0\">Sin profesor</option>";
+                $sql = "SELECT * FROM profesores ORDER BY idProfesores ASC"; 
+                $stmt = mysqli_stmt_init($conn);
+            
+                if(!mysqli_stmt_prepare($stmt, $sql)){
+                    header("location: ../admin.php?error=CouldNotConnect&panel=clases");
+                    exit();
+                }
+            
+                mysqli_stmt_execute($stmt);
+            
+                $resultdata = mysqli_stmt_get_result($stmt);
+                if(mysqli_num_rows($resultdata) > 0) {
+                    while($row = mysqli_fetch_assoc($resultdata)){
+                        if($row["fecha_baja"]){
+
+                        }
+                        else{
+                            echo "<option value=\"".$row['idProfesores']."\">".ucfirst($row['nombreProfesores'])." ".$row['apellidoProfesores']."</option>";
+                        }
+                        
+                    }
+            
+                }
+                else {
+                    echo "<option value=\"-1\">no hay profesores en el sistema</option>";
+                }
+            
+                mysqli_stmt_close($stmt);
+                echo "</select> </div> <br>";
+					
+				echo "<input type=\"submit\" name=\"submit\" value=\"Añadir\" class=\"form__submit white-text blue-background font-18\">
 				
 				</form>
 			
@@ -2016,7 +2374,7 @@ function createclase($conn,$grupo){
 function listamateriasengrupo($conn,$grupo){
 
     echo "<article class=\"asignatures-list\">
-    <p class=\"titles\">Lista de materias</p>";
+    <p class=\"article-title white-text blue-background font-24\">Lista de Materias</p>";
 
     $sql = "SELECT idMateria,idProfesor FROM clases WHERE idGrupo = ?"; 
     $stmt = mysqli_stmt_init($conn);
@@ -2046,7 +2404,7 @@ function listamateriasengrupo($conn,$grupo){
             
         }
         else {
-            echo "<h1>no hay datos pertinentes en el sistema</h1>";
+            echo "<h1>No hay datos en el sistema.</h1>";
         }
             
     mysqli_stmt_close($stmt);
@@ -2057,7 +2415,6 @@ function listamateriasengrupo($conn,$grupo){
         }
     }
 
-    echo "</section>";
 
 }
 
@@ -2116,12 +2473,12 @@ function printclasstable2($conn, $materia, $profesor,$grupo){
         <div class=\"deployed-content\">
             <p class=\"deployed-text\">Profesor: ".$profesorexiste['nombreProfesores']." ".$profesorexiste['apellidoProfesores']."</p>
             <a href=\"admin.php?panel=materiaenclase&idGrupo=".$grupo."&idMateria=".$materia."&subpanel=profesor\" class=\"deployed-link\">Editar</a>
-            <img src=\"Images/editar.png\" alt=\"\" class=\"deployed__icon\">
-            </div>
-            <div class=\"deployed-content\">
+            <img src=\"Images/editar.png\" alt=\"\" class=\"overflow__icon\">
+        </div>
+        <div class=\"deployed-content\">
             <p class=\"deployed-text\">Horarios:<br>".writehorarios2($conn,$materia,$grupo)."</p>
             <a href=\"admin.php?panel=materiaenclase&idGrupo=".$grupo."&idMateria=".$materia."&subpanel=horario\" class=\"deployed-link\">Editar</a>
-            <img src=\"Images/editar.png\" alt=\"\" class=\"deployed__icon\">
+            <img src=\"Images/editar.png\" alt=\"\" class=\"overflow__icon\">
         </div>
     </div>
 </div>";
@@ -2133,7 +2490,7 @@ function writehorarios($conn,$materia,$grupo){
         foreach($horas as $k){
             $horarios[] = revisarExistenciaDelHorarioID($conn,$k);
         }
-        writeeachhorario3($horarios);
+        writeeachhorario($horarios);
         
     }
     else {
@@ -2278,7 +2635,7 @@ function writeeachhorario2($array){
         for ($j = count($array)-1; $j >= 0 ; $j--){
             if (($array[$i]["turnoHorarios"]==$array[$j]["turnoHorarios"])&&($array[$i]["diaHorarios"]==$array[$j]["diaHorarios"])){
                 
-                $horas[] = getstringdia($array[$i]["diaHorarios"]).": ".$array[$i]["inicioHorarios"]."-".$array[$j]["terminaHorarios"]." | ".getstringturno($array[$i]["turnoHorarios"])."<br>";
+                $horas[] = getstringdia($array[$i]["diaHorarios"]).": ".$array[$i]["inicioHorarios"]."-".$array[$j]["terminaHorarios"]."<br>";
                 
                 $i = $j+1;
                 break;

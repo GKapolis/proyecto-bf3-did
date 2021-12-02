@@ -10,8 +10,7 @@ include_once "include/dbh.inc.php";
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Pagina Princial</title>
 	<link rel="stylesheet" href="css/normalize.css">
-	<link rel="stylesheet" href="css/bedelia.css">
-	<link rel="stylesheet" href="css/nav.css">
+	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 	<nav class="nav">
@@ -27,8 +26,8 @@ include_once "include/dbh.inc.php";
 		</div>
 
 		<div class="banner__content banner__title">
-			<h1>BIENVENIDOS</h1>
-			<h2>AL NUEVO AÑO ESTUDIANTIL 2021.</h2>
+			<p class="white-text font-24">BIENVENIDOS</p>
+			<p class="white-text font-18">AL NUEVO AÑO ESTUDIANTIL 2021.</p>
 		</div>	
 		
 		<div class="banner__content banner__left-arrow">
