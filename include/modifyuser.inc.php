@@ -3,7 +3,7 @@
 
 if(ISSET($_POST["submit"])) {
     $name = $_POST["username"];
-    $datatype = $_POST["data_type"];
+    $datatype = "CLAVEusuarios";//$_POST["data_type"];
     $newname = $_POST["new_data"];
     $contraseña = $_POST["contraseña"];
 

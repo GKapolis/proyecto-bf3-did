@@ -12,8 +12,7 @@ if (isset($_SESSION["username"])) {
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
 	<link rel="stylesheet" href="css/normalize.css">
-	<link rel="stylesheet" href="css/login.css">
-	<link rel="stylesheet" href="css/nav.css">
+	<link rel="stylesheet" href="css/style.css">
 
 </head>
 <body>
@@ -23,28 +22,29 @@ if (isset($_SESSION["username"])) {
 					
 		</nav>
 
-	<div class="main-container">
+	<div class="login-container flex-container col">
 
-		<span class="main-container__encabezado">Ingrese nombre de usuario y contraseña para acceder...</span>
+		<span class="login-span">Ingrese nombre de usuario y contraseña para acceder...</span>
 
-		<div class="main-container__form-container">
+		<div class="login-container__form-container">
 
-			<div class="flex-item div-candado">
+			<div class="div-candado">
 				<img src="Images/Padlock_perspective_matte_s.png" alt="" class="div-candado__img-candado">
 			</div>
 			
-			<div class="flex-item div-formulario">	
-				<form action="include/login.inc.php" method="post">
+			<div class="div-formulario">	
+				<form action="include/login.inc.php" method="post" class="login-form">
 
 					<label for="nombre">Nombre</label>
-					<input type="text" name="username"  placeholder="Ingrese su nombre" id="nombre">
+					<input type="text" name="username"  placeholder="Ingrese su nombre" id="nombre" class="login-input">
 					
 					<label for="password">Contraseña</label>
-					<input type="password" name="contraseña"  placeholder="Ingrese su contraseña" id="password">
+					<input type="password" name="contraseña"  placeholder="Ingrese su contraseña" id="password" class="login-input">
 					
-					<div class="flex-item form__botonera">
-						<input type="submit" name="submit" value="Ingresar" class="submit">
-						<span class="span-usuario"><a href="singup.php">Crear usuario</a></span>
+					<div class="login-form__buttons">
+						<input type="submit" name="submit" value="Ingresar" class="login-submit blue-text" class="login-input">
+
+						<span class="login-span span-user"><a href="singup.php" class="blue-text">Crear usuario</a></span>
 					</div>
 				
 				</form>
@@ -52,7 +52,7 @@ if (isset($_SESSION["username"])) {
 
 		</div>
 		
-		<span><a href="recover.php">Olvidó su contraseña?</a></span>	
+		<span class="login-span"><a href="recover.php">Olvidó su contraseña?</a></span>	
 	</div>	
 </body>
 </html>

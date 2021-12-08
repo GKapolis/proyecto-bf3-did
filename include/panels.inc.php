@@ -461,7 +461,8 @@ function deleteteacher($id,$nombre) {
 
 //genera un link para modificar un profesor
 function modifylink($id) {
-    $modificar = "<a class=\"table-link\" href=\"admin.php?panel=profesores&subpanel=modificar&id=".$id."\">modificar</a>";
+    //$modificar = "<a class=\"table-link\" href=\"admin.php?panel=profesores&subpanel=modificar&id=".$id."\">modificar</a>";
+    $modificar = "<a class=\"table-link\" href=\"#\">modificar</a>";
     return $modificar;
 }
 
@@ -1967,22 +1968,22 @@ function modifyuserpane2($name){
                     <article>
                         <p class=\"article-title white-text blue-background font-24\">Cambiar Constraseña</p>
                 
-                    <form action=\"include/modifyuser.inc.php\" method=\"post\" class=\"form-container__form flex-container col\">
-                    <input type=\"hidden\" name=\"name\" value=\"".$name."\" id=\"t\" form=\"profform2\">
+                    <form action=\"#\" method=\"post\" class=\"form-container__form flex-container col\">
+                    <input type=\"hidden\" name=\"username\" value=\"".$name."\" id=\"t\" form=\"profform2\">
                         
                     <div class=\"inputs\">
 					<label for=\"grupo\" class=\"input-label\">Nueva Contraseña:</label>
-					<input type=\"text\" name=\"grupo\" required class=\"input__entry\"
+					<input type=\"password\" name=\"new_data\" required class=\"input__entry\"
 					>
 				</div>
                         
                 <div class=\"inputs\" style=\"margin-top:30px\">
                 <label for=\"fullgrupo\" class=\"input-label\">Contraseña Actual:</label>
-                <input type=\"text\" name=\"fullgrupo\" required class=\"input__entry\"
+                <input type=\"password\" name=\"contraseña\" required class=\"input__entry\"
                 >
             </div>
                         
-                        <input type=\"submit\" name=\"submit\" value=\"Añadir\" class=\"form__submit blue-background white-text font-18\">
+                        <input type=\"submit\" name=\"submit\" value=\"Confirmar\" class=\"form__submit blue-background white-text font-18\">
                     
                     </form>
                     </article>
@@ -2354,7 +2355,7 @@ function createclase($conn,$grupo){
             
                 }
                 else {
-                    echo "<option value=\"-1\">no hay profesores en el sistema</option>";
+                    echo "<option value=\"-1\">no hay profesores en el sistema.</option>";
                 }
             
                 mysqli_stmt_close($stmt);

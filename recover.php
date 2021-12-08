@@ -5,37 +5,39 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
 	<link rel="stylesheet" href="css/normalize.css">
-	<link rel="stylesheet" href="css/login.css">
-	<link rel="stylesheet" href="css/nav.css">
+	<link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     
 		<nav class="nav">
 						
-                        <a href="index.php" class="links nav-logo-link"><img src="images/logo.png" alt="" class="nav__image"></a>
+            <a href="index.php" class="links nav-logo-link"><img src="images/logo.png" alt="" class="nav__image"></a>
                                 
-                    </nav>
+        </nav>
             
-                <div class="main-container">
+        <div class="login-container flex-container col">
             
-                    <span class="main-container__encabezado">ingrese sus datos para recuperarlos</span>
+        	<span class="login-span">ingrese sus datos para recuperarlos</span>
             
-                    <div class="main-container__form-container">
+            <div class="login-container__form-container">
             
-                        <div class="flex-item div-candado">
-                            <img src="Images/Padlock_perspective_matte_s.png" alt="" class="div-candado__img-candado">
-                        </div>
+                <div class="div-candado">
+                    <img src="Images/Padlock_perspective_matte_s.png" alt="" class="div-candado__img-candado">
+                </div>
                         
-			<div class="flex-item div-formulario">	
-				<form action="include/recover.inc.php" method="post">
-                <input type="text" name="username" placeholder="inserte nombre de usuario o correo registrado">
-                
-					<div class="flex-item form__botonera">
-						<input type="submit" name="submit" value="Ingresar" class="submit">
-                    </div>
+				<div class="div-formulario">	
+					<form action="include/recover.inc.php" method="post" class="login-form">
+					
+					<label for="nombre">Nombre o Correo</label>
+					<input type="text" name="username"  placeholder="Ingrese su nombre" id="nombre" class="login-input">
+
+						<div class="login-form__buttons">
+							<input type="submit" name="submit" value="Recuperar" class="login-submit blue-text" class="login-input">
+							<span class="login-span span-user"><a href="login.php" class="blue-text">Volver</a></span>
+						</div>
 				
-				</form>
-			</div>
+					</form>
+				</div>
 
 		</div>
 		
